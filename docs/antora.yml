@@ -17,6 +17,9 @@ version: true
 # [nav]
 nav:
 - modules/ROOT/nav.adoc
+- modules/chapter1_minor_differences/nav.adoc
+- modules/chapter2_major_differences/nav.adoc
+
 
 # [prerelease]
 

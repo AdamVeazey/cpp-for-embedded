@@ -1,18 +1,1 @@
 * xref:index.adoc[Overview]
-
-* xref:chapter1_minor_differences:index.adoc[Chapter 1: Minor Differences]
-** xref:chapter1_minor_differences:bool.adoc[Bool]
-** xref:chapter1_minor_differences:empty_parameter_list.adoc[Empty Parameter List]
-** xref:chapter1_minor_differences:const_behavior.adoc[const Keyword Behavior]
-** xref:chapter1_minor_differences:variable_declarations.adoc[Variable Declarations]
-** xref:chapter1_minor_differences:implicit_int_return.adoc[Implicit Return]
-** xref:chapter1_minor_differences:inline_functions.adoc[Inline Functions]
-** xref:chapter1_minor_differences:typecasting.adoc[Typecasting]
-
-* xref:chapter2_major_differences:index.adoc[Chapter 2: Major Differences]
-** xref:chapter2_major_differences:references.adoc[References]
-** xref:chapter2_major_differences:namespaces.adoc[Namespaces]
-** xref:chapter2_major_differences:overloads.adoc[Overloads]
-** xref:chapter2_major_differences:enum_type.adoc[Enum Type]
-** xref:chapter2_major_differences:struct.adoc[Structs]
-** xref:chapter2_major_differences:dynamic_memory.adoc[Dynamic Memory]
