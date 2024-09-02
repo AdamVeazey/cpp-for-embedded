@@ -1,0 +1,16 @@
+site:
+  title: C++ For Embedded C Developers
+  url: https://adamveazey.github.io/cpp-for-embedded/docs/main
+  # start_page: component-b::index.adoc
+content:
+  sources:
+  - url: https://github.com/AdamVeazey/cpp-for-embedded.git
+    branches: [main, release/*]
+    start_path: docs
+  # - url: https://gitlab.com/antora/demo/demo-component-b.git
+  #   branches: [v2.0, v1.0]
+  #   start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true

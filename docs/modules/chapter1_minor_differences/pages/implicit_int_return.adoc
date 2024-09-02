@@ -1,0 +1,42 @@
+= Implicit Return Type
+
+[source,c,indent=0]
+----
+function(int x) {
+    return x + 5;
+}
+----
+
+== TL;DR
+{cpp} and C standards after C89 do not support implicit return types. Functions must explicitly specify their return type.
+
+== What?
+In C89, if a function did not specify a return type, it was implicitly treated as returning int. This is no longer the case in modern C (post-C99) and {cpp} standards, where all functions must explicitly declare their return type.
+
+In C99 and later, including {cpp}, if you omit the return type, it results in a compile-time error. This change ensures clearer and more predictable code behavior.
+
+== C89 Example
+The following is a valid C89 program
+
+.main.c
+[source,c,indent=0]
+----
+#include <stdio.h>
+
+function(int x) {
+    return x + 5;
+}
+
+int main(void) {
+    int result;
+    result = function(5);
+    printf("result: %d\r\n", result);
+    return 0;
+}
+----
+
+Build & run with
+[source,bash]
+----
+$ gcc -std=c89 main.c && ./a.out
+----

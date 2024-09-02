@@ -1,0 +1,47 @@
+= constexpr
+
+The `constexpr` keyword, originally introduced in {cpp}, has been adopted into C starting with the C23 standard.
+
+== TL;DR
+In C23, `constexpr` can only be applied to variables, making it a type-safe replacement for #define constants, with guaranteed compile-time evaluation.
+
+In {cpp}, `constexpr` is much more versatile, allowing functions and constructors to be evaluated at compile-time, enabling powerful optimizations and reduced runtime computation.
+
+== C23
+In C23, `constexpr` is a new keyword that can be applied only to variables (also referred to as objects in the standard). The primary purpose of `constexpr` in C is to guarantee that a variable's value is a constant expression, evaluated at compile-time. This makes `constexpr` in C a safer and more robust alternative to traditional #define macros for defining constants.
+
+. Compile-Time Evaluation: The value assigned to a `constexpr` variable must be a constant expression that the compiler can evaluate at compile-time.
+. Replacement for #define: `constexpr` provides a better alternative to #define for defining constant values, offering type safety and scope rules consistent with other variables.
+. No Function Support: Unlike in {cpp}, `constexpr` in C23 does not apply to functions. This means you cannot use `constexpr` to create compile-time evaluable functions, limiting its use to defining constant variables.
+
+.Example in C
+[source,c]
+----
+constexpr int MAX_SIZE = 100;
+
+int array[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.
+----
+In this example, `MAX_SIZE` is a constant expression, and the compiler ensures that its value is available at compile-time.
+
+== {cpp}
+In {cpp}, `constexpr` is much more versatile and powerful. Introduced in {cpp}11 and extended in later standards, `constexpr` can be applied to both variables and functions, allowing for more extensive compile-time evaluation and optimization.
+
+. Compile-Time Function Evaluation: In {cpp}, `constexpr` can be applied to functions, allowing them to be evaluated at compile-time if their inputs are constant expressions. This enables the creation of highly efficient code by reducing runtime computation.
+. Versatile Use: `constexpr` can be used for variables, functions, and constructors, making it a critical tool for writing efficient and optimized code.
+. Constant Expression Enforcement: A `constexpr` function or variable must be evaluated at compile-time if possible, which can lead to significant optimizations, especially in performance-critical code like embedded systems.
+
+.Example in {cpp}
+[source,c++]
+----
+constexpr int square(int x) {
+    return x * x;
+}
+
+constexpr int result = square(10);  // result is evaluated at compile-time.
+
+int array[result];  // The size of the array is determined at compile-time.
+----
+In this example, the `square` function is evaluated at compile-time, and result becomes a compile-time constant. If `square` is always used with `constexpr` values, the function may be excluded from the final binary since there's no need to call it at runtime.
+
+== Why It Matters
+While C23's `constexpr` provides a safer way to define constants, {cpp} offers far more flexibility and power, particularly in embedded systems where compile-time computation can significantly reduce resource usage.

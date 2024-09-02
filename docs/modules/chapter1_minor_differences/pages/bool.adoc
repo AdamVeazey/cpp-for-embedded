@@ -1,0 +1,36 @@
+= bool
+
+== TL;DR
+bool is a built-in type in {cpp}, there is no need to `#include <stdbool.h>`
+
+== Key Points
+- **Built-In Type**: `bool` is part of the core {cpp} language, so there's no need to include additional headers to use it.
+- **Values**: The `bool` type can only hold `true` or `false`, which are also keywords in {cpp}.
+- **Standard Behavior**: {cpp} provides standard behavior for boolean types, ensuring consistency across different implementations.
+
+== Boolean literals
+
+`true` and `false` are the way to write a literal bool. They are not macros, they are keywords in {cpp}.
+
+[source,c++,indent=0]
+----
+if( true ) {
+    // ...
+}
+
+if( !false ) {
+    // ...
+}
+----
+
+== Implicit conversion
+{cpp} does allow for implicit conversion to and from bool. Any non-zero integer is converted to `true` and the integer value 0 is converted to `false`.
+
+- `true`
+    * `int` -> `bool` Any integer with a non-zero value
+    * `bool` -> `int` Converts to the value 1
+- `false`
+    * `int` -> `bool` An integer with a value of zero
+    * `bool` -> `int` Converts to the value 0
+
+NOTE: `int` could be replaced with any of the variations in <cstdint>

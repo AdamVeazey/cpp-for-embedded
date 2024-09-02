@@ -1,0 +1,2 @@
+= Chapter 1: Minor Differences
+This chapter goes over many miscellaneous differences between C and C++. Many of these topics are very short. This is not an exhaustive list, but does include a bunch of little things that add up over time.

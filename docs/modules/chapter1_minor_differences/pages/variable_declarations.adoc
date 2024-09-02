@@ -1,0 +1,41 @@
+= Variable Declarations
+
+== TL;DR
+{cpp} and C standards after C89 allow variable declarations at any point in a block, whereas C89 requires all variables to be declared at the beginning of a block.
+
+== What?
+
+In C89, variables must be declared at the beginning of a block before any executable statements. This is known as block scope.
+
+In C99 and later versions of C, and in {cpp}, variables can be declared anywhere within a block, not just at the beginning.
+
+== Why?
+The modern languages allow for more flexible and readable code, as variables can be declared closer to their point of use. Tightening the lifetime of variables is a general concept that will lead to better memory efficiency, as you won't have variables exist in memory for longer than they're actually needed.
+
+== Comparison
+
+[source,c++,indent=0]
+----
+void c89() {
+    int a;
+    int b;
+    int i;
+    a = 5;
+    for( i = 0; i < a; i++ ) {
+        /* ... */
+    }
+    b = a + 10;
+}
+
+void modern() {
+    int a = 5;
+    for( int i = 0; i < a; i++ ) {
+        // ...
+    }
+    int b = a + 10;
+}
+----
+
+In the c89 function, all three variables (`a`, `b`, and i) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.
+
+In the modern function, the variable `i` is declared within the for loop, so its scope is limited to the loop. After the loop ends, the memory used by `i` can be reclaimed. This allows the space previously occupied by `i` to be reused for variable `b`, potentially leading to more efficient memory usage.

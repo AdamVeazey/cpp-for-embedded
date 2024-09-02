@@ -1,0 +1,8 @@
+* xref:index.adoc[Chapter 1: Minor Differences]
+** xref:implicit_int_return.adoc[Implicit Return Type]
+** xref:variable_declarations.adoc[Variable Declarations]
+** xref:empty_parameter_list.adoc[Empty Parameter List]
+** xref:bool.adoc[bool]
+** xref:const_behavior.adoc[const Keyword Behavior]
+** xref:typecasting.adoc[Typecasting]
+** xref:constexpr.adoc[constexpr]

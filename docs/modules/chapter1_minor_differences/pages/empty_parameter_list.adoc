@@ -1,0 +1,16 @@
+= Empty Parameter List
+
+[source,c++,indent=0]
+----
+void foo(void);
+void bar();
+----
+
+== TL;DR In {cpp}:
+Both `foo(void)` and `bar()` are explicitly specified to take zero arguments.
+
+== In C:
+* `foo(void)` explicitly declares a function that takes no arguments.
+* `bar()` leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function's definition. It is up to the programmer to call the function with the correct number and types of arguments.
+* `bar()` does **not** have a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.
+

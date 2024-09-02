@@ -1,0 +1,83 @@
+= Typecasting
+
+== TL;DR
+{cpp} provides four specific type conversion operators to ensure that conversions are done safely and explicitly. These are:
+
+* `static_cast`
+* `dynamic_cast`
+* `const_cast`
+* `reinterpret_cast`
+
+The two most commonly used of these are `static_cast` and `reinterpret_cast`
+
+IMPORTANT: Casting with `void*` is also different in {cpp}
+
+== C-style casts
+C-style casts are still available in {cpp} for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. {cpp}'s specific cast operators are preferred because they explicitly convey the programmer's intent and are enforced by the compiler.
+
+== static_cast
+Used for standard type conversions that are known at compile time. It can perform implicit conversions and is often used for conversions between related types, such as between `int32_t` and `uint32_t`.
+
+.Example
+[source,c++]
+----
+size_t len = 10;
+for( int i = 0; i < static_cast<int>(len); ++i ) {
+    // ...
+}
+----
+This shows the programmer's intent to cast a `size_t` to an `int`, likely aware that len is smaller than the max value of an `int`.
+
+== dynamic_cast
+Used for safe downcasting in polymorphic class hierarchies. It checks the validity of the cast at runtime and returns `nullptr` if the cast is not valid. It is used primarily with pointers or references to base class objects when working with inheritance and virtual functions.
+
+.Example
+[source,c++]
+----
+class Base { virtual void foo() {} };
+class Derived : public Base { void foo() override {} };
+
+Base* b = new Derived;
+Derived* d = dynamic_cast<Derived*>(b); // Safely cast Base* to Derived*
+if (d) {
+    // Successful cast
+} else {
+    // Cast failed
+}
+----
+
+NOTE: This type of cast is rarely used
+
+== const_cast
+Used to add or remove `const` or `volatile` qualifiers from a variable. It can be useful when you need to change the constness of an object, but it should be used with caution. Removing `const` from a variable that was originally defined as `const` results in undefined behavior if you attempt to modify it.
+
+.Example
+[source, c++]
+----
+const char* s = "now";
+char* nonConstS = const_cast<char*>(s);
+*nonConstS = 'w'; // undefined behavior!
+----
+
+WARNING: Since undefined behavior has occurred, the compiler is free to do absolutely anything. For GCC, it is likely to ignore the attempted write at all optimization levels.
+
+TIP: Maybe you need to do this for use with a non-const-correct C library function that takes a `char*`, but that function doesn't actually mutate the data pointed at.
+
+== reinterpret_cast
+Used for low-level casting that is not type-safe. It can cast between unrelated types, such as casting a pointer to an integer or vice versa. This cast is often used for cases where you need to treat a block of memory as a different type, such as when dealing with memory-mapped hardware registers.
+
+WARNING: Use `reinterpret_cast` with caution, as it can lead to undefined behavior if the casted types are not compatible.
+
+.Example
+[source,c++]
+----
+uintptr_t address = 0x1234; // value from datasheet
+struct Peripheral {
+    volatile int reg0;
+};
+Peripheral* reg = reinterpret_cast<Peripheral*>(address); // Cast integer to pointer
+----
+
+NOTE: Use `reinterpret_cast` with caution, as it can lead to undefined behavior if the casted types are not compatible.
+
+TIP: `reinterpret_cast` is also useful for casting between `void*` and a real type when working with C APIs.
