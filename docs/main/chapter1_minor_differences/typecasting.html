@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Typecasting :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/typecasting.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://adamveazey.github.io/cpp-for-embedded/docs/main">C++ For Embedded C Developers</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">C++ For Embedded C Developers</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bool.html">Bool</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="const_behavior.html">const Keyword Behavior</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="implicit_int_return.html">Implicit Return</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter1_minor_differences:inline_functions.adoc">Inline Functions</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="typecasting.html">Typecasting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#chapter2_major_differences:index.adoc">Chapter 2: Major Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:references.adoc">References</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:namespaces.adoc">Namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:overloads.adoc">Overloads</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:enum_type.adoc">Enum Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:struct.adoc">Structs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:dynamic_memory.adoc">Dynamic Memory</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">C++ For Embedded C Developers</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">C++ For Embedded C Developers</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">C++ For Embedded C Developers</a></li>
+    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
+    <li><a href="typecasting.html">Typecasting</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/typecasting.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Typecasting</h1>
+<div class="sect1">
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>C&#43;&#43; provides four specific type conversion operators to ensure that conversions are done safely and explicitly. These are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>static_cast</code></p>
+</li>
+<li>
+<p><code>dynamic_cast</code></p>
+</li>
+<li>
+<p><code>const_cast</code></p>
+</li>
+<li>
+<p><code>reinterpret_cast</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The two most commonly used of these are <code>static_cast</code> and <code>reinterpret_cast</code></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Casting with <code>void*</code> is also different in C&#43;&#43;
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_style_casts"><a class="anchor" href="#_c_style_casts"></a>C-style casts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>C-style casts are still available in C&#43;&#43; for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. C&#43;&#43;'s specific cast operators are preferred because they explicitly convey the programmer&#8217;s intent and are enforced by the compiler.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_static_cast"><a class="anchor" href="#_static_cast"></a>static_cast</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Used for standard type conversions that are known at compile time. It can perform implicit conversions and is often used for conversions between related types, such as between <code>int32_t</code> and <code>uint32_t</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">size_t len = 10;
+for( int i = 0; i &lt; static_cast&lt;int&gt;(len); ++i ) {
+    // ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This shows the programmer&#8217;s intent to cast a <code>size_t</code> to an <code>int</code>, likely aware that len is smaller than the max value of an <code>int</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dynamic_cast"><a class="anchor" href="#_dynamic_cast"></a>dynamic_cast</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Used for safe downcasting in polymorphic class hierarchies. It checks the validity of the cast at runtime and returns <code>nullptr</code> if the cast is not valid. It is used primarily with pointers or references to base class objects when working with inheritance and virtual functions.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">class Base { virtual void foo() {} };
+class Derived : public Base { void foo() override {} };
+
+Base* b = new Derived;
+Derived* d = dynamic_cast&lt;Derived*&gt;(b); // Safely cast Base* to Derived*
+if (d) {
+    // Successful cast
+} else {
+    // Cast failed
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This type of cast is rarely used
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_const_cast"><a class="anchor" href="#_const_cast"></a>const_cast</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Used to add or remove <code>const</code> or <code>volatile</code> qualifiers from a variable. It can be useful when you need to change the constness of an object, but it should be used with caution. Removing <code>const</code> from a variable that was originally defined as <code>const</code> results in undefined behavior if you attempt to modify it.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">const char* s = "now";
+char* nonConstS = const_cast&lt;char*&gt;(s);
+*nonConstS = 'w'; // undefined behavior!</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Since undefined behavior has occurred, the compiler is free to do absolutely anything. For GCC, it is likely to ignore the attempted write at all optimization levels.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Maybe you need to do this for use with a non-const-correct C library function that takes a <code>char*</code>, but that function doesn&#8217;t actually mutate the data pointed at.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reinterpret_cast"><a class="anchor" href="#_reinterpret_cast"></a>reinterpret_cast</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Used for low-level casting that is not type-safe. It can cast between unrelated types, such as casting a pointer to an integer or vice versa. This cast is often used for cases where you need to treat a block of memory as a different type, such as when dealing with memory-mapped hardware registers.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Use <code>reinterpret_cast</code> with caution, as it can lead to undefined behavior if the casted types are not compatible.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">uintptr_t address = 0x1234; // value from datasheet
+struct Peripheral {
+    volatile int reg0;
+};
+Peripheral* reg = reinterpret_cast&lt;Peripheral*&gt;(address); // Cast integer to pointer</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Use <code>reinterpret_cast</code> with caution, as it can lead to undefined behavior if the casted types are not compatible.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<code>reinterpret_cast</code> is also useful for casting between <code>void*</code> and a real type when working with C APIs.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>const Behavior :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/const_behavior.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://adamveazey.github.io/cpp-for-embedded/docs/main">C++ For Embedded C Developers</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">C++ For Embedded C Developers</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bool.html">Bool</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="const_behavior.html">const Keyword Behavior</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="implicit_int_return.html">Implicit Return</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter1_minor_differences:inline_functions.adoc">Inline Functions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="typecasting.html">Typecasting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#chapter2_major_differences:index.adoc">Chapter 2: Major Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:references.adoc">References</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:namespaces.adoc">Namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:overloads.adoc">Overloads</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:enum_type.adoc">Enum Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:struct.adoc">Structs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:dynamic_memory.adoc">Dynamic Memory</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">C++ For Embedded C Developers</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">C++ For Embedded C Developers</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">C++ For Embedded C Developers</a></li>
+    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
+    <li><a href="const_behavior.html">const Keyword Behavior</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/const_behavior.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">const Behavior</h1>
+<div class="sect1">
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C, <code>const</code> is mostly used to define read-only variables and pointers. It is often underutilized in practice. The most common usage scenarios might include marking lookup tables as <code>const</code> or string literals as <code>const char*</code>.</p>
+</div>
+<div class="paragraph">
+<p>In C&#43;&#43;, <code>const</code> is more widely applied due to the emphasis on const-correctness, which extends to variables, pointers, and member functions. Const-correctness helps ensure that the programmer (and compiler) can clearly distinguish between mutable and immutable parts of the program.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_const_in_c"><a class="anchor" href="#_const_in_c"></a>const in C</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Read-only variables: Once a <code>const</code> variable is initialized, its value cannot be changed. <code>const int x = 100;</code></p>
+</li>
+<li>
+<p>Pointers: <code>const</code> can be used to specify the pointer itself is read-only, or the thing it&#8217;s pointing to is read-only, or both.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>const char* strLiteral = "literal";</code> - pointer can change, data can&#8217;t</p>
+</li>
+<li>
+<p><code>char* const fixedPtr = mutableString;</code> - pointer can&#8217;t change, data can</p>
+</li>
+<li>
+<p><code>const char* const fixed = "literal";</code> - pointer can&#8217;t change, data also can&#8217;t</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Linkage: By default, file scoped const variables in C have internal linkage, meaning they are only accessible within the file they are declared in unless <code>extern</code> is used.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_const_in_c_2"><a class="anchor" href="#_const_in_c_2"></a>const in C&#43;&#43;</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Read-only variables: just like in C</p>
+</li>
+<li>
+<p>Pointers: just like in C</p>
+</li>
+<li>
+<p>Member Functions: A member function can be declared as const, indicating that it does not modify the state of the object. For example, <code>int getValue() const;</code> ensures that calling <code>getValue()</code> will not change any member variables of the class.<br>
+.Example</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>class Foo {
+public:
+    void nonMutatingFunction() const;
+    void mutatingFunction();
+};
+
+const Foo values[5];
+
+for( const auto&amp; v : values ) {
+    v.nonMutatingFunction(); // v is a constant reference to a Foo object
+    v.mutatingFunction(); // this will not compile as mutatingFunction could change v
+}</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>Const-Correctness: C&#43;&#43; emphasizes the concept of const-correctness, which means using <code>const</code> wherever possible to prevent unintended modifications. This practice leads to safer and more predictable code.</p>
+</li>
+<li>
+<p>Linkage: Unlike in C, file scoped <code>const</code> variables in C&#43;&#43; have external linkage by default, allowing them to be shared across multiple translation units unless explicitly declared as static.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Const variables with external linkage can be declared in a header file and defined in a single source file, making them accessible across multiple files.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why"><a class="anchor" href="#_why"></a>Why?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The more extensive use of const in C&#43;&#43; encourages safer programming practices by reducing the likelihood of unintended side effects and making the code&#8217;s intentions clearer. It also gives the compiler more information to enforce constness in situations you might not realize involve a const variable, and allows the compiler to make greater optimizations. The use of const in C&#43;&#43; is more pervasive and integral to writing safe, const-correct code.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

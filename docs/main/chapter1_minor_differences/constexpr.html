@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>constexpr :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/constexpr.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://adamveazey.github.io/cpp-for-embedded/docs/main">C++ For Embedded C Developers</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">C++ For Embedded C Developers</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bool.html">Bool</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="const_behavior.html">const Keyword Behavior</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="implicit_int_return.html">Implicit Return</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter1_minor_differences:inline_functions.adoc">Inline Functions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="typecasting.html">Typecasting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#chapter2_major_differences:index.adoc">Chapter 2: Major Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:references.adoc">References</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:namespaces.adoc">Namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:overloads.adoc">Overloads</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:enum_type.adoc">Enum Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:struct.adoc">Structs</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chapter2_major_differences:dynamic_memory.adoc">Dynamic Memory</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">C++ For Embedded C Developers</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">C++ For Embedded C Developers</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">C++ For Embedded C Developers</a></li>
+    <li><a href="constexpr.html">constexpr</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/constexpr.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">constexpr</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>constexpr</code> keyword, originally introduced in C&#43;&#43;, has been adopted into C starting with the C23 standard.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C23, <code>constexpr</code> can only be applied to variables, making it a type-safe replacement for #define constants, with guaranteed compile-time evaluation.</p>
+</div>
+<div class="paragraph">
+<p>In C&#43;&#43;, <code>constexpr</code> is much more versatile, allowing functions and constructors to be evaluated at compile-time, enabling powerful optimizations and reduced runtime computation.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c23"><a class="anchor" href="#_c23"></a>C23</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C23, <code>constexpr</code> is a new keyword that can be applied only to variables (also referred to as objects in the standard). The primary purpose of <code>constexpr</code> in C is to guarantee that a variable&#8217;s value is a constant expression, evaluated at compile-time. This makes <code>constexpr</code> in C a safer and more robust alternative to traditional #define macros for defining constants.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Compile-Time Evaluation: The value assigned to a <code>constexpr</code> variable must be a constant expression that the compiler can evaluate at compile-time.</p>
+</li>
+<li>
+<p>Replacement for #define: <code>constexpr</code> provides a better alternative to #define for defining constant values, offering type safety and scope rules consistent with other variables.</p>
+</li>
+<li>
+<p>No Function Support: Unlike in C&#43;&#43;, <code>constexpr</code> in C23 does not apply to functions. This means you cannot use <code>constexpr</code> to create compile-time evaluable functions, limiting its use to defining constant variables.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">Example in C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">constexpr int MAX_SIZE = 100;
+
+int array[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>MAX_SIZE</code> is a constant expression, and the compiler ensures that its value is available at compile-time.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c"><a class="anchor" href="#_c"></a>C&#43;&#43;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C&#43;&#43;, <code>constexpr</code> is much more versatile and powerful. Introduced in C&#43;&#43;11 and extended in later standards, <code>constexpr</code> can be applied to both variables and functions, allowing for more extensive compile-time evaluation and optimization.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Compile-Time Function Evaluation: In C&#43;&#43;, <code>constexpr</code> can be applied to functions, allowing them to be evaluated at compile-time if their inputs are constant expressions. This enables the creation of highly efficient code by reducing runtime computation.</p>
+</li>
+<li>
+<p>Versatile Use: <code>constexpr</code> can be used for variables, functions, and constructors, making it a critical tool for writing efficient and optimized code.</p>
+</li>
+<li>
+<p>Constant Expression Enforcement: A <code>constexpr</code> function or variable must be evaluated at compile-time if possible, which can lead to significant optimizations, especially in performance-critical code like embedded systems.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">Example in C&#43;&#43;</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">constexpr int square(int x) {
+    return x * x;
+}
+
+constexpr int result = square(10);  // result is evaluated at compile-time.
+
+int array[result];  // The size of the array is determined at compile-time.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the <code>square</code> function is evaluated at compile-time, and result becomes a compile-time constant. If <code>square</code> is always used with <code>constexpr</code> values, the function may be excluded from the final binary since there&#8217;s no need to call it at runtime.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_it_matters"><a class="anchor" href="#_why_it_matters"></a>Why It Matters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While C23&#8217;s <code>constexpr</code> provides a safer way to define constants, C&#43;&#43; offers far more flexibility and power, particularly in embedded systems where compile-time computation can significantly reduce resource usage.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
