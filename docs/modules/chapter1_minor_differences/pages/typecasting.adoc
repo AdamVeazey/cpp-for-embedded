@@ -10,7 +10,7 @@
 
 The two most commonly used of these are `static_cast` and `reinterpret_cast`
 
-IMPORTANT: Casting with `void*` is also different in {cpp}
+IMPORTANT: There is no implicit cast from `void*` in {cpp}. You have to use a `static_cast` to use a `void*` pointer.
 
 == C-style casts
 C-style casts are still available in {cpp} for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. {cpp}'s specific cast operators are preferred because they explicitly convey the programmer's intent and are enforced by the compiler.
