@@ -6,11 +6,14 @@ void foo(void);
 void bar();
 ----
 
-== TL;DR In {cpp}:
-In {cpp}, it's recommended to use `()` over `(void)` for functions with zero arguments. Both `foo(void)` and `bar()` explicitly indicate zero arguments, but `()` is preferred for simplicity and consistency.
+== TL;DR
+Use `()` over `(void)` for function declarations with zero arguments.
 
-== In C:
-* `foo(void)` explicitly declares a function that takes no arguments.
-* `bar()` leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function's definition. It is up to the programmer to call the function with the correct number and types of arguments.
-* `bar()` does **not** have a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.
+== C
+* `void foo(void);` explicitly declares a function that takes no arguments.
+* `void bar();` leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function's definition. It is up to the programmer to call the function with the correct number and types of arguments.
+* `void bar();` does **not** have a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.
 
+== {cpp}
+* `void foo(void);` explicitly declares a function that takes no arguments
+* `void bar();` explicitly declares a function that takes no arguments
