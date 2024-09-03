@@ -57,7 +57,7 @@ In both C and {cpp}, the compiler assumes that your code does not contain undefi
 [source,c++]
 ----
 uint32_t myValue = 0x02;
-if( myValue & (0x1 | 0x2) ) {
+if( (myValue & (0x1 | 0x2)) == (0x1 | 0x2) ) {
     // both happened
 }
 else if( myValue & 0x1 ) {
