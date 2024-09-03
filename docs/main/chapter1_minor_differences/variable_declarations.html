@@ -165,11 +165,54 @@
 </aside>
 <article class="doc">
 <h1 class="page">Variable Declarations</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void c89(void) {
+    int a;
+    int b;
+    int i;
+    a = 5;
+    for( i = 0; i &lt; a; i++ ) {
+        /* ... */
+    }
+    b = a + 10;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>VS</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void modern() {
+    int a = 5;
+    for( int i = 0; i &lt; a; i++ ) {
+        // ...
+    }
+    int b = a + 10;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>C&#43;&#43; and C standards after C89 allow variable declarations at any point in a block, whereas C89 requires all variables to be declared at the beginning of a block.</p>
+<p>In modern C and C&#43;&#43;, declaring variables as close as possible to their point of use improves readability, reduces the chance of errors, and allows for more efficient memory usage.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_comparison"><a class="anchor" href="#_comparison"></a>Comparison</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the c89 function, all three variables (<code>a</code>, <code>b</code>, and <code>i</code>) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.</p>
+</div>
+<div class="paragraph">
+<p>In the modern function, the variable <code>i</code> is declared within the for loop, limiting its scope to the loop. After the loop ends, the memory used by <code>i</code> is no longer needed, potentially allowing the compiler to reuse that space for variable <code>b</code>, which can lead to more efficient memory usage.</p>
 </div>
 </div>
 </div>
@@ -177,7 +220,7 @@
 <h2 id="_what"><a class="anchor" href="#_what"></a>What?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C89, variables must be declared at the beginning of a block before any executable statements. This is known as block scope.</p>
+<p>In C89, variables <strong><em>must</em></strong> be declared at the beginning of a block before any executable statements.</p>
 </div>
 <div class="paragraph">
 <p>In C99 and later versions of C, and in C&#43;&#43;, variables can be declared anywhere within a block, not just at the beginning.</p>
@@ -187,41 +230,24 @@
 <div class="sect1">
 <h2 id="_why"><a class="anchor" href="#_why"></a>Why?</h2>
 <div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You&#8217;re less likely to need to scroll up/down to see the type of a variable, making the code easier to read and maintain</p>
+</li>
+<li>
+<p>Declaring variables close to their point of use helps take advantage of <a href="https://en.cppreference.com/w/cpp/language/copy_elision">return value optimization</a> and other compiler optimizations when returning large objects<br>
+<code>Data data = parseData();</code></p>
+</li>
+<li>
+<p>You avoid wasting stack space on variables that don&#8217;t need to exist for the entire block<br>
+<code>for( int i = 0; i &lt; 5; ++i ) {}</code><br>
+<code>i</code> doesn&#8217;t need to live outside of the scope of this <code>for</code> loop</p>
+</li>
+</ol>
+</div>
 <div class="paragraph">
 <p>The modern languages allow for more flexible and readable code, as variables can be declared closer to their point of use. Tightening the lifetime of variables is a general concept that will lead to better memory efficiency, as you won&#8217;t have variables exist in memory for longer than they&#8217;re actually needed.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_comparison"><a class="anchor" href="#_comparison"></a>Comparison</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void c89() {
-    int a;
-    int b;
-    int i;
-    a = 5;
-    for( i = 0; i &lt; a; i++ ) {
-        /* ... */
-    }
-    b = a + 10;
-}
-
-void modern() {
-    int a = 5;
-    for( int i = 0; i &lt; a; i++ ) {
-        // ...
-    }
-    int b = a + 10;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In the c89 function, all three variables (<code>a</code>, <code>b</code>, and i) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.</p>
-</div>
-<div class="paragraph">
-<p>In the modern function, the variable <code>i</code> is declared within the for loop, so its scope is limited to the loop. After the loop ends, the memory used by <code>i</code> can be reclaimed. This allows the space previously occupied by <code>i</code> to be reused for variable <code>b</code>, potentially leading to more efficient memory usage.</p>
 </div>
 </div>
 </div>
