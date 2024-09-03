@@ -1,22 +1,8 @@
 = Variable Declarations
 
-== TL;DR
-{cpp} and C standards after C89 allow variable declarations at any point in a block, whereas C89 requires all variables to be declared at the beginning of a block.
-
-== What?
-
-In C89, variables must be declared at the beginning of a block before any executable statements. This is known as block scope.
-
-In C99 and later versions of C, and in {cpp}, variables can be declared anywhere within a block, not just at the beginning.
-
-== Why?
-The modern languages allow for more flexible and readable code, as variables can be declared closer to their point of use. Tightening the lifetime of variables is a general concept that will lead to better memory efficiency, as you won't have variables exist in memory for longer than they're actually needed.
-
-== Comparison
-
 [source,c++,indent=0]
 ----
-void c89() {
+void c89(void) {
     int a;
     int b;
     int i;
@@ -26,7 +12,10 @@ void c89() {
     }
     b = a + 10;
 }
-
+----
+VS
+[source,c++,indent=0]
+----
 void modern() {
     int a = 5;
     for( int i = 0; i < a; i++ ) {
@@ -36,6 +25,25 @@ void modern() {
 }
 ----
 
-In the c89 function, all three variables (`a`, `b`, and i) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.
+== TL;DR
+In modern C and {cpp}, declaring variables as close as possible to their point of use improves readability, reduces the chance of errors, and allows for more efficient memory usage.
 
-In the modern function, the variable `i` is declared within the for loop, so its scope is limited to the loop. After the loop ends, the memory used by `i` can be reclaimed. This allows the space previously occupied by `i` to be reused for variable `b`, potentially leading to more efficient memory usage.
+== Comparison
+In the c89 function, all three variables (`a`, `b`, and `i`) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.
+
+In the modern function, the variable `i` is declared within the for loop, limiting its scope to the loop. After the loop ends, the memory used by `i` is no longer needed, potentially allowing the compiler to reuse that space for variable `b`, which can lead to more efficient memory usage.
+
+== What?
+In C89, variables **__must__** be declared at the beginning of a block before any executable statements.
+
+In C99 and later versions of C, and in {cpp}, variables can be declared anywhere within a block, not just at the beginning.
+
+== Why?
+. You're less likely to need to scroll up/down to see the type of a variable, making the code easier to read and maintain
+. Declaring variables close to their point of use helps take advantage of link:https://en.cppreference.com/w/cpp/language/copy_elision[return value optimization] and other compiler optimizations when returning large objects +
+`Data data = parseData();`
+. You avoid wasting stack space on variables that don't need to exist for the entire block +
+`for( int i = 0; i < 5; ++i ) {}` +
+`i` doesn't need to live outside of the scope of this `for` loop
+
+The modern languages allow for more flexible and readable code, as variables can be declared closer to their point of use. Tightening the lifetime of variables is a general concept that will lead to better memory efficiency, as you won't have variables exist in memory for longer than they're actually needed.
