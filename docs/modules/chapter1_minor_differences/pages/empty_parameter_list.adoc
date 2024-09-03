@@ -7,7 +7,7 @@ void bar();
 ----
 
 == TL;DR In {cpp}:
-Both `foo(void)` and `bar()` are explicitly specified to take zero arguments.
+In {cpp}, it's recommended to use `()` over `(void)` for functions with zero arguments. Both `foo(void)` and `bar()` explicitly indicate zero arguments, but `()` is preferred for simplicity and consistency.
 
 == In C:
 * `foo(void)` explicitly declares a function that takes no arguments.
