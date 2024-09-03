@@ -165,45 +165,17 @@
 </aside>
 <article class="doc">
 <h1 class="page">bool</h1>
-<div class="sect1">
-<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>bool is a built-in type in C&#43;&#43;, there is no need to <code>#include &lt;stdbool.h&gt;</code></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_key_points"><a class="anchor" href="#_key_points"></a>Key Points</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Built-In Type</strong>: <code>bool</code> is part of the core C&#43;&#43; language, so there&#8217;s no need to include additional headers to use it.</p>
-</li>
-<li>
-<p><strong>Values</strong>: The <code>bool</code> type can only hold <code>true</code> or <code>false</code>, which are also keywords in C&#43;&#43;.</p>
-</li>
-<li>
-<p><strong>Standard Behavior</strong>: C&#43;&#43; provides standard behavior for boolean types, ensuring consistency across different implementations.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_boolean_literals"><a class="anchor" href="#_boolean_literals"></a>Boolean literals</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><code>true</code> and <code>false</code> are the way to write a literal bool. They are not macros, they are keywords in C&#43;&#43;.</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">if( true ) {
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">bool isTrue = true;
+if( isTrue ) {
     // ...
 }
 
-if( !false ) {
+bool isFalse = false;
+if( !isFalse ) {
     // ...
 }</code></pre>
 </div>
@@ -211,35 +183,79 @@ if( !false ) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implicit_conversion"><a class="anchor" href="#_implicit_conversion"></a>Implicit conversion</h2>
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>C&#43;&#43; does allow for implicit conversion to and from bool. Any non-zero integer is converted to <code>true</code> and the integer value 0 is converted to <code>false</code>.</p>
+<p><code>bool</code> is a built-in type in C&#43;&#43;, with <code>true</code> and <code>false</code> as keywords. Unlike in C, there&#8217;s no need to <code>#include &lt;stdbool.h&gt;</code>. A <code>bool</code> variable can only be <code>true</code> or <code>false</code>, eliminating ambiguity.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_does_this_matter"><a class="anchor" href="#_why_does_this_matter"></a>Why does this matter?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C you might see code like</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">bool isCondition = 0;
+if( isCondition == true ) {}</code></pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>true</code></p>
+<p>Before C99 introduced <code>_Bool</code> (and <code>stdbool.h</code>), C did not have a dedicated boolean type. As a result, using integers as stand-ins for boolean logic was common, which increased the likelihood of implicit conversion issues.</p>
+</li>
+<li>
+<p>MISRA-C treats logical/relational operators as if they return a <code>bool</code> type and generally assumes that C has a distinct <code>bool</code> type separate from integers. This practice encourages explicit comparisons to avoid ambiguity in the programmer&#8217;s intentions.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implicit_conversion"><a class="anchor" href="#_implicit_conversion"></a>Implicit conversion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>C&#43;&#43; does allow for implicit conversion to and from <code>bool</code>. Any non-zero integer is converted to <code>true</code> and the integer value 0 is converted to <code>false</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+MISRA-C&#43;&#43; does not require an explicit use of a logical/relational operator in an <code>if</code> statement.
+</td>
+</tr>
+</table>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>int</code> &#8594; <code>bool</code> Any integer with a non-zero value</p>
+<p><code>int</code> &#8594; <code>bool</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>true</code> = Any integer with a non-zero value</p>
 </li>
 <li>
-<p><code>bool</code> &#8594; <code>int</code> Converts to the value 1</p>
+<p><code>false</code> = 0</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><code>false</code></p>
+<p><code>bool</code> &#8594; <code>int</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>int</code> &#8594; <code>bool</code> An integer with a value of zero</p>
+<p><code>true</code> = 1</p>
 </li>
 <li>
-<p><code>bool</code> &#8594; <code>int</code> Converts to the value 0</p>
+<p><code>false</code> = 0</p>
 </li>
 </ul>
 </div>
