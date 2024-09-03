@@ -8,12 +8,12 @@ function(int x) {
 ----
 
 == TL;DR
+Nobody writes code like this anymore.
+
 {cpp} and C standards after C89 do not support implicit return types. Functions must explicitly specify their return type.
 
 == What?
-In C89, if a function did not specify a return type, it was implicitly treated as returning int. This is no longer the case in modern C (post-C99) and {cpp} standards, where all functions must explicitly declare their return type.
-
-In C99 and later, including {cpp}, if you omit the return type, it results in a compile-time error. This change ensures clearer and more predictable code behavior.
+In C89, if a function didn't specify a return type, it was implicitly treated as returning `int`. This behavior was a holdover from even earlier versions of C, where `void` wasn't a recognized type, so all functions defaulted to returning `int`. However, starting with C99 and in modern {cpp} standards, omitting the return type results in a compile-time error, enforcing clearer and more predictable code by requiring explicit return type declarations.
 
 == C89 Example
 The following is a valid C89 program
