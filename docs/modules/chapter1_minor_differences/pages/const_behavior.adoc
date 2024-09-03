@@ -1,28 +1,55 @@
 = const Behavior
 
+.C
+[source,c,indent=0]
+----
+const int maxItems = 100;       // Read-only variable
+const char* greeting = "Hello"; // Pointer to constant data
+
+void foo() {
+    const int limit = 10;       // Local constant
+    // ...
+}
+----
+.{cpp}
+[source,c++,indent=0]
+----
+const int maxItems = 100;       // Read-only variable
+const char* greeting = "Hello"; // Pointer to constant data
+
+class MyClass {
+public:
+    void display() const;       // Const member function
+};
+
+void foo() {
+    const MyClass obj;          // Local constant
+    obj.display();              // Calling a const member function
+}
+----
+
 == TL;DR
-In C, `const` is mostly used to define read-only variables and pointers. It is often underutilized in practice. The most common usage scenarios might include marking lookup tables as `const` or string literals as `const char*`.
+In C, `const` is often used for read-only variables and pointers, but its usage is limited.
 
-In {cpp}, `const` is more widely applied due to the emphasis on const-correctness, which extends to variables, pointers, and member functions. Const-correctness helps ensure that the programmer (and compiler) can clearly distinguish between mutable and immutable parts of the program.
+In {cpp}, `const` is more integral, applying to variables, pointers, and member functions, promoting link:https://isocpp.org/wiki/faq/const-correctness[const-correctness]. This means you can more precisely control which parts of your code are immutable, leading to safer, more predictable code and improved optimization opportunities.
 
-== const in C
-. Read-only variables: Once a `const` variable is initialized, its value cannot be changed. `const int x = 100;`
+== C
+. **Read-only variables:** Once a `const` variable is initialized, its value cannot be changed. For example, `const int x = 100;`
 
-. Pointers: `const` can be used to specify the pointer itself is read-only, or the thing it's pointing to is read-only, or both.
-* `const char* strLiteral = "literal";` - pointer can change, data can't
-* `char* const fixedPtr = mutableString;` - pointer can't change, data can
-* `const char* const fixed = "literal";` - pointer can't change, data also can't
+. **Pointers:** `const` can specify whether the pointer itself or the data it points to is read-only, or both:
+  * `const char* strLiteral = "literal";` - pointer can change, data can't
+  * `char* const fixedPtr = mutableString;` - pointer can't change, data can
+  * `const char* const fixed = "literal";` - pointer can't change, data also can't
 
-. Linkage: By default, file scoped const variables in C have internal linkage, meaning they are only accessible within the file they are declared in unless `extern` is used.
+. **Linkage:** By default, file-scoped `const` variables in C have internal linkage. To make them accessible across multiple files, `extern` must be used.
 
+== {cpp}
+. **Read-only variables:** Same as in C.
 
-== const in {cpp}
-. Read-only variables: just like in C
+. **Pointers:** Same as in C.
 
-. Pointers: just like in C
-
-. Member Functions: A member function can be declared as const, indicating that it does not modify the state of the object. For example, `int getValue() const;` ensures that calling `getValue()` will not change any member variables of the class. +
-.Example
+. **Member Functions:** A member function can be declared as `const`, meaning it does not modify the state of the object. For example, `int getValue() const;` ensures that calling `getValue()` will not change any member variables of the class.
++
 [source,c++]
 ----
 class Foo {
@@ -39,13 +66,12 @@ for( const auto& v : values ) {
 }
 ----
 
-[start=4]
-. Const-Correctness: {cpp} emphasizes the concept of const-correctness, which means using `const` wherever possible to prevent unintended modifications. This practice leads to safer and more predictable code.
+. **Const-Correctness:** {cpp} emphasizes using `const` wherever possible to prevent unintended modifications. This leads to safer and more predictable code.
 
-. Linkage: Unlike in C, file scoped `const` variables in {cpp} have external linkage by default, allowing them to be shared across multiple translation units unless explicitly declared as static.
+. **Linkage:** Unlike in C, file-scoped `const` variables in {cpp} have external linkage by default, allowing them to be shared across multiple translation units unless explicitly declared as `static`.
 
 NOTE: Const variables with external linkage can be declared in a header file and defined in a single source file, making them accessible across multiple files.
 
 == Why?
 
-The more extensive use of const in {cpp} encourages safer programming practices by reducing the likelihood of unintended side effects and making the code's intentions clearer. It also gives the compiler more information to enforce constness in situations you might not realize involve a const variable, and allows the compiler to make greater optimizations. The use of const in {cpp} is more pervasive and integral to writing safe, const-correct code.
+The extensive use of `const` in {cpp} encourages safer programming practices by reducing unintended side effects and clarifying code intentions. It also allows the compiler to better enforce constness and make optimizations.
