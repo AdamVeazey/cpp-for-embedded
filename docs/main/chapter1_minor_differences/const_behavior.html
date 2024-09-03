@@ -165,27 +165,60 @@
 </aside>
 <article class="doc">
 <h1 class="page">const Behavior</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">const int maxItems = 100;       // Read-only variable
+const char* greeting = "Hello"; // Pointer to constant data
+
+void foo() {
+    const int limit = 10;       // Local constant
+    // ...
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">C&#43;&#43;</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">const int maxItems = 100;       // Read-only variable
+const char* greeting = "Hello"; // Pointer to constant data
+
+class MyClass {
+public:
+    void display() const;       // Const member function
+};
+
+void foo() {
+    const MyClass obj;          // Local constant
+    obj.display();              // Calling a const member function
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C, <code>const</code> is mostly used to define read-only variables and pointers. It is often underutilized in practice. The most common usage scenarios might include marking lookup tables as <code>const</code> or string literals as <code>const char*</code>.</p>
+<p>In C, <code>const</code> is often used for read-only variables and pointers, but its usage is limited.</p>
 </div>
 <div class="paragraph">
-<p>In C&#43;&#43;, <code>const</code> is more widely applied due to the emphasis on const-correctness, which extends to variables, pointers, and member functions. Const-correctness helps ensure that the programmer (and compiler) can clearly distinguish between mutable and immutable parts of the program.</p>
+<p>In C&#43;&#43;, <code>const</code> is more integral, applying to variables, pointers, and member functions, promoting <a href="https://isocpp.org/wiki/faq/const-correctness">const-correctness</a>. This means you can more precisely control which parts of your code are immutable, leading to safer, more predictable code and improved optimization opportunities.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_const_in_c"><a class="anchor" href="#_const_in_c"></a>const in C</h2>
+<h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Read-only variables: Once a <code>const</code> variable is initialized, its value cannot be changed. <code>const int x = 100;</code></p>
+<p><strong>Read-only variables:</strong> Once a <code>const</code> variable is initialized, its value cannot be changed. For example, <code>const int x = 100;</code></p>
 </li>
 <li>
-<p>Pointers: <code>const</code> can be used to specify the pointer itself is read-only, or the thing it&#8217;s pointing to is read-only, or both.</p>
+<p><strong>Pointers:</strong> <code>const</code> can specify whether the pointer itself or the data it points to is read-only, or both:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -201,32 +234,28 @@
 </div>
 </li>
 <li>
-<p>Linkage: By default, file scoped const variables in C have internal linkage, meaning they are only accessible within the file they are declared in unless <code>extern</code> is used.</p>
+<p><strong>Linkage:</strong> By default, file-scoped <code>const</code> variables in C have internal linkage. To make them accessible across multiple files, <code>extern</code> must be used.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_const_in_c_2"><a class="anchor" href="#_const_in_c_2"></a>const in C&#43;&#43;</h2>
+<h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Read-only variables: just like in C</p>
+<p><strong>Read-only variables:</strong> Same as in C.</p>
 </li>
 <li>
-<p>Pointers: just like in C</p>
+<p><strong>Pointers:</strong> Same as in C.</p>
 </li>
 <li>
-<p>Member Functions: A member function can be declared as const, indicating that it does not modify the state of the object. For example, <code>int getValue() const;</code> ensures that calling <code>getValue()</code> will not change any member variables of the class.<br>
-.Example</p>
-</li>
-</ol>
-</div>
+<p><strong>Member Functions:</strong> A member function can be declared as <code>const</code>, meaning it does not modify the state of the object. For example, <code>int getValue() const;</code> ensures that calling <code>getValue()</code> will not change any member variables of the class.</p>
 <div class="listingblock">
 <div class="content">
-<pre>class Foo {
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">class Foo {
 public:
     void nonMutatingFunction() const;
     void mutatingFunction();
@@ -237,16 +266,15 @@ const Foo values[5];
 for( const auto&amp; v : values ) {
     v.nonMutatingFunction(); // v is a constant reference to a Foo object
     v.mutatingFunction(); // this will not compile as mutatingFunction could change v
-}</pre>
+}</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="4">
-<li>
-<p>Const-Correctness: C&#43;&#43; emphasizes the concept of const-correctness, which means using <code>const</code> wherever possible to prevent unintended modifications. This practice leads to safer and more predictable code.</p>
 </li>
 <li>
-<p>Linkage: Unlike in C, file scoped <code>const</code> variables in C&#43;&#43; have external linkage by default, allowing them to be shared across multiple translation units unless explicitly declared as static.</p>
+<p><strong>Const-Correctness:</strong> C&#43;&#43; emphasizes using <code>const</code> wherever possible to prevent unintended modifications. This leads to safer and more predictable code.</p>
+</li>
+<li>
+<p><strong>Linkage:</strong> Unlike in C, file-scoped <code>const</code> variables in C&#43;&#43; have external linkage by default, allowing them to be shared across multiple translation units unless explicitly declared as <code>static</code>.</p>
 </li>
 </ol>
 </div>
@@ -268,7 +296,7 @@ Const variables with external linkage can be declared in a header file and defin
 <h2 id="_why"><a class="anchor" href="#_why"></a>Why?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The more extensive use of const in C&#43;&#43; encourages safer programming practices by reducing the likelihood of unintended side effects and making the code&#8217;s intentions clearer. It also gives the compiler more information to enforce constness in situations you might not realize involve a const variable, and allows the compiler to make greater optimizations. The use of const in C&#43;&#43; is more pervasive and integral to writing safe, const-correct code.</p>
+<p>The extensive use of <code>const</code> in C&#43;&#43; encourages safer programming practices by reducing unintended side effects and clarifying code intentions. It also allows the compiler to better enforce constness and make optimizations.</p>
 </div>
 </div>
 </div>
