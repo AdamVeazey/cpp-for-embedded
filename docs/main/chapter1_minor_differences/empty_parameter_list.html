@@ -176,26 +176,41 @@ void bar();</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tldr_in_c"><a class="anchor" href="#_tldr_in_c"></a>TL;DR In C&#43;&#43;:</h2>
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C&#43;&#43;, it&#8217;s recommended to use <code>()</code> over <code>(void)</code> for functions with zero arguments. Both <code>foo(void)</code> and <code>bar()</code> explicitly indicate zero arguments, but <code>()</code> is preferred for simplicity and consistency.</p>
+<p>Use <code>()</code> over <code>(void)</code> for function declarations with zero arguments.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_in_c"><a class="anchor" href="#_in_c"></a>In C:</h2>
+<h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><code>foo(void)</code> explicitly declares a function that takes no arguments.</p>
+<p><code>void foo(void);</code> explicitly declares a function that takes no arguments.</p>
 </li>
 <li>
-<p><code>bar()</code> leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function&#8217;s definition. It is up to the programmer to call the function with the correct number and types of arguments.</p>
+<p><code>void bar();</code> leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function&#8217;s definition. It is up to the programmer to call the function with the correct number and types of arguments.</p>
 </li>
 <li>
-<p><code>bar()</code> does <strong>not</strong> have a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.</p>
+<p><code>void bar();</code> does <strong>not</strong> have a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>void foo(void);</code> explicitly declares a function that takes no arguments</p>
+</li>
+<li>
+<p><code>void bar();</code> explicitly declares a function that takes no arguments</p>
 </li>
 </ul>
 </div>
