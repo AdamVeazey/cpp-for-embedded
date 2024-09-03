@@ -240,7 +240,7 @@ MyType::value; // specify the scope with MyType::</code></pre>
 <div class="title">Example</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">uint32_t myValue = 0x02;
-if( myValue &amp; (0x1 | 0x2) ) {
+if( (myValue &amp; (0x1 | 0x2)) == (0x1 | 0x2) ) {
     // both happened
 }
 else if( myValue &amp; 0x1 ) {
