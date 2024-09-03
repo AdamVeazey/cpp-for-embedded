@@ -180,6 +180,9 @@
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>Nobody writes code like this anymore.</p>
+</div>
+<div class="paragraph">
 <p>C&#43;&#43; and C standards after C89 do not support implicit return types. Functions must explicitly specify their return type.</p>
 </div>
 </div>
@@ -188,10 +191,7 @@
 <h2 id="_what"><a class="anchor" href="#_what"></a>What?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C89, if a function did not specify a return type, it was implicitly treated as returning int. This is no longer the case in modern C (post-C99) and C&#43;&#43; standards, where all functions must explicitly declare their return type.</p>
-</div>
-<div class="paragraph">
-<p>In C99 and later, including C&#43;&#43;, if you omit the return type, it results in a compile-time error. This change ensures clearer and more predictable code behavior.</p>
+<p>In C89, if a function didn&#8217;t specify a return type, it was implicitly treated as returning <code>int</code>. This behavior was a holdover from even earlier versions of C, where <code>void</code> wasn&#8217;t a recognized type, so all functions defaulted to returning <code>int</code>. However, starting with C99 and in modern C&#43;&#43; standards, omitting the return type results in a compile-time error, enforcing clearer and more predictable code by requiring explicit return type declarations.</p>
 </div>
 </div>
 </div>
