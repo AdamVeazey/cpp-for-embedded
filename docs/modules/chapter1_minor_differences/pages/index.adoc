@@ -1,2 +1,8 @@
 = Chapter 1: Minor Differences
+
 This chapter goes over many miscellaneous differences between C and C++. Many of these topics are very short. This is not an exhaustive list, but does include a bunch of little things that add up over time.
+
+include::chapter1_minor_differences/nav.adoc[leveloffset=+1]
+
+[button="Next"]
+link:chapter2_major_differences/index.adoc[Chapter 2: Major Differences]

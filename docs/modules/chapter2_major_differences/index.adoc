@@ -1,0 +1,8 @@
+= Chapter 2: Major Differences
+
+This chapter explores features unique to {cpp} that are not present in C. While focusing on aspects relevant to embedded systems, it will also illustrate what equivalent C code might look like for comparison. Additionally, the chapter addresses features beneficial for broader {cpp} usage.
+
+include::chapter2_major_differences/nav.adoc[leveloffset=+1]
+
+// [button="Next"]
+// link:chapter3/index.adoc[Chapter 3: ]
