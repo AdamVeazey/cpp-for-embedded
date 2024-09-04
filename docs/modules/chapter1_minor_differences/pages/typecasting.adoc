@@ -1,22 +1,104 @@
 = Typecasting
 
+.C
+[source,c]
+----
+struct Base {};
+
+struct Derived {
+    struct Base b;
+};
+
+void Derived_bar(Derived* self) {}
+
+void baz(int* shouldBeConst) { // should be void baz(const int* readOnly);
+    if( shouldBeConst ) {
+        int valueRead = *shouldBeConst;
+        // do anything with the value, except for write to the value
+    }
+}
+
+void foo() {
+    // Convert between related types
+    double pi = 3.14;
+    int truncatedPi = (int)pi;
+
+    // downcast in polymorphic class hierarchy
+    Base* b = malloc(sizeof(Derived));
+    Derived_bar((Derived*)b);
+    free(b);
+
+    // Remove constness for non-const-correct function
+    const int constantValue = 10;
+    baz((int*)&constantValue);
+
+    // Low-level cast between unrelated types
+    uintptr_t address = 0x1234;
+    int* ptr = (int*)address;
+}
+----
+
+.{cpp}
+[source,c++]
+----
+class Base {
+public:
+    virtual ~Base() = default;
+};
+
+class Derived : public Base {
+    void bar() {}
+};
+
+void baz(int* shouldBeConst) { // should be void baz(const int* readOnly);
+    if( shouldBeConst ) {
+        int valueRead = *shouldBeConst;
+        // do anything with the value, except for write to the value
+    }
+}
+
+void foo() {
+    // static_cast: Convert between related types
+    double pi = 3.14;
+    int truncatedPi = static_cast<int>(pi);
+
+    // dynamic_cast: Safely downcast in polymorphic class hierarchy
+    Base* b = new Derived;
+    Derived* d = dynamic_cast<Derived*>(b);
+    if( d ) { // if d is not nullptr, the cast was successful
+        d->bar();
+    }
+    delete b;
+
+    // const_cast: Remove constness for non-const-correct function
+    const int constantValue = 10;
+    baz(const_cast<int*>(&constantValue));
+
+    // reinterpret_cast: Low-level cast between unrelated types
+    uintptr_t address = 0x1234;
+    int* ptr = reinterpret_cast<int*>(address);
+}
+----
+
 == TL;DR
-{cpp} provides four specific type conversion operators to ensure that conversions are done safely and explicitly. These are:
+* Prefer static_cast for most type conversions in {cpp}. It is safe, explicit, and usually what you need.
+* Use the specific {cpp} cast operator that matches your intent. It provides better type safety and clearer code than C-style casts.
+* {cpp} eliminates much of the need for `void*` by offering stronger type safety and better casting options, but you might still encounter it when dealing with C APIs.
+
+{cpp} provides four specific type conversion operators:
 
 * `static_cast`
-* `dynamic_cast`
+* `dynamic_cast` - requires RTTI
 * `const_cast`
 * `reinterpret_cast`
 
-The two most commonly used of these are `static_cast` and `reinterpret_cast`
-
-IMPORTANT: There is no implicit cast from `void*` in {cpp}. You have to use a `static_cast` to use a `void*` pointer.
+TIP: In {cpp}, there's no implicit cast from `void*`. Use `static_cast` when dealing with `void*` pointers.
 
 == C-style casts
-C-style casts are still available in {cpp} for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. {cpp}'s specific cast operators are preferred because they explicitly convey the programmer's intent and are enforced by the compiler.
+C-style casts (`(Type)value`) are still available in {cpp} for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. When used in {cpp}, a C-style cast ends up as one of the specific {cpp} casts (`static_cast`, `dynamic_cast`, `const_cast`, or `reinterpret_cast`), depending on the context. However, it's better to use the explicit {cpp} cast operators directly because they convey the programmer's intent more clearly and are enforced by the compiler.
 
 == static_cast
-Used for standard type conversions that are known at compile time. It can perform implicit conversions and is often used for conversions between related types, such as between `int32_t` and `uint32_t`.
+Use `static_cast` for standard type conversions that are known at compile time, such as converting between related types (EX: `size_t` to `int`).
 
 .Example
 [source,c++]
@@ -26,10 +108,11 @@ for( int i = 0; i < static_cast<int>(len); ++i ) {
     // ...
 }
 ----
-This shows the programmer's intent to cast a `size_t` to an `int`, likely aware that len is smaller than the max value of an `int`.
 
 == dynamic_cast
 Used for safe downcasting in polymorphic class hierarchies. It checks the validity of the cast at runtime and returns `nullptr` if the cast is not valid. It is used primarily with pointers or references to base class objects when working with inheritance and virtual functions.
+
+WARNING: When link:https://en.wikipedia.org/wiki/Run-time_type_information[RTTI] is disabled, `dynamic_cast` should not be used, instead use `static_cast`.
 
 .Example
 [source,c++]
@@ -46,27 +129,26 @@ if (d) {
 }
 ----
 
-NOTE: This type of cast is rarely used
-
 == const_cast
-Used to add or remove `const` or `volatile` qualifiers from a variable. It can be useful when you need to change the constness of an object, but it should be used with caution. Removing `const` from a variable that was originally defined as `const` results in undefined behavior if you attempt to modify it.
+Used to add or remove `const` or `volatile` qualifiers from a variable. It can be useful when you need to change the constness of an object, but it should be used with caution.
+
+TIP: Maybe you need to do this for use with a non-const-correct C library function that takes a `char*`, but that function could've taken a `const char*` instead.
+
+WARNING: Removing `const` from a variable that was originally defined as `const` results in undefined behavior if you attempt to modify it.
 
 .Example
-[source, c++]
+[source,c++]
 ----
 const char* s = "now";
 char* nonConstS = const_cast<char*>(s);
 *nonConstS = 'w'; // undefined behavior!
 ----
-
-WARNING: Since undefined behavior has occurred, the compiler is free to do absolutely anything. For GCC, it is likely to ignore the attempted write at all optimization levels.
-
-TIP: Maybe you need to do this for use with a non-const-correct C library function that takes a `char*`, but that function doesn't actually mutate the data pointed at.
+Since undefined behavior has occurred, the compiler is free to do absolutely anything. For GCC, it is likely to ignore the attempted write at all optimization levels.
 
 == reinterpret_cast
 Used for low-level casting that is not type-safe. It can cast between unrelated types, such as casting a pointer to an integer or vice versa. This cast is often used for cases where you need to treat a block of memory as a different type, such as when dealing with memory-mapped hardware registers.
 
-WARNING: Use `reinterpret_cast` with caution, as it can lead to undefined behavior if the casted types are not compatible.
+WARNING: Use `reinterpret_cast` with caution, as it can lead to undefined behavior if the casted types are not compatible. link:https://en.cppreference.com/w/cpp/language/reinterpret_cast[See cppreference for more info]
 
 .Example
 [source,c++]
@@ -75,9 +157,5 @@ uintptr_t address = 0x1234; // value from datasheet
 struct Peripheral {
     volatile int reg0;
 };
-Peripheral* reg = reinterpret_cast<Peripheral*>(address); // Cast integer to pointer
+Peripheral* const p0 = reinterpret_cast<Peripheral* const>(address); // Cast integer to pointer
 ----
-
-NOTE: Use `reinterpret_cast` with caution, as it can lead to undefined behavior if the casted types are not compatible.
-
-TIP: `reinterpret_cast` is also useful for casting between `void*` and a real type when working with C APIs.
