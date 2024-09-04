@@ -5,4 +5,4 @@ This chapter goes over many miscellaneous differences between C and C++. Many of
 include::../nav.adoc[leveloffset=+1]
 
 [button="Next"]
-xref:chapter2_major_differences/index.adoc[Chapter 2: Major Differences]
+xref:chapter2_major_differences:index.adoc[Chapter 2: Major Differences]
