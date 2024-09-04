@@ -168,7 +168,61 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>constexpr</code> keyword, originally introduced in C&#43;&#43;, has been adopted into C starting with the C23 standard.</p>
+<p>The <code>constexpr</code> keyword, originally introduced in C&#43;&#43;, has been adopted into C starting with the C23 standard. However, the C&#43;&#43; version of <code>constexpr</code> is significantly more powerful and versatile.</p>
+</div>
+<div class="listingblock">
+<div class="title">C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;stddef.h&gt;
+
+void foo(void) {
+    constexpr int MAX_SIZE = 3 * 3;
+    int array[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.
+
+    // manually compute squares table
+    constexpr int table[] = { 0*0, 1*1, 2*2, 3*3, 4*4, 5*5, 6*6, 7*7, 8*8 };
+    constexpr size_t numEntries = sizeof(table)/sizeof(table[0]);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">C&#43;&#43;</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">#include &lt;array&gt;
+
+constexpr int square(int x) {
+    return x * x;
+}
+
+template&lt;std::size_t N&gt;
+constexpr std::array&lt;int, N&gt; generateSquaredLookUpTable() {
+    std::array&lt;int, N&gt; array;
+    for( std::size_t k = 0; k &lt; N; ++k ) {
+        array[k] = square(k);
+    }
+    return array;
+}
+
+void foo() {
+    constexpr int MAX_SIZE = square(3);
+    int arr[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.
+
+    constexpr auto table = generateSquaredLookUpTable&lt;square(3)&gt;(); // The table is built at compile-time.
+    constexpr std::size_t numEntries = table.size(); // numEntries is evaluated at compile-time.
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Unlike C preprocessor macros, which are limited to simple text substitution, the C++ <code>constexpr</code> function <code>generateSquaredLookUpTable()</code> allows for complex compile-time computations and initialization. This demonstrates the added power and flexibility of <code>constexpr</code> over traditional macros.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -176,10 +230,10 @@
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C23, <code>constexpr</code> can only be applied to variables, making it a type-safe replacement for #define constants, with guaranteed compile-time evaluation.</p>
+<p>Use <code>constexpr</code> to enable compile-time computation whenever possible.</p>
 </div>
 <div class="paragraph">
-<p>In C&#43;&#43;, <code>constexpr</code> is much more versatile, allowing functions and constructors to be evaluated at compile-time, enabling powerful optimizations and reduced runtime computation.</p>
+<p>In C23, <code>constexpr</code> is a type-safe replacement for <code>#define</code> constants, while in C++, it extends to functions and constructors, offering greater flexibility and optimization opportunities.</p>
 </div>
 </div>
 </div>
@@ -187,31 +241,20 @@
 <h2 id="_c23"><a class="anchor" href="#_c23"></a>C23</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C23, <code>constexpr</code> is a new keyword that can be applied only to variables (also referred to as objects in the standard). The primary purpose of <code>constexpr</code> in C is to guarantee that a variable&#8217;s value is a constant expression, evaluated at compile-time. This makes <code>constexpr</code> in C a safer and more robust alternative to traditional #define macros for defining constants.</p>
+<p>In C23, <code>constexpr</code> can be applied only to variables. It guarantees that the variable&#8217;s value is evaluated at compile-time, making it a safer and more robust alternative to <code>#define</code> macros for constants.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p>Compile-Time Evaluation: The value assigned to a <code>constexpr</code> variable must be a constant expression that the compiler can evaluate at compile-time.</p>
+<p><strong>Compile-Time Evaluation</strong>: Ensures the value is evaluated at compile-time.</p>
 </li>
 <li>
-<p>Replacement for #define: <code>constexpr</code> provides a better alternative to #define for defining constant values, offering type safety and scope rules consistent with other variables.</p>
+<p><strong>Replacement for <code>#define</code></strong>: Offers type safety and scope rules.</p>
 </li>
 <li>
-<p>No Function Support: Unlike in C&#43;&#43;, <code>constexpr</code> in C23 does not apply to functions. This means you cannot use <code>constexpr</code> to create compile-time evaluable functions, limiting its use to defining constant variables.</p>
+<p><strong>No Function Support</strong>: <code>constexpr</code> in C23 does not support functions.</p>
 </li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="title">Example in C</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">constexpr int MAX_SIZE = 100;
-
-int array[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this example, <code>MAX_SIZE</code> is a constant expression, and the compiler ensures that its value is available at compile-time.</p>
+</ul>
 </div>
 </div>
 </div>
@@ -224,38 +267,15 @@ int array[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Compile-Time Function Evaluation: In C&#43;&#43;, <code>constexpr</code> can be applied to functions, allowing them to be evaluated at compile-time if their inputs are constant expressions. This enables the creation of highly efficient code by reducing runtime computation.</p>
+<p><strong>Compile-Time Function Evaluation</strong>: In C&#43;&#43;, <code>constexpr</code> can be applied to functions, allowing them to be evaluated at compile-time if their inputs are constant expressions. This enables the creation of highly efficient code by reducing runtime computation.</p>
 </li>
 <li>
-<p>Versatile Use: <code>constexpr</code> can be used for variables, functions, and constructors, making it a critical tool for writing efficient and optimized code.</p>
+<p><strong>Versatile Use</strong>: <code>constexpr</code> can be used for variables, functions, and constructors, making it a critical tool for writing efficient and optimized code.</p>
 </li>
 <li>
-<p>Constant Expression Enforcement: A <code>constexpr</code> function or variable must be evaluated at compile-time if possible, which can lead to significant optimizations, especially in performance-critical code like embedded systems.</p>
+<p><strong>Constant Expression Enforcement</strong>: A <code>constexpr</code> function or variable must be evaluated at compile-time if possible, which can lead to significant optimizations, especially in performance-critical code like embedded systems.</p>
 </li>
 </ol>
-</div>
-<div class="listingblock">
-<div class="title">Example in C&#43;&#43;</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">constexpr int square(int x) {
-    return x * x;
-}
-
-constexpr int result = square(10);  // result is evaluated at compile-time.
-
-int array[result];  // The size of the array is determined at compile-time.</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this example, the <code>square</code> function is evaluated at compile-time, and result becomes a compile-time constant. If <code>square</code> is always used with <code>constexpr</code> values, the function may be excluded from the final binary since there&#8217;s no need to call it at runtime.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_why_it_matters"><a class="anchor" href="#_why_it_matters"></a>Why It Matters</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>While C23&#8217;s <code>constexpr</code> provides a safer way to define constants, C&#43;&#43; offers far more flexibility and power, particularly in embedded systems where compile-time computation can significantly reduce resource usage.</p>
 </div>
 </div>
 </div>
