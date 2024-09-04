@@ -165,11 +165,108 @@
 </aside>
 <article class="doc">
 <h1 class="page">Typecasting</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">struct Base {};
+
+struct Derived {
+    struct Base b;
+};
+
+void Derived_bar(Derived* self) {}
+
+void baz(int* shouldBeConst) { // should be void baz(const int* readOnly);
+    if( shouldBeConst ) {
+        int valueRead = *shouldBeConst;
+        // do anything with the value, except for write to the value
+    }
+}
+
+void foo() {
+    // Convert between related types
+    double pi = 3.14;
+    int truncatedPi = (int)pi;
+
+    // downcast in polymorphic class hierarchy
+    Base* b = malloc(sizeof(Derived));
+    Derived_bar((Derived*)b);
+    free(b);
+
+    // Remove constness for non-const-correct function
+    const int constantValue = 10;
+    baz((int*)&amp;constantValue);
+
+    // Low-level cast between unrelated types
+    uintptr_t address = 0x1234;
+    int* ptr = (int*)address;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">C&#43;&#43;</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">class Base {
+public:
+    virtual ~Base() = default;
+};
+
+class Derived : public Base {
+    void bar() {}
+};
+
+void baz(int* shouldBeConst) { // should be void baz(const int* readOnly);
+    if( shouldBeConst ) {
+        int valueRead = *shouldBeConst;
+        // do anything with the value, except for write to the value
+    }
+}
+
+void foo() {
+    // static_cast: Convert between related types
+    double pi = 3.14;
+    int truncatedPi = static_cast&lt;int&gt;(pi);
+
+    // dynamic_cast: Safely downcast in polymorphic class hierarchy
+    Base* b = new Derived;
+    Derived* d = dynamic_cast&lt;Derived*&gt;(b);
+    if( d ) { // if d is not nullptr, the cast was successful
+        d-&gt;bar();
+    }
+    delete b;
+
+    // const_cast: Remove constness for non-const-correct function
+    const int constantValue = 10;
+    baz(const_cast&lt;int*&gt;(&amp;constantValue));
+
+    // reinterpret_cast: Low-level cast between unrelated types
+    uintptr_t address = 0x1234;
+    int* ptr = reinterpret_cast&lt;int*&gt;(address);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Prefer static_cast for most type conversions in C&#43;&#43;. It is safe, explicit, and usually what you need.</p>
+</li>
+<li>
+<p>Use the specific C&#43;&#43; cast operator that matches your intent. It provides better type safety and clearer code than C-style casts.</p>
+</li>
+<li>
+<p>C&#43;&#43; eliminates much of the need for <code>void*</code> by offering stronger type safety and better casting options, but you might still encounter it when dealing with C APIs.</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>C&#43;&#43; provides four specific type conversion operators to ensure that conversions are done safely and explicitly. These are:</p>
+<p>C&#43;&#43; provides four specific type conversion operators:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -177,7 +274,7 @@
 <p><code>static_cast</code></p>
 </li>
 <li>
-<p><code>dynamic_cast</code></p>
+<p><code>dynamic_cast</code> - requires RTTI</p>
 </li>
 <li>
 <p><code>const_cast</code></p>
@@ -187,17 +284,14 @@
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>The two most commonly used of these are <code>static_cast</code> and <code>reinterpret_cast</code></p>
-</div>
-<div class="admonitionblock important">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-There is no implicit cast from <code>void*</code> in C&#43;&#43;. You have to use a <code>static_cast</code> to use a <code>void*</code> pointer.
+In C&#43;&#43;, there&#8217;s no implicit cast from <code>void*</code>. Use <code>static_cast</code> when dealing with <code>void*</code> pointers.
 </td>
 </tr>
 </table>
@@ -208,7 +302,7 @@ There is no implicit cast from <code>void*</code> in C&#43;&#43;. You have to us
 <h2 id="_c_style_casts"><a class="anchor" href="#_c_style_casts"></a>C-style casts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>C-style casts are still available in C&#43;&#43; for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. C&#43;&#43;'s specific cast operators are preferred because they explicitly convey the programmer&#8217;s intent and are enforced by the compiler.</p>
+<p>C-style casts (<code>(Type)value</code>) are still available in C&#43;&#43; for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. When used in C&#43;&#43;, a C-style cast ends up as one of the specific C&#43;&#43; casts (<code>static_cast</code>, <code>dynamic_cast</code>, <code>const_cast</code>, or <code>reinterpret_cast</code>), depending on the context. However, it&#8217;s better to use the explicit C&#43;&#43; cast operators directly because they convey the programmer&#8217;s intent more clearly and are enforced by the compiler.</p>
 </div>
 </div>
 </div>
@@ -216,7 +310,7 @@ There is no implicit cast from <code>void*</code> in C&#43;&#43;. You have to us
 <h2 id="_static_cast"><a class="anchor" href="#_static_cast"></a>static_cast</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Used for standard type conversions that are known at compile time. It can perform implicit conversions and is often used for conversions between related types, such as between <code>int32_t</code> and <code>uint32_t</code>.</p>
+<p>Use <code>static_cast</code> for standard type conversions that are known at compile time, such as converting between related types (EX: <code>size_t</code> to <code>int</code>).</p>
 </div>
 <div class="listingblock">
 <div class="title">Example</div>
@@ -227,9 +321,6 @@ for( int i = 0; i &lt; static_cast&lt;int&gt;(len); ++i ) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>This shows the programmer&#8217;s intent to cast a <code>size_t</code> to an <code>int</code>, likely aware that len is smaller than the max value of an <code>int</code>.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -237,6 +328,18 @@ for( int i = 0; i &lt; static_cast&lt;int&gt;(len); ++i ) {
 <div class="sectionbody">
 <div class="paragraph">
 <p>Used for safe downcasting in polymorphic class hierarchies. It checks the validity of the cast at runtime and returns <code>nullptr</code> if the cast is not valid. It is used primarily with pointers or references to base class objects when working with inheritance and virtual functions.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+When <a href="https://en.wikipedia.org/wiki/Run-time_type_information">RTTI</a> is disabled, <code>dynamic_cast</code> should not be used, instead use <code>static_cast</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">Example</div>
@@ -253,25 +356,37 @@ if (d) {
 }</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This type of cast is rarely used
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_const_cast"><a class="anchor" href="#_const_cast"></a>const_cast</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Used to add or remove <code>const</code> or <code>volatile</code> qualifiers from a variable. It can be useful when you need to change the constness of an object, but it should be used with caution. Removing <code>const</code> from a variable that was originally defined as <code>const</code> results in undefined behavior if you attempt to modify it.</p>
+<p>Used to add or remove <code>const</code> or <code>volatile</code> qualifiers from a variable. It can be useful when you need to change the constness of an object, but it should be used with caution.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Maybe you need to do this for use with a non-const-correct C library function that takes a <code>char*</code>, but that function could&#8217;ve taken a <code>const char*</code> instead.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Removing <code>const</code> from a variable that was originally defined as <code>const</code> results in undefined behavior if you attempt to modify it.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">Example</div>
@@ -281,29 +396,8 @@ char* nonConstS = const_cast&lt;char*&gt;(s);
 *nonConstS = 'w'; // undefined behavior!</code></pre>
 </div>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Since undefined behavior has occurred, the compiler is free to do absolutely anything. For GCC, it is likely to ignore the attempted write at all optimization levels.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Maybe you need to do this for use with a non-const-correct C library function that takes a <code>char*</code>, but that function doesn&#8217;t actually mutate the data pointed at.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Since undefined behavior has occurred, the compiler is free to do absolutely anything. For GCC, it is likely to ignore the attempted write at all optimization levels.</p>
 </div>
 </div>
 </div>
@@ -320,7 +414,7 @@ Maybe you need to do this for use with a non-const-correct C library function th
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Use <code>reinterpret_cast</code> with caution, as it can lead to undefined behavior if the casted types are not compatible.
+Use <code>reinterpret_cast</code> with caution, as it can lead to undefined behavior if the casted types are not compatible. <a href="https://en.cppreference.com/w/cpp/language/reinterpret_cast">See cppreference for more info</a>
 </td>
 </tr>
 </table>
@@ -332,32 +426,8 @@ Use <code>reinterpret_cast</code> with caution, as it can lead to undefined beha
 struct Peripheral {
     volatile int reg0;
 };
-Peripheral* reg = reinterpret_cast&lt;Peripheral*&gt;(address); // Cast integer to pointer</code></pre>
+Peripheral* const p0 = reinterpret_cast&lt;Peripheral* const&gt;(address); // Cast integer to pointer</code></pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Use <code>reinterpret_cast</code> with caution, as it can lead to undefined behavior if the casted types are not compatible.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<code>reinterpret_cast</code> is also useful for casting between <code>void*</code> and a real type when working with C APIs.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
