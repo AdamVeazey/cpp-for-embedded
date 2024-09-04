@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Implicit Return Type :: C++ For Embedded C Developers</title>
-    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/implicit_int_return.html">
+    <title>Chapter 2: Major Differences :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter2_major_differences/index.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -67,28 +67,28 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
+    <a class="nav-link" href="../chapter1_minor_differences/index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/implicit_int_return.html">Implicit Return Type</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
+    <a class="nav-link" href="../chapter1_minor_differences/variable_declarations.html">Variable Declarations</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
+    <a class="nav-link" href="../chapter1_minor_differences/empty_parameter_list.html">Empty Parameter List</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="bool.html">bool</a>
+    <a class="nav-link" href="../chapter1_minor_differences/bool.html">bool</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="const_behavior.html">const Keyword Behavior</a>
+    <a class="nav-link" href="../chapter1_minor_differences/const_behavior.html">const Keyword Behavior</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="typecasting.html">Typecasting</a>
+    <a class="nav-link" href="../chapter1_minor_differences/typecasting.html">Typecasting</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="constexpr.html">constexpr</a>
+    <a class="nav-link" href="../chapter1_minor_differences/constexpr.html">constexpr</a>
   </li>
 </ul>
   </li>
@@ -96,9 +96,9 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2_major_differences/index.html">Chapter 2: Major Differences</a>
+    <a class="nav-link" href="index.html">Chapter 2: Major Differences</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#references.adoc">References</a>
@@ -153,80 +153,51 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
-    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
-    <li><a href="implicit_int_return.html">Implicit Return Type</a></li>
+    <li><a href="index.html">Chapter 2: Major Differences</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/implicit_int_return.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter2_major_differences/pages/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Implicit Return Type</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">function(int x) {
-    return x + 5;
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
-<div class="sectionbody">
+<h1 class="page">Chapter 2: Major Differences</h1>
 <div class="paragraph">
-<p>Nobody writes code like this anymore.</p>
+<p>This chapter explores features unique to C&#43;&#43; that are not present in C. While focusing on aspects relevant to embedded systems, it will also illustrate what equivalent C code might look like for comparison. Additionally, the chapter addresses features beneficial for broader C&#43;&#43; usage.</p>
 </div>
-<div class="paragraph">
-<p>C&#43;&#43; and C standards after C89 do not support implicit return types. Functions must explicitly specify their return type.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#">Chapter 2: Major Differences</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#references.adoc" class="xref unresolved">References</a></p>
+</li>
+<li>
+<p><a href="#namespaces.adoc" class="xref unresolved">Namespaces</a></p>
+</li>
+<li>
+<p><a href="#overloads.adoc" class="xref unresolved">Overloads</a></p>
+</li>
+<li>
+<p><a href="#struct.adoc" class="xref unresolved">Structs</a></p>
+</li>
+<li>
+<p><a href="#enum_type.adoc" class="xref unresolved">Enum Type</a></p>
+</li>
+<li>
+<p><a href="#dynamic_memory.adoc" class="xref unresolved">Dynamic Memory</a></p>
+</li>
+<li>
+<p><a href="#auto.adoc" class="xref unresolved">auto</a></p>
+</li>
+</ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_what"><a class="anchor" href="#_what"></a>What?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In C89, if a function didn&#8217;t specify a return type, it was implicitly treated as returning <code>int</code>. This behavior was a holdover from even earlier versions of C, where <code>void</code> wasn&#8217;t a recognized type, so all functions defaulted to returning <code>int</code>. However, starting with C99 and in modern C&#43;&#43; standards, omitting the return type results in a compile-time error, enforcing clearer and more predictable code by requiring explicit return type declarations.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_c89_example"><a class="anchor" href="#_c89_example"></a>C89 Example</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The following is a valid C89 program</p>
-</div>
-<div class="listingblock">
-<div class="title">main.c</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;stdio.h&gt;
-
-function(int x) {
-    return x + 5;
-}
-
-int main(void) {
-    int result;
-    result = function(5);
-    printf("result: %d\r\n", result);
-    return 0;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Build &amp; run with</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcc -std=c89 main.c &amp;&amp; ./a.out</code></pre>
-</div>
-</div>
-</div>
+</li>
+</ul>
 </div>
 </article>
   </div>
