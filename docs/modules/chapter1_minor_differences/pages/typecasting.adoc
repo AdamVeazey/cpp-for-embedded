@@ -24,7 +24,7 @@ void foo() {
     int truncatedPi = (int)pi;
 
     // downcast in polymorphic class hierarchy
-    Base* b = malloc(sizeof(Derived));
+    struct Base* b = malloc(sizeof(Derived));
     Derived_bar((Derived*)b);
     free(b);
 
