@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>constexpr :: C++ For Embedded C Developers</title>
-    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/constexpr.html">
+    <title>struct :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/struct.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -87,10 +87,10 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="typecasting.html">Typecasting</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="constexpr.html">constexpr</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="struct.html">struct</a>
   </li>
 </ul>
@@ -157,129 +157,78 @@
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
     <li><a href="index.html">Chapter 1: Minor Differences</a></li>
-    <li><a href="constexpr.html">constexpr</a></li>
+    <li><a href="struct.html">struct</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/constexpr.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/struct.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">constexpr</h1>
+<h1 class="page">struct</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>The <code>constexpr</code> keyword, originally introduced in C&#43;&#43;, has been adopted into C starting with the C23 standard. However, the C&#43;&#43; version of <code>constexpr</code> is significantly more powerful and versatile.</p>
-</div>
 <div class="listingblock">
 <div class="title">C</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;stddef.h&gt;
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct point {
+    int x;
+    int y;
+} point_t;
+
+point_t point_add(const point_t* const lhs, const point_t* const rhs) {
+    point_t result;
+    result.x = lhs-&gt;x + rhs-&gt;x;
+    result.y = lhs-&gt;y + rhs-&gt;y;
+    return result;
+}
 
 void foo(void) {
-    constexpr int MAX_SIZE = 3 * 3;
-    int array[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.
-
-    // manually compute squares table
-    constexpr int table[] = { 0*0, 1*1, 2*2, 3*3, 4*4, 5*5, 6*6, 7*7, 8*8 };
-    constexpr size_t numEntries = sizeof(table)/sizeof(table[0]);
+    point_t a = { .x = 5, .y = 10 };
+    point_t b = { .x = 2, .y = 3 };
+    point_t c = point_add( &amp;a, &amp;b );
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">C&#43;&#43;</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">#include &lt;array&gt;
-
-constexpr int square(int x) {
-    return x * x;
-}
-
-template&lt;std::size_t N&gt;
-constexpr std::array&lt;int, N&gt; generateSquaredLookUpTable() {
-    std::array&lt;int, N&gt; array;
-    for( std::size_t k = 0; k &lt; N; ++k ) {
-        array[k] = square(k);
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">struct Point {
+    int x;
+    int y;
+    Point( int x = 0, int y = 0 ) : x(x), y(y) {}
+    Point add( const Point&amp; rhs ) {
+        return Point( x + rhs.x, y + rhs.y);
     }
-    return array;
-}
+};
 
-void foo() {
-    constexpr int MAX_SIZE = square(3);
-    int arr[MAX_SIZE];  // MAX_SIZE is evaluated at compile-time.
-
-    constexpr auto table = generateSquaredLookUpTable&lt;square(3)&gt;(); // The table is built at compile-time.
-    constexpr std::size_t numEntries = table.size(); // numEntries is evaluated at compile-time.
+void foo(){
+    Point a(5, 10);
+    Point b(2, 3);
+    Point c = a.add(b);
 }</code></pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Unlike C preprocessor macros, which are limited to simple text substitution, the C++ <code>constexpr</code> function <code>generateSquaredLookUpTable()</code> allows for complex compile-time computations and initialization. This demonstrates the added power and flexibility of <code>constexpr</code> over traditional macros.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Use <code>constexpr</code> to enable compile-time computation whenever possible.</p>
-</div>
-<div class="paragraph">
-<p>In C23, <code>constexpr</code> is a type-safe replacement for <code>#define</code> constants, while in C++, it extends to functions and constructors, offering greater flexibility and optimization opportunities.</p>
-</div>
+
 </div>
 </div>
 <div class="sect1">
-<h2 id="_c23"><a class="anchor" href="#_c23"></a>C23</h2>
+<h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>In C23, <code>constexpr</code> can be applied only to variables. It guarantees that the variable&#8217;s value is evaluated at compile-time, making it a safer and more robust alternative to <code>#define</code> macros for constants.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Compile-Time Evaluation</strong>: Ensures the value is evaluated at compile-time.</p>
-</li>
-<li>
-<p><strong>Replacement for <code>#define</code></strong>: Offers type safety and scope rules.</p>
-</li>
-<li>
-<p><strong>No Function Support</strong>: <code>constexpr</code> in C23 does not support functions.</p>
-</li>
-</ul>
-</div>
+
 </div>
 </div>
 <div class="sect1">
-<h2 id="_c"><a class="anchor" href="#_c"></a>C&#43;&#43;</h2>
+<h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>In C&#43;&#43;, <code>constexpr</code> is much more versatile and powerful. Introduced in C&#43;&#43;11 and extended in later standards, <code>constexpr</code> can be applied to both variables and functions, allowing for more extensive compile-time evaluation and optimization.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Compile-Time Function Evaluation</strong>: In C&#43;&#43;, <code>constexpr</code> can be applied to functions, allowing them to be evaluated at compile-time if their inputs are constant expressions. This enables the creation of highly efficient code by reducing runtime computation.</p>
-</li>
-<li>
-<p><strong>Versatile Use</strong>: <code>constexpr</code> can be used for variables, functions, and constructors, making it a critical tool for writing efficient and optimized code.</p>
-</li>
-<li>
-<p><strong>Constant Expression Enforcement</strong>: A <code>constexpr</code> function or variable must be evaluated at compile-time if possible, which can lead to significant optimizations, especially in performance-critical code like embedded systems.</p>
-</li>
-</ol>
-</div>
+
 </div>
 </div>
 </article>
