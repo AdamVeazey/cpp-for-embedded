@@ -1,4 +1,4 @@
-= const Behavior
+= const
 
 .C
 [source,c,indent=0]

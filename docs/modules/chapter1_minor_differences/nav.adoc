@@ -3,6 +3,7 @@
 ** xref:variable_declarations.adoc[Variable Declarations]
 ** xref:empty_parameter_list.adoc[Empty Parameter List]
 ** xref:bool.adoc[bool]
-** xref:const_behavior.adoc[const Keyword Behavior]
+** xref:const.adoc[const]
 ** xref:typecasting.adoc[Typecasting]
 ** xref:constexpr.adoc[constexpr]
+** xref:struct.adoc[struct]
