@@ -15,12 +15,6 @@
 // {cpp}: {cpp} allows you to define default values for function parameters, simplifying function calls and reducing overloads.
 // {cpp}: Note: binary operator sidetrack discussion
 
-** xref:struct.adoc[Structs]
-// C: To use a struct, you need to prefix it with struct unless you use a typedef.
-// {cpp}: In {cpp}, the struct keyword is not necessary when using a type, making the code cleaner and more concise.
-// 11. Structs and Classes
-// C: Structs are purely data structures with no methods or private data.
-// {cpp}: {cpp} structs can have member functions, constructors, destructors, and access specifiers (public, private, protected), making them similar to classes.
 
 ** xref:enum_type.adoc[Enum Type]
 // C: In C, enum constants are treated as int.
