@@ -113,9 +113,6 @@
     <a class="nav-link" href="#overloads.adoc">Overloads</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#struct.adoc">Structs</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#enum_type.adoc">Enum Type</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -173,41 +170,51 @@
 <div class="listingblock">
 <div class="title">C</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct point {
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;stdio.h&gt;
+
+typedef struct Point {
     int x;
     int y;
-} point_t;
+} Point_t;
 
-point_t point_add(const point_t* const lhs, const point_t* const rhs) {
-    point_t result;
-    result.x = lhs-&gt;x + rhs-&gt;x;
-    result.y = lhs-&gt;y + rhs-&gt;y;
-    return result;
+void point_move( point_t* const self, int deltaX, int deltaY ) {
+    self-&gt;x += deltaX;
+    self-&gt;y += deltaY;
+}
+
+void point_print( const point_t* const self ) {
+    printf("(%d, %d)\r\n", self-&gt;x, self-&gt;y);
 }
 
 void foo(void) {
-    point_t a = { .x = 5, .y = 10 };
-    point_t b = { .x = 2, .y = 3 };
-    point_t c = point_add( &amp;a, &amp;b );
+    Point_t a = { .x = 5, .y = 10 };
+    point_move( &amp;a, 2, 3 );
+    point_print( &amp;x );
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">C&#43;&#43;</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">struct Point {
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">#include &lt;cstdio&gt;
+
+struct Point {
     int x;
     int y;
     Point( int x = 0, int y = 0 ) : x(x), y(y) {}
-    Point add( const Point&amp; rhs ) {
-        return Point( x + rhs.x, y + rhs.y);
+    void move( int deltaX, int deltaY ) {
+        this-&gt;x += deltaX;
+        this-&gt;y += deltaY;
+    }
+    void print() const {
+        printf("(%d, %d)\r\n", this-&gt;x, this-&gt;y);
     }
 };
 
 void foo(){
-    Point a(5, 10);
-    Point b(2, 3);
-    Point c = a.add(b);
+    Point a( 5, 10 );
+    a.move( 2, 3 );
+    a.print();
 }</code></pre>
 </div>
 </div>
@@ -216,19 +223,409 @@ void foo(){
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>A <code>struct</code> in C&#43;&#43; is very similar to C, but they also include the ability to define member functions. Typical usage of a <code>struct</code> in C&#43;&#43; is when you have a simple aggregate type, that is a type whose only purpose is to contain related data.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p><code>struct</code> in C allows you to group related data into a single object with sequential memory layout. A <code>struct</code> is a contiguous block of memory, where each member occupies a defined amount of space, and the offset to access each member is calculated automatically by the compiler when you use the <code>.</code> or <code>-&gt;</code> operators.</p>
+</div>
+<div class="sect2">
+<h3 id="_memory_layout"><a class="anchor" href="#_memory_layout"></a>Memory Layout</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct Point {
+    int x;
+    int y;
+} Point_t;
 
+void foo(void) {
+    Point_t p = { .x = 5, .y = 10 };
+    int array[2];
+    array[0] = p.x;
+    array[1] = p.y;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>sizeof(p)</code> and <code>sizeof(array)</code> are equal because both are contiguous blocks of memory that contain two <code>int</code> elements. With the array, <code>array[0]</code> and <code>array[1]</code> correspond to the elements at offsets 0 and 1, respectively. The struct works similarly:</p>
+</div>
+<div class="paragraph">
+<p><code>p.x</code> can be thought of as <code>((unsigned char*)&amp;p)</code> similar to <code>array[0]</code><br>
+<code>p.y</code> can be thought of as <code>((unsigned char*)&amp;p) + (sizeof(int))</code> similar to <code>array[1]</code></p>
+</div>
+<div class="paragraph">
+<p>Thus, <code>struct</code> gives specific names and meaning to the elements of a collection, making code easier to read and maintain.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_padding"><a class="anchor" href="#_padding"></a>Padding</h3>
+<div class="paragraph">
+<p>Padding is introduced by the compiler to ensure proper alignment of data members. For instance, on many systems, int values need to be aligned to a 4-byte boundary. This can cause "holes" in the memory layout where extra bytes are reserved but not used, making the struct larger than the sum of its members.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct Mixed {
+    char c;
+    int i;
+} Mixed_t;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, the <code>char c</code> will often be padded to align <code>int i</code> on a 4-byte boundary.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_related_functions"><a class="anchor" href="#_related_functions"></a>Related Functions</h3>
+<div class="paragraph">
+<p>It&#8217;s common to write functions that operate on <code>struct&#8217;s, using the first parameter as a pointer to the struct instance. The pointer is often named `self</code>, <code>context</code>, <code>arg</code>, or something similar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct Point {
+    int x;
+    int y;
+} Point_t;
+
+void point_move(Point_t* const self, int deltaX, int deltaY) {
+    self-&gt;x = deltaX;
+    self-&gt;y = deltaY;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, <code>self</code> is a pointer to the <code>struct Point</code> and allows modifying the values of <code>x</code> and <code>y</code>. The <code>const</code> on <code>self</code> ensures that the pointer itself cannot be changed to point elsewhere, but it allows modification of the data inside the <code>struct</code>.</p>
+</div>
+<div class="paragraph">
+<p>Functions like <code>point_move</code> can operate on multiple instances of the same <code>struct</code> without being bound to one instance.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_member_access"><a class="anchor" href="#_member_access"></a>Member Access</h3>
+<div class="paragraph">
+<p>In C, there is only public access to struct members. All members of a struct are visible and accessible to any code that includes the definition of the struct. However, various techniques can be used to hide the specific type of the struct and control access more effectively.</p>
+</div>
+<div class="sect3">
+<h4 id="_using_void_to_hide_type"><a class="anchor" href="#_using_void_to_hide_type"></a>Using void* to Hide Type</h4>
+<div class="paragraph">
+<p>In some cases, you may want to hide the specific type of a <code>struct</code> from users of your API. This can be achieved by using <code>void*</code> in function signatures instead of the concrete <code>struct</code> type. This technique provides a level of abstraction and allows changes to the underlying <code>struct</code> type without affecting the API.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct Point {
+    int x;
+    int y;
+} Point_t;
+
+void point_move(void* const self, int deltaX, int deltaY) {
+    Point_t* const p = (Point_t* const)self;
+    p-&gt;x += deltaX;
+    p-&gt;y += deltaY;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>point_move</code> takes a <code>void*</code> parameter and casts it to the appropriate <code>struct</code> type within the function. This approach hides the specific implementation of the <code>struct</code> from the function&#8217;s users, who only need to know that they should pass a pointer to some opaque data.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_forward_declarations"><a class="anchor" href="#_forward_declarations"></a>Forward Declarations</h4>
+<div class="paragraph">
+<p>Another common practice to hide the details of a <code>struct</code> is to use forward declarations in header files. You declare the <code>struct</code> in the header file but define it only in the corresponding source file. This approach keeps the implementation details hidden from users and provides a clean interface.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">/* point.h */
+typedef struct Point Point_t; // Forward declaration
+
+void point_move(Point_t* const self, int deltaX, int deltaY);
+void point_print(const Point_t* const self);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">/* point.c */
+#include "point.h"
+#include &lt;stdio.h&gt;
+
+struct Point { int x; int y; }; // define type
+
+void point_move(Point_t* const self, int deltaX, int deltaY) {
+    self-&gt;x += deltaX;
+    self-&gt;y += deltaY;
+}
+
+void point_print(const Point_t* const self) {
+    printf("(%d, %d)\r\n", self-&gt;x, self-&gt;y);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the struct definition is hidden in the source file (point.c), while the header file (point.h) only contains a forward declaration of the struct and the function prototypes. This encapsulation hides implementation details and promotes modularity.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_memory_layout_2"><a class="anchor" href="#_memory_layout_2"></a>Memory Layout</h3>
+<div class="paragraph">
+<p>The memory layout of <code>struct</code> in C&#43;&#43; is the same as in C. Members are stored in contiguous memory locations, and the compiler calculates the offsets for each member automatically. If the <code>struct</code> contains members of different types, padding might be introduced to align data members to word boundaries for performance reasons.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;cstdio&gt;
 
+struct Mixed {
+    char c;
+    int i;
+};
+
+int main() {
+    printf("%u\r\n", sizeof(Mixed)); // Output may include padding
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>sizeof(Mixed)</code> may be larger than the sum of the sizes of <code>char</code> and <code>int</code> due to padding. <code>char c</code> is often aligned at the start, while <code>int i</code> may be padded to align with a 4-byte boundary.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_member_function"><a class="anchor" href="#_member_function"></a>Member Function</h3>
+<div class="paragraph">
+<p>In C&#43;&#43;, <code>struct</code> members can include functions. This is different from C, where <code>struct`s can only contain data. The first parameter of these member functions is an implicit `this</code> pointer, which refers to the instance of the struct the function is operating on.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+member functions do not add to the memory footprint of a <code>struct</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;cstdio&gt;
+
+// C++
+struct Point {
+    int x;
+    int y;
+    Point( int x = 0, int y = 0 ) : x(x), y(y) {}
+    void move( int deltaX, int deltaY ) {
+        this-&gt;x += deltaX;
+        this-&gt;y += deltaY;
+    }
+    void print() const {
+        printf("(%d, %d)\r\n", this-&gt;x, this-&gt;y);
+    }
+};
+
+// C
+typedef struct Point {
+    int x;
+    int y;
+} Point_t;
+
+void point_move( point_t* const self, int deltaX, int deltaY ) {
+    self-&gt;x += deltaX;
+    self-&gt;y += deltaY;
+}
+
+void point_print( const point_t* const self ) {
+    printf("(%d, %d)\r\n", self-&gt;x, self-&gt;y);
+}
+
+// Comparison
+int main() {
+    Point p1( 5, 10 );
+    p1.move( 2, 3 ); // &amp;p1 is the `this` pointer for this call to move()
+    p1.print();      // &amp;p1 is the `this` pointer for this call to print()
+
+    Point_t p2 = { 5, 10 };
+    point_move( &amp;p2, 2, 3 );
+    point_print( &amp;p2 );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, <code>move</code> and <code>print</code> are member functions of <code>struct</code> <code>Point</code>. The <code>this</code> pointer is automatically passed to these functions, allowing them to access and modify the members of <code>Point</code>.</p>
+</div>
+<div class="paragraph">
+<p>Moving the C code around until it looks like the C&#43;&#43; example</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>point_move( &amp;p2, 2, 3 );</code> - original C version</p>
+</li>
+<li>
+<p><code>(&amp;p2)-&gt;point_move( 2, 3 );</code> - moving <code>self</code> aka <code>this</code> to the left operand of <code>-&gt;</code></p>
+</li>
+<li>
+<p><code>p2.point_move(2, 3);</code> - using the <code>.</code> operator instead on <code>this</code></p>
+</li>
+<li>
+<p><code>p2.move(2, 3);</code> - rename the function as repeating the type name is redundant, as <code>move</code> can only be called on <code>Point</code> objects.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The type of <code>self</code> in <code>point_move</code> is a constant pointer to a mutable <code>Point_t</code>. This reflects the type of <code>this</code> in a <code>non-const</code> member function.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The type of <code>self</code> in <code>point_print</code> is a constant pointer to a constant <code>Point_t</code>. This reflects the type of <code>this</code> in a <code>const</code> member function.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In the C&#43;&#43; example, <code>move()</code> is not required to explicitly use <code>this+&#8594;+</code>, it&#8217;s more common to <strong><em>not</em></strong> explicitly use <code>this</code> directly unless there is a naming conflict between a data member and a member function parameter.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_static_member_data_and_functions"><a class="anchor" href="#_static_member_data_and_functions"></a>Static Member Data and Functions</h3>
+<div class="paragraph">
+<p>Static data members have a single instance per type, no matter how many type instances there are. Static member functions do not receive the this pointer and are not associated with any particular instance of the struct. They can be called using the scope resolution operator <code>::</code> and can only access static members of the struct.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">// S.hpp
+struct S {
+    static int counter;
+    static void increment() { ++counter; }
+};
+
+// S.cpp
+#include &lt;cstdio&gt;
+
+int S::counter = 0; // this is where the static member of S lives
+
+void example() {
+    S::increment(); // no instance of S required
+    S myValue;
+    myValue.increment(); // Can also call static functions with object instance
+    printf("counter: %d\r\n", S::counter); // access the static member directly
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_member_access_2"><a class="anchor" href="#_member_access_2"></a>Member Access</h3>
+<div class="paragraph">
+<p>Members declared as <code>public</code> are accessible from any code that can see the definition of the <code>struct</code>. This is the default access specifier for <code>struct</code> members.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">struct PublicExample {
+    int value; // public by default
+};
+
+int main() {
+    PublicExample e;
+    e.value = 42; // Accessible directly
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>value</code> is a public member and can be accessed directly from outside the struct.</p>
+</div>
+<div class="sect3">
+<h4 id="_protected"><a class="anchor" href="#_protected"></a>protected</h4>
+<div class="paragraph">
+<p>Members declared as <code>protected</code> can only be accessed by the <code>struct</code> itself, and by derived <code>struct`s. They are not accessible from outside the `struct</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">struct Base {
+protected:
+    int value;
+};
+
+struct Derived : Base {
+    void updateValue(int v) {
+        value = v; // Accessible within derived class
+    }
+};
+
+int main() {
+    Derived d;
+    d.updateValue(42); // OK
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>value</code> is a protected data member and is accessible within <code>Derived</code>, but not from outside the <code>struct</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_private"><a class="anchor" href="#_private"></a>private</h4>
+<div class="paragraph">
+<p>Members declared as <code>private</code> can only be accessed by the <code>struct</code> itself. They are not accessible from derived classes or from outside the struct.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;cstdio&gt;
+
+struct PrivateExample {
+private:
+    int value;
+public:
+    void setValue(int v) {
+        value = v;
+    }
+    int getValue() const {
+        return value;
+    }
+};
+
+int main() {
+    PrivateExample e;
+    e.setValue(42); // OK
+    printf("%d\r\n", e.getValue()); // OK
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>value</code> is a private member and can only be accessed through the public member functions <code>setValue</code> and <code>getValue</code>.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </article>
