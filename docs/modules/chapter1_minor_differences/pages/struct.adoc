@@ -22,7 +22,7 @@ void point_print( const point_t* const self ) {
 void foo(void) {
     Point_t a = { .x = 5, .y = 10 };
     point_move( &a, 2, 3 );
-    point_print( &x );
+    point_print( &a );
 }
 ----
 
@@ -241,7 +241,8 @@ Moving the C code around until it looks like the {cpp} example
 
 . `point_move( &p2, 2, 3 );` - original C version
 . `+(&p2)->point_move( 2, 3 );+` - moving `self` aka `this` to the left operand of `+->+`
-. `p2.point_move(2, 3);` - using the `.` operator instead on `this`
+. `(*(&p2)).point_move( 2, 3 );` - dereference `this` to use the `.` operator instead
+. `p2.point_move(2, 3);` - remove dereference and address-of operators
 . `p2.move(2, 3);` - rename the function as repeating the type name is redundant, as `move` can only be called on `Point` objects.
 
 NOTE: The type of `self` in `point_move` is a constant pointer to a mutable `Point_t`. This reflects the type of `this` in a `non-const` member function.
