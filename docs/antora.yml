@@ -5,8 +5,9 @@ name: docs
 # version: '1.0'
 version: true
 
-# asciidoc:
-#   attributes:
+asciidoc:
+  attributes:
+    page-pagination: ''
 #     attribute_1: Value
 #     attribute_2: A different value; Another value
 
