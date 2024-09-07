@@ -1,8 +1,7 @@
 = Chapter 1: Minor Differences
 
-This chapter goes over many miscellaneous differences between C and C++. Many of these topics are very short. This is not an exhaustive list, but does include a bunch of little things that add up over time.
+This chapter covers various minor differences between C and {cpp}. Many of these topics are brief. While this is not an exhaustive list, it includes several small details that can add up over time.
 
 include::../nav.adoc[leveloffset=+1]
 
-[button="Next"]
-xref:chapter2_major_differences:index.adoc[Chapter 2: Major Differences]
+The sections on Implicit Return Type, Variable Declarations, and Empty Parameter Lists address quirks that may appear in C but are unnecessary in {cpp}. These topics are largely centered around C89 or even earlier versions of C, and, for legacy reasons, these practices often find their way into {cpp} code.
