@@ -11,13 +11,13 @@ permissions:
   contents: write
   pages: write
   id-token: write
-  
+
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,6 +32,8 @@ jobs:
         node-version: '16'
     - name: Install Antora
       run: npm i antora
+    - name: Ensure Latest Antora UI Bundle
+      run: curl -O https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
     - name: Generate Site
       run: npx antora antora-playbook.yaml
     - name: Publish to GitHub Pages
