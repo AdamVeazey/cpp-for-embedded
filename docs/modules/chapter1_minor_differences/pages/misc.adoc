@@ -1,17 +1,17 @@
 = MISC.
 :toc:
 
-Before comparing minor differences between C and {cpp}, these are important topics to have common ground on before jumping into the rest of the book.
+Before comparing minor differences between C and {cpp}, it's important to establish common ground on the following key topics before jumping into the rest of the guide.
 
 == {cpp} Is NOT C With Classes
-That is indeed the origin and original name of {cpp} between 1979-1982. Frankly speaking, that early version of {cpp} is similar to pre-C89. {cpp}03 is similar to C89 in the sense that it's the first real standardized version people use. However, it is so old that the way code is written for C89/{cpp}03 shows its age compared to more modern versions of {cpp}. {cpp}11 is similar to C99 in the sense that it's basically the version "1.0" of the language. There are newer standards for both languages, with some of the largest changes happening for both very recently with C23 and {cpp}20.
+That was indeed the origin and original name of {cpp} between 1979-1982. The early version of {cpp} is comparable pre-C89. {cpp}98 is comparable to C89 in that it was the first  standardized version people used. However, it is so old that code written for C89/{cpp}98 looks outdated when compared to more modern versions of {cpp}. {cpp}11 is similar to C99 in that it's effectively version "1.0" of the language. Both languages have introduced newer standards, with some of the most significant changes occurring recently with C23 and {cpp}20.
 
-This guide will focus on modern {cpp} ({cpp}11 and above), as the embedded systems industry continues to use ARM/RISC-V based microcontrollers, you have access to the latest C and {cpp} standards, thanks to GCC.
+This guide focuses on modern {cpp} ({cpp}11 and above), as the embedded systems industry increasingly uses ARM/RISC-V based microcontrollers. Thanks to GCC, you have access to the latest standards in both C and {cpp}.
 
 == Declaration, Definition, Initialization
-In both C and {cpp} functions, types, and variables have a concept of being declared then possibly later defined or initialized. Sometimes, both the declaration and definition/initialization happen in the same step. Sometimes, they occur separately.
+In both C and {cpp}, functions, types, and variables can be declared, and later possibly defined or initialized. In some cases, declaration and definition/initialization happen simultaneously, while in others, they occur separately.
 
-While reading this guide, pay close attention to the language used, particularly declaration and definition. They are not interchangeable, and the guide uses each one with their particular definition in mind.
+While reading this guide, pay close attention to the specific terminology—especially between declarations and definitions. They are not interchangeable terms, and this guide uses them with precision.
 
 [source,c++]
 ----
@@ -35,7 +35,7 @@ struct s {                  // type definition
 ----
 
 == Scope
-Variables, functions, types all have an associated scope. Generally, you get a new scope when you use `{}`. This includes, functions, if statements, loops, etc..
+Variables, functions, and types all have an associated scope. Typically, a new scope is introduced when you use `{}`. This applies to functions, if statements, loops, and other blocks of code.
 
 [source,c++]
 ----
@@ -43,30 +43,30 @@ int fileScopeGlobal = 100;
 
 static void fileScopeFunction() {
     int functionScopeA = 50;
-    for( int i = 0; i < fileScopeA; ++i ) {
-        // i only lives within the scope of this for loop
+    for( int i = 0; i < functionScopeA; ++i ) {
+        // 'i' only lives within the scope of this for loop
     }
 }
 
 struct MyType {
-    // this variable only exists for MyType
-    inline static int value = 500; // between {} for MyType definition
+    // this variable only exists within MyType
+    inline static int value = 500; // within {} for MyType definition
 };
 
 MyType::value; // specify the scope with MyType::
 ----
 
-== Optimization and Undefined behavior
+== Optimization and Undefined Behavior
 
 === TL;DR
 Feel free to use `-Os` or other optimization levels. If your code doesn't rely on undefined behavior, the compiler will not "throw out" any logic.
 
-=== Explain
-In both C and {cpp}, the compiler assumes that your code does not contain undefined behavior (UB). This assumption allows compilers to perform extensive optimizations. There is no danger in turning on higher optimization levels (-Os, -O3, etc...) due to this assumption.
+=== Explanation
+In both C and {cpp}, the compiler assumes your code contains no undefined behavior (UB). This assumption enables extensive compiler optimizations. Therefore, there is no risk in enabling higher optimization levels (-Os, -O3, etc.) provided your code avoids UB.
 
-You might wonder why some particular UB is still undefined, why doesn't the committee just define it? Consider `int`, you might make a reasonable assumption that on many platforms, it is 32-bits. Why doesn't the standard committee just define it to always be a 32-bit signed two's compliment value? Well, not all platforms easily support 32-bit signed two's compliment values.
+You may wonder why certain forms of UB remain undefined—why not just define them? Consider `int`: you might assume it's 32 bits on many platforms. However, not all platforms easily support 32-bit signed two's complement values, which is why the standards committee doesn't enforce this assumption. This means that trying to cast a `int32_t*` to a `int*` is technically undefined behavior, as an `int` and `int32_t` are not guaranteed to be the same.
 
-It is more beneficial to prioritize code clarity over obscure optimizations that may seem efficient but can be harder to maintain.
+Prioritizing code clarity over micro-optimizations often leads to better maintainability and less fragile code. Enabling higher levels of optimization usually means that the more readable code has near/exactly zero impact on code size and/or execution speed.
 
 .Example
 [source,c++]
@@ -97,7 +97,7 @@ else if( rightButtonPressed ) {
 }
 ----
 
-In both code examples, no undefined behavior is present. This allows the compiler to apply optimizations confidently. In the second example, where two boolean variables are used to capture the results of bitwise operations, the compiler is likely to optimize away these variables. This is because the compiler recognizes that the boolean variables are derived from the same myValue and that the bitwise operations are performed in a predictable manner. Consequently, the compiler may generate similar or even identical machine code for both examples, depending on the optimization level and the compiler's ability to perform constant folding and other optimizations.
+In both examples, no undefined behavior is present. This enables the compiler to apply optimizations confidently. In the second example, where boolean variables capture the results of bitwise operations, the compiler will likely optimize away these variables because they are derived from `myValue` and the operations are straightforward. As a result, depending on the optimization level and the compiler's ability to perform constant folding, the generated machine code may be similar or even identical for both examples.
 
 === -O0
-Even compiling with "no" optimizations, the compiler may still do some basic optimizations, such as the low-hanging fruit cases of, basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.
+Even when compiling with no optimizations (`-O0`), the compiler may still perform basic optimizations. These can include basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.
