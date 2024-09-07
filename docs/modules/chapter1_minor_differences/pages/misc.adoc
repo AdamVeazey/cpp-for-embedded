@@ -1,0 +1,103 @@
+= MISC.
+:toc:
+
+Before comparing minor differences between C and {cpp}, these are important topics to have common ground on before jumping into the rest of the book.
+
+== {cpp} Is NOT C With Classes
+That is indeed the origin and original name of {cpp} between 1979-1982. Frankly speaking, that early version of {cpp} is similar to pre-C89. {cpp}03 is similar to C89 in the sense that it's the first real standardized version people use. However, it is so old that the way code is written for C89/{cpp}03 shows its age compared to more modern versions of {cpp}. {cpp}11 is similar to C99 in the sense that it's basically the version "1.0" of the language. There are newer standards for both languages, with some of the largest changes happening for both very recently with C23 and {cpp}20.
+
+This guide will focus on modern {cpp} ({cpp}11 and above), as the embedded systems industry continues to use ARM/RISC-V based microcontrollers, you have access to the latest C and {cpp} standards, thanks to GCC.
+
+== Declaration, Definition, Initialization
+In both C and {cpp} functions, types, and variables have a concept of being declared then possibly later defined or initialized. Sometimes, both the declaration and definition/initialization happen in the same step. Sometimes, they occur separately.
+
+While reading this guide, pay close attention to the language used, particularly declaration and definition. They are not interchangeable, and the guide uses each one with their particular definition in mind.
+
+[source,c++]
+----
+int foo(int x);             // function declaration
+int globalVariable = 10;    // variable declaration & initialization
+
+int foo(int x) {            // function definition
+    int y;                  // variable declaration
+    y = x * 10;             // variable initialization
+    return y;
+}
+
+static void bar(int x) {    // function declaration & definition
+    return x + 10;
+}
+
+struct s;                   // type declaration
+struct s {                  // type definition
+    int data;
+};
+----
+
+== Scope
+Variables, functions, types all have an associated scope. Generally, you get a new scope when you use `{}`. This includes, functions, if statements, loops, etc..
+
+[source,c++]
+----
+int fileScopeGlobal = 100;
+
+static void fileScopeFunction() {
+    int functionScopeA = 50;
+    for( int i = 0; i < fileScopeA; ++i ) {
+        // i only lives within the scope of this for loop
+    }
+}
+
+struct MyType {
+    // this variable only exists for MyType
+    inline static int value = 500; // between {} for MyType definition
+};
+
+MyType::value; // specify the scope with MyType::
+----
+
+== Optimization and Undefined behavior
+
+=== TL;DR
+Feel free to use `-Os` or other optimization levels. If your code doesn't rely on undefined behavior, the compiler will not "throw out" any logic.
+
+=== Explain
+In both C and {cpp}, the compiler assumes that your code does not contain undefined behavior (UB). This assumption allows compilers to perform extensive optimizations. There is no danger in turning on higher optimization levels (-Os, -O3, etc...) due to this assumption.
+
+You might wonder why some particular UB is still undefined, why doesn't the committee just define it? Consider `int`, you might make a reasonable assumption that on many platforms, it is 32-bits. Why doesn't the standard committee just define it to always be a 32-bit signed two's compliment value? Well, not all platforms easily support 32-bit signed two's compliment values.
+
+It is more beneficial to prioritize code clarity over obscure optimizations that may seem efficient but can be harder to maintain.
+
+.Example
+[source,c++]
+----
+uint32_t myValue = 0x02;
+if( (myValue & (0x1 | 0x2)) == (0x1 | 0x2) ) {
+    // both happened
+}
+else if( myValue & 0x1 ) {
+    // left
+}
+else if( myValue & 0x2 ) {
+    // right
+}
+
+// vs
+
+bool leftButtonPressed = myValue & 0x01;
+bool rightButtonPressed = myValue & 0x02;
+if( leftButtonPressed && rightButtonPressed ) {
+    // read the line above like a sentence
+}
+else if( leftButtonPressed ) {
+    // read the line above like a sentence
+}
+else if( rightButtonPressed ) {
+    // read the line above like a sentence
+}
+----
+
+In both code examples, no undefined behavior is present. This allows the compiler to apply optimizations confidently. In the second example, where two boolean variables are used to capture the results of bitwise operations, the compiler is likely to optimize away these variables. This is because the compiler recognizes that the boolean variables are derived from the same myValue and that the bitwise operations are performed in a predictable manner. Consequently, the compiler may generate similar or even identical machine code for both examples, depending on the optimization level and the compiler's ability to perform constant folding and other optimizations.
+
+=== -O0
+Even compiling with "no" optimizations, the compiler may still do some basic optimizations, such as the low-hanging fruit cases of, basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.

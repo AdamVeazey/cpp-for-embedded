@@ -1,4 +1,5 @@
 * xref:index.adoc[Chapter 1: Minor Differences]
+** xref:misc.adoc[MISC.]
 ** xref:implicit_int_return.adoc[Implicit Return Type]
 ** xref:variable_declarations.adoc[Variable Declarations]
 ** xref:empty_parameter_list.adoc[Empty Parameter List]
