@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Implicit Return Type :: C++ For Embedded C Developers</title>
     <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/implicit_int_return.html">
+    <link rel="prev" href="misc.html">
+    <link rel="next" href="variable_declarations.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -69,6 +71,9 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="misc.html">MISC.</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
   </li>
@@ -180,10 +185,7 @@
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Nobody writes code like this anymore.</p>
-</div>
-<div class="paragraph">
-<p>C&#43;&#43; and C standards after C89 do not support implicit return types. Functions must explicitly specify their return type.</p>
+<p>All C&#43;&#43; standards and C standards post-C89 require functions to explicitly specify their return type. Implicit return types are no longer supported.</p>
 </div>
 </div>
 </div>
@@ -191,7 +193,7 @@
 <h2 id="_what"><a class="anchor" href="#_what"></a>What?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C89, if a function didn&#8217;t specify a return type, it was implicitly treated as returning <code>int</code>. This behavior was a holdover from even earlier versions of C, where <code>void</code> wasn&#8217;t a recognized type, so all functions defaulted to returning <code>int</code>. However, starting with C99 and in modern C&#43;&#43; standards, omitting the return type results in a compile-time error, enforcing clearer and more predictable code by requiring explicit return type declarations.</p>
+<p>In C89, if a function didn&#8217;t specify a return type, it was implicitly treated as returning <code>int</code>. This behavior dates back to earlier versions of C, where <code>void</code> was not a recognized type, and thus all functions defaulted to returning <code>int</code>. However, starting with C99 and in all C&#43;&#43; standards, omitting the return type results in a compile-time error. This change enforces clearer and more predictable code by mandating explicit return type declarations.</p>
 </div>
 </div>
 </div>
@@ -199,7 +201,7 @@
 <h2 id="_c89_example"><a class="anchor" href="#_c89_example"></a>C89 Example</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following is a valid C89 program</p>
+<p>The following is a valid C89 program:</p>
 </div>
 <div class="listingblock">
 <div class="title">main.c</div>
@@ -219,7 +221,7 @@ int main(void) {
 </div>
 </div>
 <div class="paragraph">
-<p>Build &amp; run with</p>
+<p>Build &amp; run with:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -228,6 +230,10 @@ int main(void) {
 </div>
 </div>
 </div>
+<nav class="pagination">
+  <span class="prev"><a href="misc.html">MISC.</a></span>
+  <span class="next"><a href="variable_declarations.html">Variable Declarations</a></span>
+</nav>
 </article>
   </div>
 </main>

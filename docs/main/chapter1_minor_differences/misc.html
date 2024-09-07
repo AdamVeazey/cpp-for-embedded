@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MISC. :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/misc.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="implicit_int_return.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://adamveazey.github.io/cpp-for-embedded/docs/main">C++ For Embedded C Developers</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">C++ For Embedded C Developers</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Overview</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="misc.html">MISC.</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bool.html">bool</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="const.html">const</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="typecasting.html">Typecasting</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="constexpr.html">constexpr</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="struct.html">struct</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter2_major_differences/index.html">Chapter 2: Major Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#references.adoc">References</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#namespaces.adoc">Namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#overloads.adoc">Overloads</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#enum_type.adoc">Enum Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#dynamic_memory.adoc">Dynamic Memory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#auto.adoc">auto</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">C++ For Embedded C Developers</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">C++ For Embedded C Developers</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">C++ For Embedded C Developers</a></li>
+    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
+    <li><a href="misc.html">MISC.</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/misc.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">MISC.</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_c_is_not_c_with_classes">C&#43;&#43; Is NOT C With Classes</a></li>
+<li><a href="#_declaration_definition_initialization">Declaration, Definition, Initialization</a></li>
+<li><a href="#_scope">Scope</a></li>
+<li><a href="#_optimization_and_undefined_behavior">Optimization and Undefined Behavior</a>
+<ul class="sectlevel2">
+<li><a href="#_tldr">TL;DR</a></li>
+<li><a href="#_explanation">Explanation</a></li>
+<li><a href="#_o0">-O0</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before comparing minor differences between C and C&#43;&#43;, it&#8217;s important to establish common ground on the following key topics before jumping into the rest of the guide.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_is_not_c_with_classes"><a class="anchor" href="#_c_is_not_c_with_classes"></a>C&#43;&#43; Is NOT C With Classes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>That was indeed the origin and original name of C&#43;&#43; between 1979-1982. The early version of C&#43;&#43; is comparable pre-C89. C&#43;&#43;98 is comparable to C89 in that it was the first  standardized version people used. However, it is so old that code written for C89/C&#43;&#43;98 looks outdated when compared to more modern versions of C&#43;&#43;. C&#43;&#43;11 is similar to C99 in that it&#8217;s effectively version "1.0" of the language. Both languages have introduced newer standards, with some of the most significant changes occurring recently with C23 and C&#43;&#43;20.</p>
+</div>
+<div class="paragraph">
+<p>This guide focuses on modern C&#43;&#43; (C&#43;&#43;11 and above), as the embedded systems industry increasingly uses ARM/RISC-V based microcontrollers. Thanks to GCC, you have access to the latest standards in both C and C&#43;&#43;.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_declaration_definition_initialization"><a class="anchor" href="#_declaration_definition_initialization"></a>Declaration, Definition, Initialization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In both C and C&#43;&#43;, functions, types, and variables can be declared, and later possibly defined or initialized. In some cases, declaration and definition/initialization happen simultaneously, while in others, they occur separately.</p>
+</div>
+<div class="paragraph">
+<p>While reading this guide, pay close attention to the specific terminology—especially between declarations and definitions. They are not interchangeable terms, and this guide uses them with precision.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int foo(int x);             // function declaration
+int globalVariable = 10;    // variable declaration &amp; initialization
+
+int foo(int x) {            // function definition
+    int y;                  // variable declaration
+    y = x * 10;             // variable initialization
+    return y;
+}
+
+static void bar(int x) {    // function declaration &amp; definition
+    return x + 10;
+}
+
+struct s;                   // type declaration
+struct s {                  // type definition
+    int data;
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scope"><a class="anchor" href="#_scope"></a>Scope</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Variables, functions, and types all have an associated scope. Typically, a new scope is introduced when you use <code>{}</code>. This applies to functions, if statements, loops, and other blocks of code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int fileScopeGlobal = 100;
+
+static void fileScopeFunction() {
+    int functionScopeA = 50;
+    for( int i = 0; i &lt; functionScopeA; ++i ) {
+        // 'i' only lives within the scope of this for loop
+    }
+}
+
+struct MyType {
+    // this variable only exists within MyType
+    inline static int value = 500; // within {} for MyType definition
+};
+
+MyType::value; // specify the scope with MyType::</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optimization_and_undefined_behavior"><a class="anchor" href="#_optimization_and_undefined_behavior"></a>Optimization and Undefined Behavior</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h3>
+<div class="paragraph">
+<p>Feel free to use <code>-Os</code> or other optimization levels. If your code doesn&#8217;t rely on undefined behavior, the compiler will not "throw out" any logic.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_explanation"><a class="anchor" href="#_explanation"></a>Explanation</h3>
+<div class="paragraph">
+<p>In both C and C&#43;&#43;, the compiler assumes your code contains no undefined behavior (UB). This assumption enables extensive compiler optimizations. Therefore, there is no risk in enabling higher optimization levels (-Os, -O3, etc.) provided your code avoids UB.</p>
+</div>
+<div class="paragraph">
+<p>You may wonder why certain forms of UB remain undefined—why not just define them? Consider <code>int</code>: you might assume it&#8217;s 32 bits on many platforms. However, not all platforms easily support 32-bit signed two&#8217;s complement values, which is why the standards committee doesn&#8217;t enforce this assumption. This means that trying to cast a <code>int32_t*</code> to a <code>int*</code> is technically undefined behavior, as an <code>int</code> and <code>int32_t</code> are not guaranteed to be the same.</p>
+</div>
+<div class="paragraph">
+<p>Prioritizing code clarity over micro-optimizations often leads to better maintainability and less fragile code. Enabling higher levels of optimization usually means that the more readable code has near/exactly zero impact on code size and/or execution speed.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">uint32_t myValue = 0x02;
+if( (myValue &amp; (0x1 | 0x2)) == (0x1 | 0x2) ) {
+    // both happened
+}
+else if( myValue &amp; 0x1 ) {
+    // left
+}
+else if( myValue &amp; 0x2 ) {
+    // right
+}
+
+// vs
+
+bool leftButtonPressed = myValue &amp; 0x01;
+bool rightButtonPressed = myValue &amp; 0x02;
+if( leftButtonPressed &amp;&amp; rightButtonPressed ) {
+    // read the line above like a sentence
+}
+else if( leftButtonPressed ) {
+    // read the line above like a sentence
+}
+else if( rightButtonPressed ) {
+    // read the line above like a sentence
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In both examples, no undefined behavior is present. This enables the compiler to apply optimizations confidently. In the second example, where boolean variables capture the results of bitwise operations, the compiler will likely optimize away these variables because they are derived from <code>myValue</code> and the operations are straightforward. As a result, depending on the optimization level and the compiler&#8217;s ability to perform constant folding, the generated machine code may be similar or even identical for both examples.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_o0"><a class="anchor" href="#_o0"></a>-O0</h3>
+<div class="paragraph">
+<p>Even when compiling with no optimizations (<code>-O0</code>), the compiler may still perform basic optimizations. These can include basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Chapter 1: Minor Differences</a></span>
+  <span class="next"><a href="implicit_int_return.html">Implicit Return Type</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

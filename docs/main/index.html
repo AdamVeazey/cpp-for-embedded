@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Overview :: C++ For Embedded C Developers</title>
     <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/index.html">
+    <link rel="next" href="chapter1_minor_differences/index.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../_/css/site.css">
   </head>
@@ -69,6 +70,9 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="chapter1_minor_differences/index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chapter1_minor_differences/misc.html">MISC.</a>
+  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="chapter1_minor_differences/implicit_int_return.html">Implicit Return Type</a>
   </li>
@@ -164,118 +168,15 @@
 </aside>
 <article class="doc">
 <h1 class="page">Overview</h1>
-<div id="preamble">
-<div class="sectionbody">
 <div class="paragraph">
-<p>This guide is designed to help embedded software developers who are already familiar with C to learn the C&#43;&#43; features that are particularly useful in embedded systems. It assumes you have intermediate to advanced knowledge of C.</p>
+<p>This guide is designed to help embedded software developers who are already familiar with C to learn the C&#43;&#43; features that are particularly useful in embedded systems. It assumes you have an intermediate to advanced knowledge of C.</p>
 </div>
 <div class="paragraph">
-<p>There are a few MISC topics that will make reading this guide more helpful.</p>
+<p>No matter your experience level with C, it is recommended that you read all of Chapter 1 in order. As you progress through the guide, the importance of following the chapters in order diminishes.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_declaration_definition_initialization"><a class="anchor" href="#_declaration_definition_initialization"></a>Declaration, Definition, Initialization</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In both C and C&#43;&#43; functions, types, and variables have a concept of being declared then possibly later defined or initialized. Sometimes, both the declaration and definition/initialization happen in the same step. Sometimes, they occur separately. Pay close attention to the language used, particularly declaration and definition.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int foo(int x);             // function declaration
-int globalVariable = 10;    // variable declaration &amp; initialization
-
-int foo(int x) {            // function definition
-    int y;                  // variable declaration
-    y = x * 10;             // variable initialization
-    return y;
-}
-
-static void bar(int x) {    // function declaration &amp; definition
-    return x + 10;
-}
-
-struct s;                   // type declaration
-struct s {                  // type definition
-    int data;
-};</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_scope"><a class="anchor" href="#_scope"></a>Scope</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Variables, functions, types all have an associated scope. Generally, you get a new scope when you use <code>{}</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int fileScopeGlobal = 100;
-
-static void fileScopeFunction() {
-    int functionScopeA = 50;
-    for( int i = 0; i &lt; fileScopeA; ++i ) {
-        // i only lives within the scope of this for loop
-    }
-}
-
-struct MyType {
-    // this variable only exists for MyType
-    inline static int value = 500; // between {} for MyType definition
-};
-
-MyType::value; // specify the scope with MyType::</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_optimization_and_undefined_behavior"><a class="anchor" href="#_optimization_and_undefined_behavior"></a>Optimization and Undefined behavior</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In both C and C&#43;&#43;, the compiler assumes that your code does not contain undefined behavior (UB). This assumption allows compilers to perform extensive optimizations. Since UB enables architecture-specific optimizations for performance and code size, writing correct and readable code is crucial for long-term maintenance. It is more beneficial to prioritize code clarity over obscure optimizations that may seem efficient but can be harder to maintain.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">uint32_t myValue = 0x02;
-if( (myValue &amp; (0x1 | 0x2)) == (0x1 | 0x2) ) {
-    // both happened
-}
-else if( myValue &amp; 0x1 ) {
-    // left
-}
-else if( myValue &amp; 0x2 ) {
-    // right
-}
-
-// vs
-
-bool leftButtonPressed = myValue &amp; 0x01;
-bool rightButtonPressed = myValue &amp; 0x02;
-if( leftButtonPressed &amp;&amp; rightButtonPressed ) {
-    // read the line above like a sentence
-}
-else if( leftButtonPressed ) {
-    // read the line above like a sentence
-}
-else if( rightButtonPressed ) {
-    // read the line above like a sentence
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In both code examples, no undefined behavior is present. This allows the compiler to apply optimizations confidently. In the second example, where two boolean variables are used to capture the results of bitwise operations, the compiler is likely to optimize away these variables. This is because the compiler recognizes that the boolean variables are derived from the same myValue and that the bitwise operations are performed in a predictable manner. Consequently, the compiler may generate similar or even identical machine code for both examples, depending on the optimization level and the compiler&#8217;s ability to perform constant folding and other optimizations.</p>
-</div>
-<div class="sect2">
-<h3 id="_o0"><a class="anchor" href="#_o0"></a>-O0</h3>
-<div class="paragraph">
-<p>Even compiling with "no" optimizations, the compiler may still do some basic optimizations, such as the low-hanging fruit cases of, basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.</p>
-</div>
-</div>
-</div>
-</div>
+<nav class="pagination">
+  <span class="next"><a href="chapter1_minor_differences/index.html">Chapter 1: Minor Differences</a></span>
+</nav>
 </article>
   </div>
 </main>
