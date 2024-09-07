@@ -7,16 +7,16 @@ void bar();
 ----
 
 == TL;DR
-Use `()` over `(void)` for function declarations with zero arguments.
+Use `()` over `(void)` for function declarations with zero arguments. Similar to the change from xref:implicit_int_return.adoc[implicit return types], in {cpp} you should use `void bar();` instead of the C-compatible `void foo(void);`.
 
 == C
 * `void foo(void);` explicitly declares a function that takes no arguments.
 * `void bar();` leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function's definition. It is up to the programmer to call the function with the correct number and types of arguments.
-* `void bar();` does **not** have a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.
+* `void bar();` does **not** imply a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.
 
 == {cpp}
-* `void foo(void);` explicitly declares a function that takes no arguments
-* `void bar();` explicitly declares a function that takes no arguments
+* `void foo(void);` explicitly declares a function that takes no arguments.
+* `void bar();` explicitly declares a function that takes no arguments.
 
 == History
 In early versions of C, pre-C89, `void bar();` was the only way to declare a function, leaving the parameters unspecified. When C adopted function prototypes from {cpp}, the need for backward compatibility led to the creation of `void foo(void);` to explicitly indicate that a function takes no arguments. {cpp} continued to support both styles, with `void foo(void);` used primarily for compatibility with C.
