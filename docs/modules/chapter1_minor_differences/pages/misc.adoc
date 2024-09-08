@@ -1,30 +1,49 @@
 = MISC.
 :toc:
 
-Before comparing minor differences between C and {cpp}, it's important to establish common ground on the following key topics before jumping into the rest of the guide.
+This section covers key topics that provide foundational knowledge before exploring differences between C and {cpp}. Understanding these fundamentals is crucial for effectively navigating the rest of the guide.
 
-== {cpp} Is NOT C With Classes
-That was indeed the origin and original name of {cpp} between 1979-1982. The early version of {cpp} is comparable pre-C89. {cpp}98 is comparable to C89 in that it was the first  standardized version people used. However, it is so old that code written for C89/{cpp}98 looks outdated when compared to more modern versions of {cpp}. {cpp}11 is similar to C99 in that it's effectively version "1.0" of the language. Both languages have introduced newer standards, with some of the most significant changes occurring recently with C23 and {cpp}20.
+== Not Your Fathers {cpp}
+{cpp} was originally referred to as "C with Classes" from 1979-1982. This early version of {cpp}, akin to pre-standard C, is now outdated. {cpp}03, similar to C89, appears outdated compared to modern standards, but you may still encounter it in legacy code bases. {cpp}11, comparable to C99, represents a significant evolution, one may argue it's the version "1.0" of these languages. Recent updates like C23 and {cpp}23 reflect further advancements.
 
-This guide focuses on modern {cpp} ({cpp}11 and above), as the embedded systems industry increasingly uses ARM/RISC-V based microcontrollers. Thanks to GCC, you have access to the latest standards in both C and {cpp}.
+=== C Standards
+* *C99*: Introduced enhancements such as new data types (e.g., long long int), flexible array members, and variable-length arrays.
+* *C11*: Added improvements like multithreading support, atomic operations, and enhanced standard library functions.
+* *C23*: The latest standard, offering improvements in type-generic programming, enhanced standard library functions, and more. Support is growing, especially with leading compilers like GCC.
+
+=== {cpp} Standards
+* *{cpp}03*: The first major update after {cpp}98, adding minor improvements and bug fixes. Still in use on legacy systems but considered outdated.
+* *{cpp}11*: Introduced features like auto type deduction, lambda expressions, smart pointers, and concurrency support. Most modern embedded toolchains support {cpp}11.
+* *{cpp}14 and {cpp}17*: Provided further refinements and enhancements.
+* *{cpp}20*: Added concepts, ranges, calendar and time zone libraries, and other features enhancing expressiveness and safety.
+* *{cpp}23*: The latest standard, feature improvements for constexpr and consteval, as well as additions to the standard library, like std::expected. Support from major compilers is beginning to emerge.
+
+=== Support for Modern Standards
+As of this writing:
+
+* *GCC*: Version 11 fully supports {cpp}20. Version 12 has partial {cpp}23 support. Version 13 has extensive {cpp}23 support. GCC supports practically any ARM or RISC-V CPU you would want to use. This includes SoftCore's on an FPGA, like the MicroBlaze and Nios II cores, as well as 'hard' ARM/RISC-V cores in an SoC.
+* *ARM Compiler (Arm Keil MDK)*: Arm Compiler 6.x supports {cpp}14 and some {cpp}17 features.
+* *IAR Embedded Workbench*: Supports {cpp}11 and some features of {cpp}14, with incremental improvements for some {cpp}17 features.
+
+This guide focuses on modern {cpp} ({cpp}11 and above) for the embedded systems industry, particularly for ARM/RISC-V microcontrollers, as major compilers support at least {cpp}11.
 
 == Declaration, Definition, Initialization
-In both C and {cpp}, functions, types, and variables can be declared, and later possibly defined or initialized. In some cases, declaration and definition/initialization happen simultaneously, while in others, they occur separately.
+Functions, types, and variables in both C and {cpp} can be declared, defined, or initialized. These processes might occur simultaneously or separately.
 
-While reading this guide, pay close attention to the specific terminology—especially between declarations and definitions. They are not interchangeable terms, and this guide uses them with precision.
+Understanding the precise terminology—declarations and definitions—is crucial, as they are not interchangeable.
 
 [source,c++]
 ----
-int foo(int x);             // function declaration
+int foo( int x );           // function declaration
 int globalVariable = 10;    // variable declaration & initialization
 
-int foo(int x) {            // function definition
+int foo( int x ) {          // function definition
     int y;                  // variable declaration
     y = x * 10;             // variable initialization
     return y;
 }
 
-static void bar(int x) {    // function declaration & definition
+static void bar( int x ) {  // function declaration & definition
     return x + 10;
 }
 
@@ -35,38 +54,46 @@ struct s {                  // type definition
 ----
 
 == Scope
-Variables, functions, and types all have an associated scope. Typically, a new scope is introduced when you use `{}`. This applies to functions, if statements, loops, and other blocks of code.
+Scope refers to the visibility and lifetime of variables, functions, and types. Typically, a new scope is introduced with `{}`, such as in functions, if statements, loops, and other blocks of code. Tightening the scope of variables, functions, and types reduces their exposure and enhances encapsulation.
+
+You can create new scopes by using `{}`:
 
 [source,c++]
 ----
 int fileScopeGlobal = 100;
 
 static void fileScopeFunction() {
-    int functionScopeA = 50;
-    for( int i = 0; i < functionScopeA; ++i ) {
-        // 'i' only lives within the scope of this for loop
+    int functionScope = 50;
+    for( int loopScope = 0; loopScope < functionScope; ++loopScope ) {
+        // 'loopScope' only lives within the scope of this for loop
     }
+    {
+        int newScope = functionScope + globalScope;
+        // newScope only exists within this inner block
+    }
+    // newScope no longer exists
 }
 
 struct MyType {
-    // this variable only exists within MyType
+    // This variable only exists within MyType
     inline static int value = 500; // within {} for MyType definition
 };
 
-MyType::value; // specify the scope with MyType::
+MyType::value; // Specify the scope with MyType::
 ----
+
+=== Variable Lifetimes
+Scope controls stack variable lifetimes. When an object is created, resources are allocated (e.g., memory), and when the object's lifetime ends (goes out of scope), resources are freed. This behavior is central to the {cpp} principle of Resource Acquisition Is Initialization (RAII), which ensures effective resource management.
 
 == Optimization and Undefined Behavior
 
 === TL;DR
-Feel free to use `-Os` or other optimization levels. If your code doesn't rely on undefined behavior, the compiler will not "throw out" any logic.
+Use `-Os` or other optimization levels confidently, provided your code avoids undefined behavior. The compiler will not discard any logic.
 
 === Explanation
-In both C and {cpp}, the compiler assumes your code contains no undefined behavior (UB). This assumption enables extensive compiler optimizations. Therefore, there is no risk in enabling higher optimization levels (-Os, -O3, etc.) provided your code avoids UB.
+Compilers assume code does not contain undefined behavior (UB), allowing them to perform extensive optimizations. UB remains undefined because standards aim to be implementation-agnostic. For instance, while `int` might be 32 bits on many platforms, it's not universally guaranteed. Therefore, casting `int32_t*` to `int*` is undefined behavior, as `int` and `int32_t` are not necessarily the same.
 
-You may wonder why certain forms of UB remain undefined—why not just define them? Consider `int`: you might assume it's 32 bits on many platforms. However, not all platforms easily support 32-bit signed two's complement values, which is why the standards committee doesn't enforce this assumption. This means that trying to cast a `int32_t*` to a `int*` is technically undefined behavior, as an `int` and `int32_t` are not guaranteed to be the same.
-
-Prioritizing code clarity over micro-optimizations often leads to better maintainability and less fragile code. Enabling higher levels of optimization usually means that the more readable code has near/exactly zero impact on code size and/or execution speed.
+When writing code, it's often tempting to optimize for performance by minimizing operations. However, modern compilers are highly adept at optimizing code, often better than manual optimizations. As long as your code avoids undefined behavior, the compiler handles optimizations efficiently. Adding extra variables for clarity, such as boolean flags, generally does not impact performance at higher optimization levels (-O1, -O2, -O3, -Os). The compiler is likely to generate similar or identical machine code whether you use compact bitwise operations or more readable boolean expressions.
 
 .Example
 [source,c++]
@@ -87,17 +114,14 @@ else if( myValue & 0x2 ) {
 bool leftButtonPressed = myValue & 0x01;
 bool rightButtonPressed = myValue & 0x02;
 if( leftButtonPressed && rightButtonPressed ) {
-    // read the line above like a sentence
+    // Read the line above like a sentence
 }
 else if( leftButtonPressed ) {
-    // read the line above like a sentence
+    // Read the line above like a sentence
 }
 else if( rightButtonPressed ) {
-    // read the line above like a sentence
+    // Read the line above like a sentence
 }
 ----
 
-In both examples, no undefined behavior is present. This enables the compiler to apply optimizations confidently. In the second example, where boolean variables capture the results of bitwise operations, the compiler will likely optimize away these variables because they are derived from `myValue` and the operations are straightforward. As a result, depending on the optimization level and the compiler's ability to perform constant folding, the generated machine code may be similar or even identical for both examples.
-
-=== -O0
-Even when compiling with no optimizations (`-O0`), the compiler may still perform basic optimizations. These can include basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.
+Both examples avoid undefined behavior, allowing the compiler to optimize confidently. In the second example, boolean variables capture the results of bitwise operations, which may lead the compiler to optimize away these variables due to straightforward operations. Thus, the generated machine code may be similar or identical.
