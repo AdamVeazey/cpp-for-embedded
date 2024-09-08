@@ -174,7 +174,7 @@
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void c89(void) {
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">void c89(void) {
     int a;
     int b;
     int i;
@@ -206,18 +206,10 @@
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In modern C and C&#43;&#43;, declaring variables as close as possible to their point of use improves readability, reduces the chance of errors, and allows for more efficient memory usage.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_comparison"><a class="anchor" href="#_comparison"></a>Comparison</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the c89 function, all three variables (<code>a</code>, <code>b</code>, and <code>i</code>) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.</p>
+<p>There&#8217;s no benefit to sticking with C89-style variable declaration in C&#43;&#43;.</p>
 </div>
 <div class="paragraph">
-<p>In the modern function, the variable <code>i</code> is declared within the for loop, limiting its scope to the loop. After the loop ends, the memory used by <code>i</code> is no longer needed, potentially allowing the compiler to reuse that space for variable <code>b</code>, which can lead to more efficient memory usage.</p>
+<p>Modern C and C&#43;&#43; practices favor declaring variables close to their point of use. This shift from older practices, similar to the move away from <a href="implicit_int_return.html" class="xref page">implicit return types</a>, improves code clarity and memory efficiency.</p>
 </div>
 </div>
 </div>
@@ -225,10 +217,21 @@
 <h2 id="_what"><a class="anchor" href="#_what"></a>What?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In C89, variables <strong><em>must</em></strong> be declared at the beginning of a block before any executable statements.</p>
+<p>In C89, variables <strong>must</strong> be declared at the beginning of a block, before any other statements.</p>
 </div>
 <div class="paragraph">
-<p>In C99 and later versions of C, and in C&#43;&#43;, variables can be declared anywhere within a block, not just at the beginning.</p>
+<p>Starting with C99 and continuing into C&#43;&#43;, variables can be declared anywhere within a block, leading to more flexible and readable code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_comparison"><a class="anchor" href="#_code_comparison"></a>Code Comparison</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <code>c89</code> function, all three variables (<code>a</code>, <code>b</code>, and <code>i</code>) are declared at the start of the block, reserving stack space for them even if not all are immediately used.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>modern</code> function, <code>i</code> is declared within the for loop, limiting its scope to the loop. Once the loop ends, <code>i&#8217;s memory is released, which potentially allows the compiler to optimize memory usage by reusing that space for `b</code>.</p>
 </div>
 </div>
 </div>
@@ -238,21 +241,79 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>You&#8217;re less likely to need to scroll up/down to see the type of a variable, making the code easier to read and maintain</p>
+<p>Declaring and initializing variables close to their usage ensures they start with a known value, minimizing bugs from uninitialized variables.</p>
 </li>
 <li>
-<p>Declaring variables close to their point of use helps take advantage of <a href="https://en.cppreference.com/w/cpp/language/copy_elision">return value optimization</a> and other compiler optimizations when returning large objects<br>
-<code>Data data = parseData();</code></p>
+<p>Declaring variables near their point of use helps the compiler with optimizations like <a href="https://en.cppreference.com/w/cpp/language/copy_elision">return value optimization</a>, especially with large objects. Example:<br>
+<code>Data data = parseData();</code><br></p>
 </li>
 <li>
-<p>You avoid wasting stack space on variables that don&#8217;t need to exist for the entire block<br>
+<p>Limiting variable scope avoids wasting stack space on variables not needed throughout the block. Example:<br>
 <code>for( int i = 0; i &lt; 5; ++i ) {}</code><br>
-<code>i</code> doesn&#8217;t need to live outside of the scope of this <code>for</code> loop</p>
+<code>i</code> only exists within the loop, freeing its memory immediately after.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>The modern languages allow for more flexible and readable code, as variables can be declared closer to their point of use. Tightening the lifetime of variables is a general concept that will lead to better memory efficiency, as you won&#8217;t have variables exist in memory for longer than they&#8217;re actually needed.</p>
+<p>Modern practices enhance memory management and code maintainability by confining variable lifetimes to their necessary scopes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_list_initialization"><a class="anchor" href="#_list_initialization"></a>List Initialization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>C&#43;&#43; supports list initialization for variables, offering:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Consistent Syntax</strong>: The <code>{}</code> syntax is uniform across simple variables, arrays, structs, and user-defined types, promoting consistency in code.</p>
+</li>
+<li>
+<p><strong>Narrowing Conversion Prevention</strong>: List initialization prevents implicit narrowing conversions, where a larger data type might be truncated when assigned to a smaller data type, reducing potential bugs. Braces ensure the compiler flags such conversions.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int a{5};         // same as int a = 5;
+double b{4.5};    // same as double b = 4.5;
+float c{4.5};     // Narrowing conversion allowed since 4.5 fits in a float
+
+// Prevents narrowing conversion
+int d{4.5};       // Error: cannot convert double to int
+float e{1e40};    // Error: overflow: cannot convert large double to float
+
+int arr[3]{1, 2, 3};  // List initialization for arrays
+
+struct Point {
+    int x;
+    int y;
+};
+
+Point p{10, 20};  // List initialization for structs</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_designated_initializers_for_aggregate_types"><a class="anchor" href="#_designated_initializers_for_aggregate_types"></a>Designated Initializers For Aggregate Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While C&#43;&#43; does not support designated initializers in the same way as C, C&#43;&#43;20 introduces them for aggregate initialization with <a href="https://en.cppreference.com/w/cpp/language/aggregate_initialization">aggregate types</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">struct Point {
+    int x;
+    int y;
+};
+
+// Designated initialization in C++20
+Point p{.x = 10, .y = 20};</code></pre>
+</div>
 </div>
 </div>
 </div>

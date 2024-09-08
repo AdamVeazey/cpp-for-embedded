@@ -173,14 +173,23 @@
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_c_is_not_c_with_classes">C&#43;&#43; Is NOT C With Classes</a></li>
+<li><a href="#_not_your_fathers_c">Not Your Fathers C&#43;&#43;</a>
+<ul class="sectlevel2">
+<li><a href="#_c_standards">C Standards</a></li>
+<li><a href="#_c_standards_2">C&#43;&#43; Standards</a></li>
+<li><a href="#_support_for_modern_standards">Support for Modern Standards</a></li>
+</ul>
+</li>
 <li><a href="#_declaration_definition_initialization">Declaration, Definition, Initialization</a></li>
-<li><a href="#_scope">Scope</a></li>
+<li><a href="#_scope">Scope</a>
+<ul class="sectlevel2">
+<li><a href="#_variable_lifetimes">Variable Lifetimes</a></li>
+</ul>
+</li>
 <li><a href="#_optimization_and_undefined_behavior">Optimization and Undefined Behavior</a>
 <ul class="sectlevel2">
 <li><a href="#_tldr">TL;DR</a></li>
 <li><a href="#_explanation">Explanation</a></li>
-<li><a href="#_o0">-O0</a></li>
 </ul>
 </li>
 </ul>
@@ -188,18 +197,75 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Before comparing minor differences between C and C&#43;&#43;, it&#8217;s important to establish common ground on the following key topics before jumping into the rest of the guide.</p>
+<p>This section covers key topics that provide foundational knowledge before exploring differences between C and C&#43;&#43;. Understanding these fundamentals is crucial for effectively navigating the rest of the guide.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_c_is_not_c_with_classes"><a class="anchor" href="#_c_is_not_c_with_classes"></a>C&#43;&#43; Is NOT C With Classes</h2>
+<h2 id="_not_your_fathers_c"><a class="anchor" href="#_not_your_fathers_c"></a>Not Your Fathers C&#43;&#43;</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>That was indeed the origin and original name of C&#43;&#43; between 1979-1982. The early version of C&#43;&#43; is comparable pre-C89. C&#43;&#43;98 is comparable to C89 in that it was the first  standardized version people used. However, it is so old that code written for C89/C&#43;&#43;98 looks outdated when compared to more modern versions of C&#43;&#43;. C&#43;&#43;11 is similar to C99 in that it&#8217;s effectively version "1.0" of the language. Both languages have introduced newer standards, with some of the most significant changes occurring recently with C23 and C&#43;&#43;20.</p>
+<p>C&#43;&#43; was originally referred to as "C with Classes" from 1979-1982. This early version of C&#43;&#43;, akin to pre-standard C, is now outdated. C&#43;&#43;03, similar to C89, appears outdated compared to modern standards, but you may still encounter it in legacy code bases. C&#43;&#43;11, comparable to C99, represents a significant evolution, one may argue it&#8217;s the version "1.0" of these languages. Recent updates like C23 and C&#43;&#43;23 reflect further advancements.</p>
+</div>
+<div class="sect2">
+<h3 id="_c_standards"><a class="anchor" href="#_c_standards"></a>C Standards</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>C99</strong>: Introduced enhancements such as new data types (e.g., long long int), flexible array members, and variable-length arrays.</p>
+</li>
+<li>
+<p><strong>C11</strong>: Added improvements like multithreading support, atomic operations, and enhanced standard library functions.</p>
+</li>
+<li>
+<p><strong>C23</strong>: The latest standard, offering improvements in type-generic programming, enhanced standard library functions, and more. Support is growing, especially with leading compilers like GCC.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_c_standards_2"><a class="anchor" href="#_c_standards_2"></a>C&#43;&#43; Standards</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>C&#43;&#43;03</strong>: The first major update after C&#43;&#43;98, adding minor improvements and bug fixes. Still in use on legacy systems but considered outdated.</p>
+</li>
+<li>
+<p><strong>C&#43;&#43;11</strong>: Introduced features like auto type deduction, lambda expressions, smart pointers, and concurrency support. Most modern embedded toolchains support C&#43;&#43;11.</p>
+</li>
+<li>
+<p><strong>C&#43;&#43;14 and C&#43;&#43;17</strong>: Provided further refinements and enhancements.</p>
+</li>
+<li>
+<p><strong>C&#43;&#43;20</strong>: Added concepts, ranges, calendar and time zone libraries, and other features enhancing expressiveness and safety.</p>
+</li>
+<li>
+<p><strong>C&#43;&#43;23</strong>: The latest standard, feature improvements for constexpr and consteval, as well as additions to the standard library, like std::expected. Support from major compilers is beginning to emerge.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_support_for_modern_standards"><a class="anchor" href="#_support_for_modern_standards"></a>Support for Modern Standards</h3>
+<div class="paragraph">
+<p>As of this writing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>GCC</strong>: Version 11 fully supports C&#43;&#43;20. Version 12 has partial C&#43;&#43;23 support. Version 13 has extensive C&#43;&#43;23 support. GCC supports practically any ARM or RISC-V CPU you would want to use. This includes SoftCore&#8217;s on an FPGA, like the MicroBlaze and Nios II cores, as well as 'hard' ARM/RISC-V cores in an SoC.</p>
+</li>
+<li>
+<p><strong>ARM Compiler (Arm Keil MDK)</strong>: Arm Compiler 6.x supports C&#43;&#43;14 and some C&#43;&#43;17 features.</p>
+</li>
+<li>
+<p><strong>IAR Embedded Workbench</strong>: Supports C&#43;&#43;11 and some features of C&#43;&#43;14, with incremental improvements for some C&#43;&#43;17 features.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>This guide focuses on modern C&#43;&#43; (C&#43;&#43;11 and above), as the embedded systems industry increasingly uses ARM/RISC-V based microcontrollers. Thanks to GCC, you have access to the latest standards in both C and C&#43;&#43;.</p>
+<p>This guide focuses on modern C&#43;&#43; (C&#43;&#43;11 and above) for the embedded systems industry, particularly for ARM/RISC-V microcontrollers, as major compilers support at least C&#43;&#43;11.</p>
+</div>
 </div>
 </div>
 </div>
@@ -207,23 +273,23 @@
 <h2 id="_declaration_definition_initialization"><a class="anchor" href="#_declaration_definition_initialization"></a>Declaration, Definition, Initialization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In both C and C&#43;&#43;, functions, types, and variables can be declared, and later possibly defined or initialized. In some cases, declaration and definition/initialization happen simultaneously, while in others, they occur separately.</p>
+<p>Functions, types, and variables in both C and C&#43;&#43; can be declared, defined, or initialized. These processes might occur simultaneously or separately.</p>
 </div>
 <div class="paragraph">
-<p>While reading this guide, pay close attention to the specific terminology—especially between declarations and definitions. They are not interchangeable terms, and this guide uses them with precision.</p>
+<p>Understanding the precise terminology—declarations and definitions—is crucial, as they are not interchangeable.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int foo(int x);             // function declaration
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int foo( int x );           // function declaration
 int globalVariable = 10;    // variable declaration &amp; initialization
 
-int foo(int x) {            // function definition
+int foo( int x ) {          // function definition
     int y;                  // variable declaration
     y = x * 10;             // variable initialization
     return y;
 }
 
-static void bar(int x) {    // function declaration &amp; definition
+static void bar( int x ) {  // function declaration &amp; definition
     return x + 10;
 }
 
@@ -239,25 +305,39 @@ struct s {                  // type definition
 <h2 id="_scope"><a class="anchor" href="#_scope"></a>Scope</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Variables, functions, and types all have an associated scope. Typically, a new scope is introduced when you use <code>{}</code>. This applies to functions, if statements, loops, and other blocks of code.</p>
+<p>Scope refers to the visibility and lifetime of variables, functions, and types. Typically, a new scope is introduced with <code>{}</code>, such as in functions, if statements, loops, and other blocks of code. Tightening the scope of variables, functions, and types reduces their exposure and enhances encapsulation.</p>
+</div>
+<div class="paragraph">
+<p>You can create new scopes by using <code>{}</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">int fileScopeGlobal = 100;
 
 static void fileScopeFunction() {
-    int functionScopeA = 50;
-    for( int i = 0; i &lt; functionScopeA; ++i ) {
-        // 'i' only lives within the scope of this for loop
+    int functionScope = 50;
+    for( int loopScope = 0; loopScope &lt; functionScope; ++loopScope ) {
+        // 'loopScope' only lives within the scope of this for loop
     }
+    {
+        int newScope = functionScope + globalScope;
+        // newScope only exists within this inner block
+    }
+    // newScope no longer exists
 }
 
 struct MyType {
-    // this variable only exists within MyType
+    // This variable only exists within MyType
     inline static int value = 500; // within {} for MyType definition
 };
 
-MyType::value; // specify the scope with MyType::</code></pre>
+MyType::value; // Specify the scope with MyType::</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variable_lifetimes"><a class="anchor" href="#_variable_lifetimes"></a>Variable Lifetimes</h3>
+<div class="paragraph">
+<p>Scope controls stack variable lifetimes. When an object is created, resources are allocated (e.g., memory), and when the object&#8217;s lifetime ends (goes out of scope), resources are freed. This behavior is central to the C&#43;&#43; principle of Resource Acquisition Is Initialization (RAII), which ensures effective resource management.</p>
 </div>
 </div>
 </div>
@@ -268,19 +348,16 @@ MyType::value; // specify the scope with MyType::</code></pre>
 <div class="sect2">
 <h3 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h3>
 <div class="paragraph">
-<p>Feel free to use <code>-Os</code> or other optimization levels. If your code doesn&#8217;t rely on undefined behavior, the compiler will not "throw out" any logic.</p>
+<p>Use <code>-Os</code> or other optimization levels confidently, provided your code avoids undefined behavior. The compiler will not discard any logic.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_explanation"><a class="anchor" href="#_explanation"></a>Explanation</h3>
 <div class="paragraph">
-<p>In both C and C&#43;&#43;, the compiler assumes your code contains no undefined behavior (UB). This assumption enables extensive compiler optimizations. Therefore, there is no risk in enabling higher optimization levels (-Os, -O3, etc.) provided your code avoids UB.</p>
+<p>Compilers assume code does not contain undefined behavior (UB), allowing them to perform extensive optimizations. UB remains undefined because standards aim to be implementation-agnostic. For instance, while <code>int</code> might be 32 bits on many platforms, it&#8217;s not universally guaranteed. Therefore, casting <code>int32_t*</code> to <code>int*</code> is undefined behavior, as <code>int</code> and <code>int32_t</code> are not necessarily the same.</p>
 </div>
 <div class="paragraph">
-<p>You may wonder why certain forms of UB remain undefined—why not just define them? Consider <code>int</code>: you might assume it&#8217;s 32 bits on many platforms. However, not all platforms easily support 32-bit signed two&#8217;s complement values, which is why the standards committee doesn&#8217;t enforce this assumption. This means that trying to cast a <code>int32_t*</code> to a <code>int*</code> is technically undefined behavior, as an <code>int</code> and <code>int32_t</code> are not guaranteed to be the same.</p>
-</div>
-<div class="paragraph">
-<p>Prioritizing code clarity over micro-optimizations often leads to better maintainability and less fragile code. Enabling higher levels of optimization usually means that the more readable code has near/exactly zero impact on code size and/or execution speed.</p>
+<p>When writing code, it&#8217;s often tempting to optimize for performance by minimizing operations. However, modern compilers are highly adept at optimizing code, often better than manual optimizations. As long as your code avoids undefined behavior, the compiler handles optimizations efficiently. Adding extra variables for clarity, such as boolean flags, generally does not impact performance at higher optimization levels (-O1, -O2, -O3, -Os). The compiler is likely to generate similar or identical machine code whether you use compact bitwise operations or more readable boolean expressions.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example</div>
@@ -301,24 +378,18 @@ else if( myValue &amp; 0x2 ) {
 bool leftButtonPressed = myValue &amp; 0x01;
 bool rightButtonPressed = myValue &amp; 0x02;
 if( leftButtonPressed &amp;&amp; rightButtonPressed ) {
-    // read the line above like a sentence
+    // Read the line above like a sentence
 }
 else if( leftButtonPressed ) {
-    // read the line above like a sentence
+    // Read the line above like a sentence
 }
 else if( rightButtonPressed ) {
-    // read the line above like a sentence
+    // Read the line above like a sentence
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In both examples, no undefined behavior is present. This enables the compiler to apply optimizations confidently. In the second example, where boolean variables capture the results of bitwise operations, the compiler will likely optimize away these variables because they are derived from <code>myValue</code> and the operations are straightforward. As a result, depending on the optimization level and the compiler&#8217;s ability to perform constant folding, the generated machine code may be similar or even identical for both examples.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_o0"><a class="anchor" href="#_o0"></a>-O0</h3>
-<div class="paragraph">
-<p>Even when compiling with no optimizations (<code>-O0</code>), the compiler may still perform basic optimizations. These can include basic arithmetic simplifications, dead code elimination, constant folding, inlining of simple functions, and basic common subexpression elimination.</p>
+<p>Both examples avoid undefined behavior, allowing the compiler to optimize confidently. In the second example, boolean variables capture the results of bitwise operations, which may lead the compiler to optimize away these variables due to straightforward operations. Thus, the generated machine code may be similar or identical.</p>
 </div>
 </div>
 </div>
