@@ -1,6 +1,6 @@
 = Variable Declarations
 
-[source,c++,indent=0]
+[source,c,indent=0]
 ----
 void c89(void) {
     int a;
@@ -26,24 +26,68 @@ void modern() {
 ----
 
 == TL;DR
-In modern C and {cpp}, declaring variables as close as possible to their point of use improves readability, reduces the chance of errors, and allows for more efficient memory usage.
+There's no benefit to sticking with C89-style variable declaration in {cpp}.
 
-== Comparison
-In the c89 function, all three variables (`a`, `b`, and `i`) are declared at the beginning of the block, resulting in stack space being allocated for all of them upfront.
-
-In the modern function, the variable `i` is declared within the for loop, limiting its scope to the loop. After the loop ends, the memory used by `i` is no longer needed, potentially allowing the compiler to reuse that space for variable `b`, which can lead to more efficient memory usage.
+Modern C and {cpp} practices favor declaring variables close to their point of use. This shift from older practices, similar to the move away from xref:implicit_int_return.adoc[implicit return types], improves code clarity and memory efficiency.
 
 == What?
-In C89, variables **__must__** be declared at the beginning of a block before any executable statements.
+In C89, variables **must** be declared at the beginning of a block, before any other statements.
 
-In C99 and later versions of C, and in {cpp}, variables can be declared anywhere within a block, not just at the beginning.
+Starting with C99 and continuing into {cpp}, variables can be declared anywhere within a block, leading to more flexible and readable code.
+
+== Code Comparison
+In the `c89` function, all three variables (`a`, `b`, and `i`) are declared at the start of the block, reserving stack space for them even if not all are immediately used.
+
+In the `modern` function, `i` is declared within the for loop, limiting its scope to the loop. Once the loop ends, `i`'s memory is released, which potentially allows the compiler to optimize memory usage by reusing that space for `b`.
 
 == Why?
-. You're less likely to need to scroll up/down to see the type of a variable, making the code easier to read and maintain
-. Declaring variables close to their point of use helps take advantage of link:https://en.cppreference.com/w/cpp/language/copy_elision[return value optimization] and other compiler optimizations when returning large objects +
-`Data data = parseData();`
-. You avoid wasting stack space on variables that don't need to exist for the entire block +
+. Declaring and initializing variables close to their usage ensures they start with a known value, minimizing bugs from uninitialized variables.
+. Declaring variables near their point of use helps the compiler with optimizations like link:https://en.cppreference.com/w/cpp/language/copy_elision[return value optimization], especially with large objects. Example: +
+`Data data = parseData();` +
+. Limiting variable scope avoids wasting stack space on variables not needed throughout the block. Example: +
 `for( int i = 0; i < 5; ++i ) {}` +
-`i` doesn't need to live outside of the scope of this `for` loop
+`i` only exists within the loop, freeing its memory immediately after.
 
-The modern languages allow for more flexible and readable code, as variables can be declared closer to their point of use. Tightening the lifetime of variables is a general concept that will lead to better memory efficiency, as you won't have variables exist in memory for longer than they're actually needed.
+Modern practices enhance memory management and code maintainability by confining variable lifetimes to their necessary scopes.
+
+== List Initialization
+{cpp} supports list initialization for variables, offering:
+
+* **Consistent Syntax**: The `{}` syntax is uniform across simple variables, arrays, structs, and user-defined types, promoting consistency in code.
+
+* **Narrowing Conversion Prevention**: List initialization prevents implicit narrowing conversions, where a larger data type might be truncated when assigned to a smaller data type, reducing potential bugs. Braces ensure the compiler flags such conversions.
+
+[source,c++]
+----
+int a{5};         // same as int a = 5;
+double b{4.5};    // same as double b = 4.5;
+float c{4.5};     // Narrowing conversion allowed since 4.5 fits in a float
+
+// Prevents narrowing conversion
+int d{4.5};       // Error: cannot convert double to int
+float e{1e40};    // Error: overflow: cannot convert large double to float
+
+int arr[3]{1, 2, 3};  // List initialization for arrays
+
+struct Point {
+    int x;
+    int y;
+};
+
+Point p{10, 20};  // List initialization for structs
+----
+
+== Designated Initializers For Aggregate Types
+While {cpp} does not support designated initializers in the same way as C, {cpp}20 introduces them for aggregate initialization with link:https://en.cppreference.com/w/cpp/language/aggregate_initialization[aggregate types].
+
+.Example
+[source,c++]
+----
+struct Point {
+    int x;
+    int y;
+};
+
+// Designated initialization in C++20
+Point p{.x = 10, .y = 20};
+----
