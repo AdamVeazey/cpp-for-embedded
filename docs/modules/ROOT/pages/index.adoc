@@ -1,5 +1,6 @@
 = Overview
 
-This guide is designed to help embedded software developers who are already familiar with C to learn the {cpp} features that are particularly useful in embedded systems. It assumes you have an intermediate to advanced knowledge of C.
+This guide is designed to help embedded software developers already familiar with C learn the {cpp} features that are particularly useful in embedded systems. If using this guide, it is assumed that you have an intermediate to advanced knowledge of C.
 
-No matter your experience level with C, it is recommended that you read all of Chapter 1 in order. As you progress through the guide, the importance of following the chapters in order diminishes.
+No matter your experience level with C, it is recommended that you read all of Chapter 1 in order. As you progress through the guide, the importance of following the chapter order diminishes.
+
