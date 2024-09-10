@@ -20,7 +20,7 @@ if( !isFalse ) {
 In C you might see code like
 [source,c]
 ----
-bool isCondition = 0;
+int isCondition = 0;
 if( isCondition == true ) {}
 ----
 * Before C99 introduced `_Bool` (and `stdbool.h`), C did not have a dedicated boolean type. As a result, using integers as stand-ins for boolean logic was common, which increased the likelihood of implicit conversion issues.
@@ -31,10 +31,10 @@ if( isCondition == true ) {}
 
 TIP: MISRA-{cpp} does not require an explicit use of a logical/relational operator in an `if` statement.
 
-- `int` -> `bool`
+- *Convert `int` to `bool`*:
     * `true` = Any integer with a non-zero value
     * `false` = 0
-- `bool` -> `int`
+- *Convert `bool` to `int`*:
     * `true` = 1
     * `false` = 0
 
