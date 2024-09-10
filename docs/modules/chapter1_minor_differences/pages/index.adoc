@@ -1,7 +1,7 @@
 = Chapter 1: Minor Differences
 
-This chapter covers various minor differences between C and {cpp}. Many of these topics are brief. While this is not an exhaustive list, it includes several small details that can add up over time.
+This chapter covers the various minor differences between C and {cpp}. Many of the topics covered are brief; while not an exhaustive list, it includes several small details that can add up in relevance over time. By considering these topics, you'll better understand what changes are helpful when you approach {cpp} from a C background.
 
 include::../nav.adoc[leveloffset=+1]
 
-The sections on Implicit Return Type, Variable Declarations, and Empty Parameter Lists address quirks that may appear in C but are unnecessary in {cpp}. These topics are largely centered around C89 or even earlier versions of C, and, for legacy reasons, these practices often find their way into {cpp} code.
+NOTE: The sections on xref:implicit_int_return.adoc[Implicit Return Type], xref:variable_declarations.adoc[Variable Declarations], and xref:empty_parameter_list.adoc[Empty Parameter Lists] address quirks that may appear in C but are unnecessary in {cpp}. These specific topics originate from C89 (or even earlier versions of C) and problematically find their way into {cpp} code, so it's important to consider the changes necessary for a more effective {cpp} approach.
