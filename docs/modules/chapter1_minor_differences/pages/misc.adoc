@@ -3,29 +3,6 @@
 
 This section covers key topics that provide foundational knowledge before exploring differences between C and {cpp}. Understanding these fundamentals is crucial for effectively navigating the rest of the guide.
 
-== Not Your Fathers {cpp}
-{cpp} was originally referred to as "C with Classes" from 1979-1982. This early version of {cpp}, akin to pre-standard C, is now outdated. {cpp}03, similar to C89, appears outdated compared to modern standards, but you may still encounter it in legacy code bases. {cpp}11, comparable to C99, represents a significant evolution, one may argue it's the version "1.0" of these languages. Recent updates like C23 and {cpp}23 reflect further advancements.
-
-=== C Standards
-* *C99*: Introduced enhancements such as new data types (e.g., long long int), flexible array members, and variable-length arrays.
-* *C11*: Added improvements like multithreading support, atomic operations, and enhanced standard library functions.
-* *C23*: The latest standard, offering improvements in type-generic programming, enhanced standard library functions, and more. Support is growing, especially with leading compilers like GCC.
-
-=== {cpp} Standards
-* *{cpp}03*: The first major update after {cpp}98, adding minor improvements and bug fixes. Still in use on legacy systems but considered outdated.
-* *{cpp}11*: Introduced features like auto type deduction, lambda expressions, smart pointers, and concurrency support. Most modern embedded toolchains support {cpp}11.
-* *{cpp}14 and {cpp}17*: Provided further refinements and enhancements.
-* *{cpp}20*: Added concepts, ranges, calendar and time zone libraries, and other features enhancing expressiveness and safety.
-* *{cpp}23*: The latest standard, feature improvements for constexpr and consteval, as well as additions to the standard library, like std::expected. Support from major compilers is beginning to emerge.
-
-=== Support for Modern Standards
-As of this writing:
-
-* *GCC*: Version 11 fully supports {cpp}20. Version 12 has partial {cpp}23 support. Version 13 has extensive {cpp}23 support. GCC supports practically any ARM or RISC-V CPU you would want to use. This includes SoftCore's on an FPGA, like the MicroBlaze and Nios II cores, as well as 'hard' ARM/RISC-V cores in an SoC.
-* *ARM Compiler (Arm Keil MDK)*: Arm Compiler 6.x supports {cpp}14 and some {cpp}17 features.
-* *IAR Embedded Workbench*: Supports {cpp}11 and some features of {cpp}14, with incremental improvements for some {cpp}17 features.
-
-This guide focuses on modern {cpp} ({cpp}11 and above) for the embedded systems industry, particularly for ARM/RISC-V microcontrollers, as major compilers support at least {cpp}11.
 
 == Declaration, Definition, Initialization
 Functions, types, and variables in both C and {cpp} can be declared, defined, or initialized. These processes might occur simultaneously or separately.

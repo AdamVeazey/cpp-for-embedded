@@ -1,5 +1,5 @@
 * xref:index.adoc[Chapter 1: Minor Differences]
-** xref:misc.adoc[MISC.]
+** xref:not_your_fathers_cpp.adoc[Not Your Fathers {cpp}]
 ** xref:implicit_int_return.adoc[Implicit Return Type]
 ** xref:variable_declarations.adoc[Variable Declarations]
 ** xref:empty_parameter_list.adoc[Empty Parameter List]

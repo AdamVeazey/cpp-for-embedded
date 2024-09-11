@@ -1,0 +1,38 @@
+= Not Your Father's {cpp}
+
+{cpp} was originally known as "C with Classes" from 1979-1982. Since then, {cpp} has evolved through various standard versions, much like C. The table below highlights some loose parallels between C and {cpp} standards:
+
+[%autowidth]
+|===
+^.^|C ^.^|{cpp} ^.^|Parallel
+
+^.^|Pre-C89
+^.^|Pre-{cpp}98
+|Both of these versions are nearly obsolete. While some legacy code exists, it's extremely rare to encounter this style today.
+
+^.^|C89
+^.^|{cpp}98 and {cpp}03
+|These early standard versions reflect the coding styles and limitations of their time. They are still used in legacy systems. Consider using these only in new projects if there is a specific, valid reason, not just "maybe someday I'll need to compile this code with an old proprietary C/{cpp} compiler."
+
+C89 unfortunately remains common, especially in embedded systems, while {cpp}98/03 is less likely to be encountered in embedded systems. {cpp} had limited or no support on many embedded MCUs during this period. Developers often relied on proprietary C compilers from silicon vendors, as open-source alternatives focused on other target architectures.
+
+^.^|C99
+^.^|{cpp}11
+|If these language versions followed link:https://semver.org/[SemVer], you might consider them "1.0.0" releases. Both C99 and {cpp}11 represent significant advancements over their predecessors, greatly improving the coding experience.
+
+Open-source compilers like GCC and Clang became widely adopted as they began offering robust support for ARM architectures. GCC significantly enhanced its ARM support around 2007-2008. Major silicon vendors responded by shipping customized versions of GCC, incorporating the latest standards and features to benefit embedded developers. This development played a key role in advancing {cpp} adoption in embedded systems.
+
+^.^|C11 and C23
+^.^|{cpp}14 and {cpp}17
+|These versions represent incremental improvements rather than revolutions. Both standards introduced useful features, but the changes are not as drastic as those between C89 and C99 or {cpp}03 and {cpp}11.
+
+Open-source compilers for ARM and RISC-V have continued to improve. Most silicon vendors still rely on GCC. GCC 5.1 (2015) fully supported {cpp}14, and GCC 8.1 (2018) fully supported {cpp}17.
+
+Proprietary compilers like IAR and ARMCC fully supported {cpp}11 by 2015. ARMCC switched to LLVM (Clang) that same year. IAR continues to add support for {cpp}14 and {cpp}17, though it lags behind open-source alternatives. ARMCC, now following LLVM, fully supported {cpp}14 by 2016 and {cpp}17 by 2018.
+
+^.^|
+^.^|{cpp}20, {cpp}23, and {cpp}26
+|These versions mark another major shift in {cpp}. If these language versions followed link:https://semver.org/[SemVer], you might consider them "2.0.0" releases. The introduction of concepts, modules, coroutines, and further enhanced `constexpr` support represents a significant leap forward.
+
+GCC and ARMCC lead in supporting the latest {cpp} standards, with nearly full support for {cpp}20 and many {cpp}23 features also available.
+|===
