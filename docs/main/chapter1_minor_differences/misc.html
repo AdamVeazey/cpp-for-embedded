@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MISC. :: C++ For Embedded C Developers</title>
     <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/misc.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="implicit_int_return.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -71,8 +69,8 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="misc.html">MISC.</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
@@ -158,7 +156,6 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
-    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
     <li><a href="misc.html">MISC.</a></li>
   </ul>
 </nav>
@@ -173,13 +170,6 @@
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_not_your_fathers_c">Not Your Fathers C&#43;&#43;</a>
-<ul class="sectlevel2">
-<li><a href="#_c_standards">C Standards</a></li>
-<li><a href="#_c_standards_2">C&#43;&#43; Standards</a></li>
-<li><a href="#_support_for_modern_standards">Support for Modern Standards</a></li>
-</ul>
-</li>
 <li><a href="#_declaration_definition_initialization">Declaration, Definition, Initialization</a></li>
 <li><a href="#_scope">Scope</a>
 <ul class="sectlevel2">
@@ -198,74 +188,6 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section covers key topics that provide foundational knowledge before exploring differences between C and C&#43;&#43;. Understanding these fundamentals is crucial for effectively navigating the rest of the guide.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_not_your_fathers_c"><a class="anchor" href="#_not_your_fathers_c"></a>Not Your Fathers C&#43;&#43;</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>C&#43;&#43; was originally referred to as "C with Classes" from 1979-1982. This early version of C&#43;&#43;, akin to pre-standard C, is now outdated. C&#43;&#43;03, similar to C89, appears outdated compared to modern standards, but you may still encounter it in legacy code bases. C&#43;&#43;11, comparable to C99, represents a significant evolution, one may argue it&#8217;s the version "1.0" of these languages. Recent updates like C23 and C&#43;&#43;23 reflect further advancements.</p>
-</div>
-<div class="sect2">
-<h3 id="_c_standards"><a class="anchor" href="#_c_standards"></a>C Standards</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>C99</strong>: Introduced enhancements such as new data types (e.g., long long int), flexible array members, and variable-length arrays.</p>
-</li>
-<li>
-<p><strong>C11</strong>: Added improvements like multithreading support, atomic operations, and enhanced standard library functions.</p>
-</li>
-<li>
-<p><strong>C23</strong>: The latest standard, offering improvements in type-generic programming, enhanced standard library functions, and more. Support is growing, especially with leading compilers like GCC.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_c_standards_2"><a class="anchor" href="#_c_standards_2"></a>C&#43;&#43; Standards</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>C&#43;&#43;03</strong>: The first major update after C&#43;&#43;98, adding minor improvements and bug fixes. Still in use on legacy systems but considered outdated.</p>
-</li>
-<li>
-<p><strong>C&#43;&#43;11</strong>: Introduced features like auto type deduction, lambda expressions, smart pointers, and concurrency support. Most modern embedded toolchains support C&#43;&#43;11.</p>
-</li>
-<li>
-<p><strong>C&#43;&#43;14 and C&#43;&#43;17</strong>: Provided further refinements and enhancements.</p>
-</li>
-<li>
-<p><strong>C&#43;&#43;20</strong>: Added concepts, ranges, calendar and time zone libraries, and other features enhancing expressiveness and safety.</p>
-</li>
-<li>
-<p><strong>C&#43;&#43;23</strong>: The latest standard, feature improvements for constexpr and consteval, as well as additions to the standard library, like std::expected. Support from major compilers is beginning to emerge.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_support_for_modern_standards"><a class="anchor" href="#_support_for_modern_standards"></a>Support for Modern Standards</h3>
-<div class="paragraph">
-<p>As of this writing:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>GCC</strong>: Version 11 fully supports C&#43;&#43;20. Version 12 has partial C&#43;&#43;23 support. Version 13 has extensive C&#43;&#43;23 support. GCC supports practically any ARM or RISC-V CPU you would want to use. This includes SoftCore&#8217;s on an FPGA, like the MicroBlaze and Nios II cores, as well as 'hard' ARM/RISC-V cores in an SoC.</p>
-</li>
-<li>
-<p><strong>ARM Compiler (Arm Keil MDK)</strong>: Arm Compiler 6.x supports C&#43;&#43;14 and some C&#43;&#43;17 features.</p>
-</li>
-<li>
-<p><strong>IAR Embedded Workbench</strong>: Supports C&#43;&#43;11 and some features of C&#43;&#43;14, with incremental improvements for some C&#43;&#43;17 features.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This guide focuses on modern C&#43;&#43; (C&#43;&#43;11 and above) for the embedded systems industry, particularly for ARM/RISC-V microcontrollers, as major compilers support at least C&#43;&#43;11.</p>
-</div>
 </div>
 </div>
 </div>
@@ -394,10 +316,6 @@ else if( rightButtonPressed ) {
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="index.html">Chapter 1: Minor Differences</a></span>
-  <span class="next"><a href="implicit_int_return.html">Implicit Return Type</a></span>
-</nav>
 </article>
   </div>
 </main>

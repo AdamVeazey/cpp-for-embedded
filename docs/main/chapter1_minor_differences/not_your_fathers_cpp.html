@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Empty Parameter List :: C++ For Embedded C Developers</title>
-    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/empty_parameter_list.html">
-    <link rel="prev" href="variable_declarations.html">
-    <link rel="next" href="bool.html">
+    <title>Not Your Father&#8217;s C&#43;&#43; :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/not_your_fathers_cpp.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="implicit_int_return.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -71,7 +71,7 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -80,7 +80,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -159,79 +159,69 @@
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
     <li><a href="index.html">Chapter 1: Minor Differences</a></li>
-    <li><a href="empty_parameter_list.html">Empty Parameter List</a></li>
+    <li><a href="not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/empty_parameter_list.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/not_your_fathers_cpp.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Empty Parameter List</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void foo(void);
-void bar();</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
-<div class="sectionbody">
+<h1 class="page">Not Your Father&#8217;s C&#43;&#43;</h1>
 <div class="paragraph">
-<p>Use <code>()</code> over <code>(void)</code> for function declarations with zero arguments. Similar to the change from <a href="implicit_int_return.html" class="xref page">implicit return types</a>, in C&#43;&#43; you should use <code>void bar();</code> instead of the C-compatible <code>void foo(void);</code>.</p>
+<p>C&#43;&#43; was originally known as "C with Classes" from 1979-1982. Since then, C&#43;&#43; has evolved through various standard versions, much like C. The table below highlights some loose parallels between C and C&#43;&#43; standards:</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><code>void foo(void);</code> explicitly declares a function that takes no arguments.</p>
-</li>
-<li>
-<p><code>void bar();</code> leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function&#8217;s definition. It is up to the programmer to call the function with the correct number and types of arguments.</p>
-</li>
-<li>
-<p><code>void bar();</code> does <strong>not</strong> imply a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><code>void foo(void);</code> explicitly declares a function that takes no arguments.</p>
-</li>
-<li>
-<p><code>void bar();</code> explicitly declares a function that takes no arguments.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_history"><a class="anchor" href="#_history"></a>History</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In early versions of C, pre-C89, <code>void bar();</code> was the only way to declare a function, leaving the parameters unspecified. When C adopted function prototypes from C&#43;&#43;, the need for backward compatibility led to the creation of <code>void foo(void);</code> to explicitly indicate that a function takes no arguments. C&#43;&#43; continued to support both styles, with <code>void foo(void);</code> used primarily for compatibility with C.</p>
-</div>
-</div>
-</div>
+<table class="tableblock frame-all grid-all fit-content">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-middle">C</th>
+<th class="tableblock halign-center valign-middle">C&#43;&#43;</th>
+<th class="tableblock halign-center valign-middle">Parallel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">Pre-C89</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">Pre-C&#43;&#43;98</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Both of these versions are nearly obsolete. While some legacy code exists, it&#8217;s extremely rare to encounter this style today.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C89</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C&#43;&#43;98 and C&#43;&#43;03</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">These early standard versions reflect the coding styles and limitations of their time. They are still used in legacy systems. Consider using these only in new projects if there is a specific, valid reason, not just "maybe someday I&#8217;ll need to compile this code with an old proprietary C/C&#43;&#43; compiler."</p>
+<p class="tableblock">C89 unfortunately remains common, especially in embedded systems, while C&#43;&#43;98/03 is less likely to be encountered in embedded systems. C&#43;&#43; had limited or no support on many embedded MCUs during this period. Developers often relied on proprietary C compilers from silicon vendors, as open-source alternatives focused on other target architectures.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C99</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C&#43;&#43;11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If these language versions followed <a href="https://semver.org/">SemVer</a>, you might consider them "1.0.0" releases. Both C99 and C&#43;&#43;11 represent significant advancements over their predecessors, greatly improving the coding experience.</p>
+<p class="tableblock">Open-source compilers like GCC and Clang became widely adopted as they began offering robust support for ARM architectures. GCC significantly enhanced its ARM support around 2007-2008. Major silicon vendors responded by shipping customized versions of GCC, incorporating the latest standards and features to benefit embedded developers. This development played a key role in advancing C&#43;&#43; adoption in embedded systems.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C11 and C23</p></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C&#43;&#43;14 and C&#43;&#43;17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">These versions represent incremental improvements rather than revolutions. Both standards introduced useful features, but the changes are not as drastic as those between C89 and C99 or C&#43;&#43;03 and C&#43;&#43;11.</p>
+<p class="tableblock">Open-source compilers for ARM and RISC-V have continued to improve. Most silicon vendors still rely on GCC. GCC 5.1 (2015) fully supported C&#43;&#43;14, and GCC 8.1 (2018) fully supported C&#43;&#43;17.</p>
+<p class="tableblock">Proprietary compilers like IAR and ARMCC fully supported C&#43;&#43;11 by 2015. ARMCC switched to LLVM (Clang) that same year. IAR continues to add support for C&#43;&#43;14 and C&#43;&#43;17, though it lags behind open-source alternatives. ARMCC, now following LLVM, fully supported C&#43;&#43;14 by 2016 and C&#43;&#43;17 by 2018.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle"></td>
+<td class="tableblock halign-center valign-middle"><p class="tableblock">C&#43;&#43;20, C&#43;&#43;23, and C&#43;&#43;26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">These versions mark another major shift in C&#43;&#43;. If these language versions followed <a href="https://semver.org/">SemVer</a>, you might consider them "2.0.0" releases. The introduction of concepts, modules, coroutines, and further enhanced <code>constexpr</code> support represents a significant leap forward.</p>
+<p class="tableblock">GCC and ARMCC lead in supporting the latest C&#43;&#43; standards, with nearly full support for C&#43;&#43;20 and many C&#43;&#43;23 features also available.</p></td>
+</tr>
+</tbody>
+</table>
 <nav class="pagination">
-  <span class="prev"><a href="variable_declarations.html">Variable Declarations</a></span>
-  <span class="next"><a href="bool.html">bool</a></span>
+  <span class="prev"><a href="index.html">Chapter 1: Minor Differences</a></span>
+  <span class="next"><a href="implicit_int_return.html">Implicit Return Type</a></span>
 </nav>
 </article>
   </div>
