@@ -34,5 +34,5 @@ Proprietary compilers like IAR and ARMCC fully supported {cpp}11 by 2015. ARMCC 
 ^.^|{cpp}20, {cpp}23, and {cpp}26
 |These versions mark another major shift in {cpp}. If these language versions followed link:https://semver.org/[SemVer], you might consider them "2.0.0" releases. The introduction of concepts, modules, coroutines, and further enhanced `constexpr` support represents a significant leap forward.
 
-GCC and ARMCC lead in supporting the latest {cpp} standards, with nearly full support for {cpp}20 and many {cpp}23 features also available.
+GCC and ARMCC lead in supporting the latest {cpp} standards, with nearly full support for {cpp}20 and many {cpp}23 features.
 |===
