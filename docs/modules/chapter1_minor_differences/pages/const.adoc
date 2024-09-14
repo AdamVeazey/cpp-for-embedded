@@ -31,15 +31,21 @@ void foo() {
 == TL;DR
 In C, `const` is often used for read-only variables and pointers, but its usage is limited.
 
-In {cpp}, `const` is more integral, applying to variables, pointers, and member functions, promoting link:https://isocpp.org/wiki/faq/const-correctness[const-correctness]. This means you can more precisely control which parts of your code are immutable, leading to safer, more predictable code and improved optimization opportunities.
+In {cpp}, `const` usage is more integral, applying to variables, pointers, and member functions, promoting link:https://isocpp.org/wiki/faq/const-correctness[const-correctness]. This means you can more precisely control which parts of your code are immutable, leading to safer, more predictable code with improved optimization opportunities.
 
 == C
-. **Read-only variables:** Once a `const` variable is initialized, its value cannot be changed. For example, `const int x = 100;`
+. **Read-only variables:** Once a `const` variable is initialized, its value cannot be changed. +
+EX: +
+`const int x = 100;`
 
 . **Pointers:** `const` can specify whether the pointer itself or the data it points to is read-only, or both:
-  * `const char* strLiteral = "literal";` - pointer can change, data can't
-  * `char* const fixedPtr = mutableString;` - pointer can't change, data can
-  * `const char* const fixed = "literal";` - pointer can't change, data also can't
+  * `const char* strLiteral = "literal";` +
+  pointer can change, data can't
+  * `char mutableString[] = "Change me!";` +
+  `char* const fixedPtr = mutableString;` +
+  pointer can't change, data can
+  * `const char* const fixed = "literal";` +
+  pointer can't change, data also can't
 
 . **Linkage:** By default, file-scoped `const` variables in C have internal linkage. To make them accessible across multiple files, `extern` must be used.
 
@@ -48,7 +54,7 @@ In {cpp}, `const` is more integral, applying to variables, pointers, and member 
 
 . **Pointers:** Same as in C.
 
-. **Member Functions:** A member function can be declared as `const`, meaning it does not modify the state of the object. For example, `int getValue() const;` ensures that calling `getValue()` will not change any member variables of the class.
+. **Member Functions:** A member function can be declared as `const`, meaning it does not modify the state of the object. The `this` pointer is a constant pointer to constant data for these member functions, as opposed to being a constant pointer to mutable data in a non-const member function. For example, `int getValue() const;` ensures that calling `getValue()` will not change any member variables of the class.
 +
 [source,c++]
 ----
@@ -60,7 +66,7 @@ public:
 
 const Foo values[5];
 
-for( const auto& v : values ) {
+for( const Foo& v : values ) {
     v.nonMutatingFunction(); // v is a constant reference to a Foo object
     v.mutatingFunction(); // this will not compile as mutatingFunction could change v
 }
