@@ -3,42 +3,38 @@
 [source,c,indent=0]
 ----
 void c89(void) {
-    int a;
-    int b;
+    int len;
     int i;
-    a = 5;
-    for( i = 0; i < a; i++ ) {
+    int noLongerNeedI;
+    len = 5;
+    for( i = 0; i < len; i++ ) {
         /* ... */
     }
-    b = a + 10;
+    /* Could've reused the space reserved for i */
+    noLongerNeedI = len + 10;
 }
 ----
 VS
 [source,c++,indent=0]
 ----
 void modern() {
-    int a = 5;
-    for( int i = 0; i < a; i++ ) {
+    int len = 5;
+    for( int i = 0; i < len; i++ ) {
         // ...
     }
-    int b = a + 10;
+    int reusedMemoryNoLongerNeededForI = len + 10; // most likely
 }
 ----
 
 == TL;DR
 There's no benefit to sticking with C89-style variable declaration in {cpp}.
 
-Modern C and {cpp} practices favor declaring variables close to their point of use. This shift from older practices, similar to the move away from xref:implicit_int_return.adoc[implicit return types], improves code clarity and memory efficiency.
+Modern C and {cpp} best practices favor declaring variables as close to their point of use as possible. This shift from older practices, similar to the move away from xref:implicit_int_return.adoc[implicit return types], helps to improve memory efficiency, narrow scope, localize behaviors, etc...
 
 == What?
 In C89, variables **must** be declared at the beginning of a block, before any other statements.
 
-Starting with C99 and continuing into {cpp}, variables can be declared anywhere within a block, leading to more flexible and readable code.
-
-== Code Comparison
-In the `c89` function, all three variables (`a`, `b`, and `i`) are declared at the start of the block, reserving stack space for them even if not all are immediately used.
-
-In the `modern` function, `i` is declared within the for loop, limiting its scope to the loop. Once the loop ends, `i`'s memory is released, which potentially allows the compiler to optimize memory usage by reusing that space for `b`.
+Starting with C99 and continuing into all versions of {cpp}, variables can be declared anywhere within a block.
 
 == Why?
 . Declaring and initializing variables close to their usage ensures they start with a known value, minimizing bugs from uninitialized variables.
@@ -46,7 +42,7 @@ In the `modern` function, `i` is declared within the for loop, limiting its scop
 `Data data = parseData();` +
 . Limiting variable scope avoids wasting stack space on variables not needed throughout the block. Example: +
 `for( int i = 0; i < 5; ++i ) {}` +
-`i` only exists within the loop, freeing its memory immediately after.
+`i` only exists within the loop scope, freeing its memory immediately after.
 
 Modern practices enhance memory management and code maintainability by confining variable lifetimes to their necessary scopes.
 
