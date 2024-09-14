@@ -210,7 +210,7 @@ void foo() {
 <p>In C, <code>const</code> is often used for read-only variables and pointers, but its usage is limited.</p>
 </div>
 <div class="paragraph">
-<p>In C&#43;&#43;, <code>const</code> is more integral, applying to variables, pointers, and member functions, promoting <a href="https://isocpp.org/wiki/faq/const-correctness">const-correctness</a>. This means you can more precisely control which parts of your code are immutable, leading to safer, more predictable code and improved optimization opportunities.</p>
+<p>In C&#43;&#43;, <code>const</code> usage is more integral, applying to variables, pointers, and member functions, promoting <a href="https://isocpp.org/wiki/faq/const-correctness">const-correctness</a>. This means you can more precisely control which parts of your code are immutable, leading to safer, more predictable code with improved optimization opportunities.</p>
 </div>
 </div>
 </div>
@@ -220,20 +220,26 @@ void foo() {
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Read-only variables:</strong> Once a <code>const</code> variable is initialized, its value cannot be changed. For example, <code>const int x = 100;</code></p>
+<p><strong>Read-only variables:</strong> Once a <code>const</code> variable is initialized, its value cannot be changed.<br>
+EX:<br>
+<code>const int x = 100;</code></p>
 </li>
 <li>
 <p><strong>Pointers:</strong> <code>const</code> can specify whether the pointer itself or the data it points to is read-only, or both:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>const char* strLiteral = "literal";</code> - pointer can change, data can&#8217;t</p>
+<p><code>const char* strLiteral = "literal";</code><br>
+pointer can change, data can&#8217;t</p>
 </li>
 <li>
-<p><code>char* const fixedPtr = mutableString;</code> - pointer can&#8217;t change, data can</p>
+<p><code>char mutableString[] = "Change me!";</code><br>
+<code>char* const fixedPtr = mutableString;</code><br>
+pointer can&#8217;t change, data can</p>
 </li>
 <li>
-<p><code>const char* const fixed = "literal";</code> - pointer can&#8217;t change, data also can&#8217;t</p>
+<p><code>const char* const fixed = "literal";</code><br>
+pointer can&#8217;t change, data also can&#8217;t</p>
 </li>
 </ul>
 </div>
@@ -257,7 +263,7 @@ void foo() {
 <p><strong>Pointers:</strong> Same as in C.</p>
 </li>
 <li>
-<p><strong>Member Functions:</strong> A member function can be declared as <code>const</code>, meaning it does not modify the state of the object. For example, <code>int getValue() const;</code> ensures that calling <code>getValue()</code> will not change any member variables of the class.</p>
+<p><strong>Member Functions:</strong> A member function can be declared as <code>const</code>, meaning it does not modify the state of the object. The <code>this</code> pointer is a constant pointer to constant data for these member functions, as opposed to being a constant pointer to mutable data in a non-const member function. For example, <code>int getValue() const;</code> ensures that calling <code>getValue()</code> will not change any member variables of the class.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">class Foo {
@@ -268,7 +274,7 @@ public:
 
 const Foo values[5];
 
-for( const auto&amp; v : values ) {
+for( const Foo&amp; v : values ) {
     v.nonMutatingFunction(); // v is a constant reference to a Foo object
     v.mutatingFunction(); // this will not compile as mutatingFunction could change v
 }</code></pre>

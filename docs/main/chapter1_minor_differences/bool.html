@@ -213,7 +213,7 @@ if( isCondition == true ) {}</code></pre>
 <p>Before C99 introduced <code>_Bool</code> (and <code>stdbool.h</code>), C did not have a dedicated boolean type. As a result, using integers as stand-ins for boolean logic was common, which increased the likelihood of implicit conversion issues.</p>
 </li>
 <li>
-<p>MISRA-C treats logical/relational operators as if they return a <code>bool</code> type and generally assumes that C has a distinct <code>bool</code> type separate from integers. This practice encourages explicit comparisons to avoid ambiguity in the programmer&#8217;s intentions.</p>
+<p>MISRA-C in essence treats logical/relational operators as if they return a <code>bool</code> type (in reality they return an <code>int</code>) and expands on this idea to give the impression that C has a distinct <code>bool</code> type separate from integers. This practice encourages explicit comparisons to avoid ambiguity in the programmer&#8217;s intentions.</p>
 </li>
 </ul>
 </div>
@@ -232,7 +232,7 @@ if( isCondition == true ) {}</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-MISRA-C&#43;&#43; does not require an explicit use of a logical/relational operator in an <code>if</code> statement.
+MISRA-C&#43;&#43; does <strong>not</strong> require an explicit use of a logical/relational operator in an <code>if</code> statement.
 </td>
 </tr>
 </table>
