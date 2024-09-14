@@ -175,14 +175,15 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">void c89(void) {
-    int a;
-    int b;
+    int len;
     int i;
-    a = 5;
-    for( i = 0; i &lt; a; i++ ) {
+    int noLongerNeedI;
+    len = 5;
+    for( i = 0; i &lt; len; i++ ) {
         /* ... */
     }
-    b = a + 10;
+    /* Could've reused the space reserved for i */
+    noLongerNeedI = len + 10;
 }</code></pre>
 </div>
 </div>
@@ -192,11 +193,11 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void modern() {
-    int a = 5;
-    for( int i = 0; i &lt; a; i++ ) {
+    int len = 5;
+    for( int i = 0; i &lt; len; i++ ) {
         // ...
     }
-    int b = a + 10;
+    int reusedMemoryNoLongerNeededForI = len + 10; // most likely
 }</code></pre>
 </div>
 </div>
@@ -209,7 +210,7 @@
 <p>There&#8217;s no benefit to sticking with C89-style variable declaration in C&#43;&#43;.</p>
 </div>
 <div class="paragraph">
-<p>Modern C and C&#43;&#43; practices favor declaring variables close to their point of use. This shift from older practices, similar to the move away from <a href="implicit_int_return.html" class="xref page">implicit return types</a>, improves code clarity and memory efficiency.</p>
+<p>Modern C and C&#43;&#43; best practices favor declaring variables as close to their point of use as possible. This shift from older practices, similar to the move away from <a href="implicit_int_return.html" class="xref page">implicit return types</a>, helps to improve memory efficiency, narrow scope, localize behaviors, etc&#8230;&#8203;</p>
 </div>
 </div>
 </div>
@@ -220,18 +221,7 @@
 <p>In C89, variables <strong>must</strong> be declared at the beginning of a block, before any other statements.</p>
 </div>
 <div class="paragraph">
-<p>Starting with C99 and continuing into C&#43;&#43;, variables can be declared anywhere within a block, leading to more flexible and readable code.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_code_comparison"><a class="anchor" href="#_code_comparison"></a>Code Comparison</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the <code>c89</code> function, all three variables (<code>a</code>, <code>b</code>, and <code>i</code>) are declared at the start of the block, reserving stack space for them even if not all are immediately used.</p>
-</div>
-<div class="paragraph">
-<p>In the <code>modern</code> function, <code>i</code> is declared within the for loop, limiting its scope to the loop. Once the loop ends, <code>i&#8217;s memory is released, which potentially allows the compiler to optimize memory usage by reusing that space for `b</code>.</p>
+<p>Starting with C99 and continuing into all versions of C&#43;&#43;, variables can be declared anywhere within a block.</p>
 </div>
 </div>
 </div>
@@ -250,7 +240,7 @@
 <li>
 <p>Limiting variable scope avoids wasting stack space on variables not needed throughout the block. Example:<br>
 <code>for( int i = 0; i &lt; 5; ++i ) {}</code><br>
-<code>i</code> only exists within the loop, freeing its memory immediately after.</p>
+<code>i</code> only exists within the loop scope, freeing its memory immediately after.</p>
 </li>
 </ol>
 </div>
