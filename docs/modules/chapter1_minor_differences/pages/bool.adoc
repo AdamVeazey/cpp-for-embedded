@@ -24,12 +24,12 @@ int isCondition = 0;
 if( isCondition == true ) {}
 ----
 * Before C99 introduced `_Bool` (and `stdbool.h`), C did not have a dedicated boolean type. As a result, using integers as stand-ins for boolean logic was common, which increased the likelihood of implicit conversion issues.
-* MISRA-C treats logical/relational operators as if they return a `bool` type and generally assumes that C has a distinct `bool` type separate from integers. This practice encourages explicit comparisons to avoid ambiguity in the programmer's intentions.
+* MISRA-C in essence treats logical/relational operators as if they return a `bool` type (in reality they return an `int`) and expands on this idea to give the impression that C has a distinct `bool` type separate from integers. This practice encourages explicit comparisons to avoid ambiguity in the programmer's intentions.
 
 == Implicit conversion
 {cpp} does allow for implicit conversion to and from `bool`. Any non-zero integer is converted to `true` and the integer value 0 is converted to `false`.
 
-TIP: MISRA-{cpp} does not require an explicit use of a logical/relational operator in an `if` statement.
+TIP: MISRA-{cpp} does *not* require an explicit use of a logical/relational operator in an `if` statement.
 
 - *Convert `int` to `bool`*:
     * `true` = Any integer with a non-zero value
