@@ -11,14 +11,14 @@ struct Derived {
 
 void Derived_bar(Derived* self) {}
 
-void baz(int* shouldBeConst) { // should be void baz(const int* readOnly);
+void baz(int* shouldBeConst) { // function doesn't modify data, should be const int*
     if( shouldBeConst ) {
         int valueRead = *shouldBeConst;
         // do anything with the value, except for write to the value
     }
 }
 
-void foo() {
+void foo(void) {
     // Convert between related types
     double pi = 3.14;
     int truncatedPi = (int)pi;
@@ -47,6 +47,7 @@ public:
 };
 
 class Derived : public Base {
+public:
     void bar() {}
 };
 
@@ -81,18 +82,17 @@ void foo() {
 ----
 
 == TL;DR
-* Prefer static_cast for most type conversions in {cpp}. It is safe, explicit, and usually what you need.
+{cpp} provides four specific type conversion operators that should be used instead of C-style casts.
+
+. `static_cast`
+. `dynamic_cast` - requires RTTI
+. `const_cast`
+. `reinterpret_cast`
+
+=== Tips
 * Use the specific {cpp} cast operator that matches your intent. It provides better type safety and clearer code than C-style casts.
-* {cpp} eliminates much of the need for `void*` by offering stronger type safety and better casting options, but you might still encounter it when dealing with C APIs.
-
-{cpp} provides four specific type conversion operators:
-
-* `static_cast`
-* `dynamic_cast` - requires RTTI
-* `const_cast`
-* `reinterpret_cast`
-
-TIP: In {cpp}, there's no implicit cast from `void*`. Use `static_cast` when dealing with `void*` pointers.
+* Prefer `static_cast` for most type conversions in {cpp}. It is safe, explicit, and usually what you need.
+* If you find yourself reaching for `void*` in {cpp}, theres most likely a better alternative approach available. However, you might still encounter it when dealing with C APIs. If this happens, prefer to use `static_cast` to cast it to the correct pointer type vs the C-Style cast.
 
 == C-style casts
 C-style casts (`(Type)value`) are still available in {cpp} for backward compatibility, but they are discouraged. They do not provide type safety and can lead to unintended consequences. When used in {cpp}, a C-style cast ends up as one of the specific {cpp} casts (`static_cast`, `dynamic_cast`, `const_cast`, or `reinterpret_cast`), depending on the context. However, it's better to use the explicit {cpp} cast operators directly because they convey the programmer's intent more clearly and are enforced by the compiler.
