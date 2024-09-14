@@ -184,7 +184,7 @@ void bar();</code></pre>
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Use <code>()</code> over <code>(void)</code> for function declarations with zero arguments. Similar to the change from <a href="implicit_int_return.html" class="xref page">implicit return types</a>, in C&#43;&#43; you should use <code>void bar();</code> instead of the C-compatible <code>void foo(void);</code>.</p>
+<p>In C&#43;&#43; <code>foo</code> and <code>bar</code> are defined to mean exactly the same thing, a function that takes zero parameters. Prefer the use of <code>()</code> over <code>(void)</code>. In C&#43;&#43;, <code>(void)</code> is allowed for backwards compatibility with C.</p>
 </div>
 </div>
 </div>
@@ -197,12 +197,21 @@ void bar();</code></pre>
 <p><code>void foo(void);</code> explicitly declares a function that takes no arguments.</p>
 </li>
 <li>
-<p><code>void bar();</code> leaves the parameter list unspecified in the declaration. The actual number and types of arguments are determined by the function&#8217;s definition. It is up to the programmer to call the function with the correct number and types of arguments.</p>
-</li>
-<li>
-<p><code>void bar();</code> does <strong>not</strong> imply a variable number of arguments; the number of arguments is fixed in the function definition but unspecified in the declaration.</p>
+<p><code>void bar();</code> leaves the parameter list <em>unspecified</em> in the declaration. The actual number and types of arguments are determined by the function&#8217;s definition. It is up to the programmer to call the function with the correct number and types of arguments.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>void bar();</code> does <strong>not</strong> imply a variable number of arguments; the number of arguments is fixed in the function definition, merely <em>unspecified</em> in the declaration.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
