@@ -75,6 +75,9 @@
     <a class="nav-link" href="not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="behind_the_curtain.html">Behind The Curtain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -183,14 +186,14 @@ struct Derived {
 
 void Derived_bar(Derived* self) {}
 
-void baz(int* shouldBeConst) { // should be void baz(const int* readOnly);
+void baz(int* shouldBeConst) { // function doesn't modify data, should be const int*
     if( shouldBeConst ) {
         int valueRead = *shouldBeConst;
         // do anything with the value, except for write to the value
     }
 }
 
-void foo() {
+void foo(void) {
     // Convert between related types
     double pi = 3.14;
     int truncatedPi = (int)pi;
@@ -219,6 +222,7 @@ public:
 };
 
 class Derived : public Base {
+public:
     void bar() {}
 };
 
@@ -257,24 +261,11 @@ void foo() {
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Prefer static_cast for most type conversions in C&#43;&#43;. It is safe, explicit, and usually what you need.</p>
-</li>
-<li>
-<p>Use the specific C&#43;&#43; cast operator that matches your intent. It provides better type safety and clearer code than C-style casts.</p>
-</li>
-<li>
-<p>C&#43;&#43; eliminates much of the need for <code>void*</code> by offering stronger type safety and better casting options, but you might still encounter it when dealing with C APIs.</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>C&#43;&#43; provides four specific type conversion operators:</p>
+<p>C&#43;&#43; provides four specific type conversion operators that should be used instead of C-style casts.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p><code>static_cast</code></p>
 </li>
@@ -287,19 +278,23 @@ void foo() {
 <li>
 <p><code>reinterpret_cast</code></p>
 </li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_tips"><a class="anchor" href="#_tips"></a>Tips</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the specific C&#43;&#43; cast operator that matches your intent. It provides better type safety and clearer code than C-style casts.</p>
+</li>
+<li>
+<p>Prefer <code>static_cast</code> for most type conversions in C&#43;&#43;. It is safe, explicit, and usually what you need.</p>
+</li>
+<li>
+<p>If you find yourself reaching for <code>void*</code> in C&#43;&#43;, theres most likely a better alternative approach available. However, you might still encounter it when dealing with C APIs. If this happens, prefer to use <code>static_cast</code> to cast it to the correct pointer type vs the C-Style cast.</p>
+</li>
 </ul>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-In C&#43;&#43;, there&#8217;s no implicit cast from <code>void*</code>. Use <code>static_cast</code> when dealing with <code>void*</code> pointers.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
