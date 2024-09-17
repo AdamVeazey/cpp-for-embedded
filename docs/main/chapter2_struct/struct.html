@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>struct :: C++ For Embedded C Developers</title>
-    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/struct.html">
-    <link rel="prev" href="constexpr.html">
-    <link rel="next" href="../chapter2_major_differences/index.html">
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter2_struct/struct.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -61,45 +59,14 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../index.html">Overview</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a>
+    <a class="nav-link" href="../not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="behind_the_curtain.html">Behind The Curtain</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="bool.html">bool</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="const.html">const</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="typecasting.html">Typecasting</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="constexpr.html">constexpr</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="struct.html">struct</a>
+    <a class="nav-link" href="../behind_the_curtain.html">Behind The Curtain</a>
   </li>
 </ul>
   </li>
@@ -109,25 +76,28 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2_major_differences/index.html">Chapter 2: Major Differences</a>
+    <a class="nav-link" href="../chapter1_minor_differences/index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#references.adoc">References</a>
+    <a class="nav-link" href="../chapter1_minor_differences/implicit_int_return.html">Implicit Return Type</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#namespaces.adoc">Namespaces</a>
+    <a class="nav-link" href="../chapter1_minor_differences/variable_declarations.html">Variable Declarations</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#overloads.adoc">Overloads</a>
+    <a class="nav-link" href="../chapter1_minor_differences/empty_parameter_list.html">Empty Parameter List</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#enum_type.adoc">Enum Type</a>
+    <a class="nav-link" href="../chapter1_minor_differences/bool.html">bool</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#dynamic_memory.adoc">Dynamic Memory</a>
+    <a class="nav-link" href="../chapter1_minor_differences/const.html">const</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#auto.adoc">auto</a>
+    <a class="nav-link" href="../chapter1_minor_differences/typecasting.html">Typecasting</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/constexpr.html">constexpr</a>
   </li>
 </ul>
   </li>
@@ -161,11 +131,10 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
-    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
     <li><a href="struct.html">struct</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/struct.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter2_struct/pages/struct.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -639,10 +608,6 @@ int main() {
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="constexpr.html">constexpr</a></span>
-  <span class="next"><a href="../chapter2_major_differences/index.html">Chapter 2: Major Differences</a></span>
-</nav>
 </article>
   </div>
 </main>
