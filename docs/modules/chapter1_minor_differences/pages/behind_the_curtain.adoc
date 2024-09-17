@@ -129,7 +129,11 @@ inline int& operator_addAssignment(int& leftHandSide, int rightHandSide) {
 }
 operator_addAssignment(value, 3); // same as `value += 3`
 ----
-The addition and addition-assignment operators are simply shorthand for function calls that either return a result or modify the variable in place. In the first example, chaining multiple function calls adds a lot of visual clutter, making it harder to understand what the code is doing. Using the syntax sugar `+` allows for much clearer intent. Similarly, in the case of addition-assignment, the function version isn't as obvious at first glance that `value` is being modified. Again, the syntax sugar `+=` makes this clearer.
+The addition and addition-assignment operators can be thought of as syntax sugar for function calls that either return a result or modify the variable in place.
+
+In the first example, chaining multiple function calls adds a lot of visual clutter, making it harder to understand what the code is doing. Using the syntax sugar `+` allows for much clearer intent.
+
+Similarly, in the case of addition-assignment, the function version isn't as obvious at first glance that `value` is being modified. Again, the syntax sugar `+=` makes this clearer.
 
 === Ternary operators
 
@@ -152,7 +156,7 @@ inline const char* operator_ternaryString(
 }
 const char* value = operator_ternaryString(isCondition, "valueIfTrue", "valueIfFalse");
 ----
-The ternary operator is just a concise way of writing a conditional statement. Once you see the operator for the first time, you might wonder why not just use an `if`? But its utility lies in encoding intent concisely in simpler cases.
+The ternary operator is just a concise way of writing a conditional statement. Once you see the operator for the first time, you might wonder why not just use an `if`? But its utility lies in encoding intent concisely in simpler cases, reducing visual clutter from the main idea that can easily be seen in a single line.
 
 == Array Indexing Operator []
 
