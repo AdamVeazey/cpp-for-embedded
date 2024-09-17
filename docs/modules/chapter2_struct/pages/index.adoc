@@ -1,0 +1,8 @@
+= Chapter 2: struct
+
+In this chapter, we'll explore what a `struct` is in both C and {cpp}. While a `struct` in C is simply a way to group related data, in {cpp} it can take on more complex, object-like behaviors. By the end of this chapter, you'll see how {cpp} builds on the concept of `struct` without introducing unnecessary complexity or memory/runtime cost.
+
+include::../nav.adoc[leveloffset=+1]
+
+// [button="Next"]
+// xref:chapter3:index.adoc[Chapter 3: ]

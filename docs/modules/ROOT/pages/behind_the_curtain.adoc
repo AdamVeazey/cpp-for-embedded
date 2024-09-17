@@ -1,6 +1,6 @@
 = Behind The Curtain
 
-This section doesn't focus on differences between C and {cpp}, but rather offers a different way of looking at familiar constructs. By uncovering these "under the hood" mechanics, you'll be better equipped to understand more complex C and {cpp} concepts, like l-values and r-values.
+This section offers a different way of looking at familiar constructs. By considering these syntax examples from a fresh perspective, you'll be better prepared to understand more complex C and {cpp} concepts, such as copy/move semantics and recognizing value categories.
 
 == Syntax Sugar: It's Already There
 

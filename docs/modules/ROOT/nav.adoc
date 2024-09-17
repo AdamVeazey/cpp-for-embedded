@@ -1,1 +1,3 @@
 * xref:index.adoc[Overview]
+** xref:not_your_fathers_cpp.adoc[Not Your Fathers {cpp}]
+** xref:behind_the_curtain.adoc[Behind The Curtain]

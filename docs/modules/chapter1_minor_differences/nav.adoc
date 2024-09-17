@@ -1,6 +1,4 @@
 * xref:index.adoc[Chapter 1: Minor Differences]
-** xref:not_your_fathers_cpp.adoc[Not Your Fathers {cpp}]
-** xref:behind_the_curtain.adoc[Behind The Curtain]
 ** xref:implicit_int_return.adoc[Implicit Return Type]
 ** xref:variable_declarations.adoc[Variable Declarations]
 ** xref:empty_parameter_list.adoc[Empty Parameter List]
@@ -8,4 +6,3 @@
 ** xref:const.adoc[const]
 ** xref:typecasting.adoc[Typecasting]
 ** xref:constexpr.adoc[constexpr]
-** xref:struct.adoc[struct]
