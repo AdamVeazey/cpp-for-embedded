@@ -106,7 +106,13 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Chapter 2: struct</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="memory_layout.html">Memory Layout</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -219,51 +225,6 @@ void foo(){
 <p><code>struct</code> in C allows you to group related data into a single object with sequential memory layout. A <code>struct</code> is a contiguous block of memory, where each member occupies a defined amount of space, and the offset to access each member is calculated automatically by the compiler when you use the <code>.</code> or <code>-&gt;</code> operators.</p>
 </div>
 <div class="sect2">
-<h3 id="_memory_layout"><a class="anchor" href="#_memory_layout"></a>Memory Layout</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct Point {
-    int x;
-    int y;
-} Point_t;
-
-void foo(void) {
-    Point_t p = { .x = 5, .y = 10 };
-    int array[2];
-    array[0] = p.x;
-    array[1] = p.y;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this example, <code>sizeof(p)</code> and <code>sizeof(array)</code> are equal because both are contiguous blocks of memory that contain two <code>int</code> elements. With the array, <code>array[0]</code> and <code>array[1]</code> correspond to the elements at offsets 0 and 1, respectively. The struct works similarly:</p>
-</div>
-<div class="paragraph">
-<p><code>p.x</code> can be thought of as <code>((unsigned char*)&amp;p)</code> similar to <code>array[0]</code><br>
-<code>p.y</code> can be thought of as <code>((unsigned char*)&amp;p) + (sizeof(int))</code> similar to <code>array[1]</code></p>
-</div>
-<div class="paragraph">
-<p>Thus, <code>struct</code> gives specific names and meaning to the elements of a collection, making code easier to read and maintain.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_padding"><a class="anchor" href="#_padding"></a>Padding</h3>
-<div class="paragraph">
-<p>Padding is introduced by the compiler to ensure proper alignment of data members. For instance, on many systems, int values need to be aligned to a 4-byte boundary. This can cause "holes" in the memory layout where extra bytes are reserved but not used, making the struct larger than the sum of its members.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct Mixed {
-    char c;
-    int i;
-} Mixed_t;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this case, the <code>char c</code> will often be padded to align <code>int i</code> on a 4-byte boundary.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_related_functions"><a class="anchor" href="#_related_functions"></a>Related Functions</h3>
 <div class="paragraph">
 <p>It&#8217;s common to write functions that operate on <code>struct&#8217;s, using the first parameter as a pointer to the struct instance. The pointer is often named `self</code>, <code>context</code>, <code>arg</code>, or something similar.</p>
@@ -359,7 +320,7 @@ void point_print(const Point_t* const self) {
 <h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_memory_layout_2"><a class="anchor" href="#_memory_layout_2"></a>Memory Layout</h3>
+<h3 id="_memory_layout"><a class="anchor" href="#_memory_layout"></a>Memory Layout</h3>
 <div class="paragraph">
 <p>The memory layout of <code>struct</code> in C&#43;&#43; is the same as in C. Members are stored in contiguous memory locations, and the compiler calculates the offsets for each member automatically. If the <code>struct</code> contains members of different types, padding might be introduced to align data members to word boundaries for performance reasons.</p>
 </div>

@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Chapter 2: struct :: C++ For Embedded C Developers</title>
-    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter2_struct/index.html">
-    <link rel="prev" href="../chapter1_minor_differences/constexpr.html">
-    <link rel="next" href="memory_layout.html">
+    <title>Memory Layout :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter2_struct/memory_layout.html">
+    <link rel="prev" href="index.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -107,11 +106,11 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">Chapter 2: struct</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="memory_layout.html">Memory Layout</a>
   </li>
 </ul>
@@ -147,36 +146,117 @@
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
     <li><a href="index.html">Chapter 2: struct</a></li>
+    <li><a href="memory_layout.html">Memory Layout</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter2_struct/pages/index.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter2_struct/pages/memory_layout.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Chapter 2: struct</h1>
+<h1 class="page">Memory Layout</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter, we&#8217;ll explore what a <code>struct</code> is in both C and C&#43;&#43;. While a <code>struct</code> in C is simply a way to group related data, in C&#43;&#43; it can take on more complex, object-like behaviors. By the end of this chapter, you&#8217;ll see how C&#43;&#43; builds on the concept of <code>struct</code> without introducing unnecessary complexity or memory/runtime cost.</p>
+<p>To understand how a <code>struct</code> is laid out in memory, consider an unusual but useful mental model: imagine a <code>struct</code> as a type of array that can contain elements of different data types.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#">Chapter 2: struct</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="memory_layout.html" class="xref page">Memory Layout</a></p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct StrangeArray {
+    int x;
+    char y;
+    const char* z;
+} StrangeArray_t;
+
+void bar(int* px) {
+    // ...
+}
+
+void baz(char* py) {
+    // ...
+}
+
+void foo(void) {
+    StrangeArray_t strangeArray = { .x = 5, .y = 'S', .z = "neat" };
+    strangeArray.x; // Access like strangeArray[0], giving an int lvalue
+    strangeArray.y; // Access like strangeArray[1], giving a char lvalue
+    strangeArray.z; // Access like strangeArray[2], giving a pointer to constant data lvalue
+    bar(&amp;strangeArray);  // Address of struct is address of first element (int x)
+    bar(&amp;strangeArray.x);  // Same as above, similar to &amp;strangeArray[0]
+    baz(&amp;strangeArray.y);  // Similar to &amp;strangeArray[1], for char y
+}</code></pre>
 </div>
-</li>
-</ul>
+</div>
+<div class="paragraph">
+<p>Recall from the section on <a href="../behind_the_curtain.html#array-indexing-operator" class="xref page">Array Indexing Operator</a> that an array&#8217;s indexing operator is essentially <code>*(address + offset)</code> and is expressed as <code>address[offset]</code>.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, the <code>.</code> operator for a <code>struct</code> is used to access members by calculating their offsets from the structure&#8217;s base address, resembling <code>*(struct address + data member offset)</code>.</p>
+</div>
+<div class="paragraph">
+<p>The key difference is that array offsets are uniform (since all elements are the same size), but <code>struct</code> offsets vary because data members can differ in size. The compiler determines these offsets, ensuring proper alignment for efficient memory access.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In the example, <code>bar(&amp;strangeArray);</code> demonstrates that the address of the struct points to its first data member (<code>x</code> in this case). However, in C&#43;&#43; structs with virtual functions, the first member is typically a pointer to the virtual table (vtable). This vtable pointer allows dynamic dispatch but adds a slight memory cost—a single pointer per instance. When virtual inheritance or virtual functions are introduced, the struct&#8217;s layout changes subtly behind the scenes to include this vtable pointer.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_padding"><a class="anchor" href="#_padding"></a>Padding</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As <code>struct</code> data members can be of different types, memory alignment is crucial. Aligning data members to their natural word boundaries (e.g., 4 bytes on a 32-bit system) ensures faster memory access. If we ignored alignment and packed data members tightly, access times could be slower due to the need for more CPU cycles to access a value that spans multiple words.</p>
+</div>
+<div class="paragraph">
+<p>Consider the following examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">#include &lt;cstdint&gt;
+
+typedef struct Larger {
+    char ch0;
+    int number;
+    char ch1;
+} Larger_t;
+
+sizeof(Larger_t);  // Likely 12 bytes on 32/64-bit targets
+
+typedef struct Smaller {
+    char ch0;
+    char ch1;
+    int number;
+} Smaller_t;
+
+sizeof(Smaller_t);  // Likely 8 bytes on 32/64-bit targets</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In <code>Larger_t</code>, the data member <code>ch0</code> is padded so that <code>number</code> aligns on a 4-byte boundary. On 32-bit and 64-bit systems, accessing an <code>int</code> at misaligned boundaries can slow down performance, so compilers automatically pad data to avoid this. Reordering the members in <code>Smaller_t</code> eliminates the padding, reducing the <code>struct</code> size to 8 bytes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_member_order"><a class="anchor" href="#_data_member_order"></a>Data Member Order</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The order in which you declare <code>struct</code> members directly impacts their memory layout. The compiler does not rearrange these members, so the order you choose affects both memory efficiency and alignment. By ordering members by size—generally from largest to smallest—you can reduce the amount of padding needed between members, leading to more efficient memory usage.</p>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../chapter1_minor_differences/constexpr.html">constexpr</a></span>
-  <span class="next"><a href="memory_layout.html">Memory Layout</a></span>
+  <span class="prev"><a href="index.html">Chapter 2: struct</a></span>
 </nav>
 </article>
   </div>
