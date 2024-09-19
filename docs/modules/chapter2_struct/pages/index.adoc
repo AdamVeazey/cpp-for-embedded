@@ -4,5 +4,3 @@ In this chapter, we'll explore what a `struct` is in both C and {cpp}. While a `
 
 include::../nav.adoc[leveloffset=+1]
 
-// [button="Next"]
-// xref:chapter3:index.adoc[Chapter 3: ]

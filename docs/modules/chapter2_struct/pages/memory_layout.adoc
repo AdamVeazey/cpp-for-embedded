@@ -1,0 +1,73 @@
+= Memory Layout
+
+To understand how a `struct` is laid out in memory, consider an unusual but useful mental model: imagine a `struct` as a type of array that can contain elements of different data types.
+
+[source,c]
+----
+typedef struct StrangeArray {
+    int x;
+    char y;
+    const char* z;
+} StrangeArray_t;
+
+void bar(int* px) {
+    // ...
+}
+
+void baz(char* py) {
+    // ...
+}
+
+void foo(void) {
+    StrangeArray_t strangeArray = { .x = 5, .y = 'S', .z = "neat" };
+    strangeArray.x; // Access like strangeArray[0], giving an int lvalue
+    strangeArray.y; // Access like strangeArray[1], giving a char lvalue
+    strangeArray.z; // Access like strangeArray[2], giving a pointer to constant data lvalue
+    bar(&strangeArray);  // Address of struct is address of first element (int x)
+    bar(&strangeArray.x);  // Same as above, similar to &strangeArray[0]
+    baz(&strangeArray.y);  // Similar to &strangeArray[1], for char y
+}
+----
+
+Recall from the section on xref:ROOT:behind_the_curtain.adoc#array-indexing-operator[Array Indexing Operator] that an array's indexing operator is essentially `*(address + offset)` and is expressed as `address[offset]`.
+
+Similarly, the `.` operator for a `struct` is used to access members by calculating their offsets from the structure's base address, resembling `*(struct address + data member offset)`.
+
+The key difference is that array offsets are uniform (since all elements are the same size), but `struct` offsets vary because data members can differ in size. The compiler determines these offsets, ensuring proper alignment for efficient memory access.
+
+NOTE: In the example, `bar(&strangeArray);` demonstrates that the address of the struct points to its first data member (`x` in this case). However, in {cpp} structs with virtual functions, the first member is typically a pointer to the virtual table (vtable). This vtable pointer allows dynamic dispatch but adds a slight memory cost—a single pointer per instance. When virtual inheritance or virtual functions are introduced, the struct's layout changes subtly behind the scenes to include this vtable pointer.
+
+// Add to the note above, provide a reference for section on virtual member functions
+
+== Padding
+
+As `struct` data members can be of different types, memory alignment is crucial. Aligning data members to their natural word boundaries (e.g., 4 bytes on a 32-bit system) ensures faster memory access. If we ignored alignment and packed data members tightly, access times could be slower due to the need for more CPU cycles to access a value that spans multiple words.
+
+Consider the following examples:
+
+[source, c++]
+----
+#include <cstdint>
+
+typedef struct Larger {
+    char ch0;
+    int number;
+    char ch1;
+} Larger_t;
+
+sizeof(Larger_t);  // Likely 12 bytes on 32/64-bit targets
+
+typedef struct Smaller {
+    char ch0;
+    char ch1;
+    int number;
+} Smaller_t;
+
+sizeof(Smaller_t);  // Likely 8 bytes on 32/64-bit targets
+----
+
+In `Larger_t`, the data member `ch0` is padded so that `number` aligns on a 4-byte boundary. On 32-bit and 64-bit systems, accessing an `int` at misaligned boundaries can slow down performance, so compilers automatically pad data to avoid this. Reordering the members in `Smaller_t` eliminates the padding, reducing the `struct` size to 8 bytes.
+
+== Data Member Order
+
+The order in which you declare `struct` members directly impacts their memory layout. The compiler does not rearrange these members, so the order you choose affects both memory efficiency and alignment. By ordering members by size—generally from largest to smallest—you can reduce the amount of padding needed between members, leading to more efficient memory usage.

@@ -57,41 +57,8 @@ A `struct` in {cpp} is very similar to C, but they also include the ability to d
 == C
 `struct` in C allows you to group related data into a single object with sequential memory layout. A `struct` is a contiguous block of memory, where each member occupies a defined amount of space, and the offset to access each member is calculated automatically by the compiler when you use the `.` or `+->+` operators.
 
-=== Memory Layout
-[source, c]
-----
-typedef struct Point {
-    int x;
-    int y;
-} Point_t;
 
-void foo(void) {
-    Point_t p = { .x = 5, .y = 10 };
-    int array[2];
-    array[0] = p.x;
-    array[1] = p.y;
-}
-----
 
-In this example, `sizeof(p)` and `sizeof(array)` are equal because both are contiguous blocks of memory that contain two `int` elements. With the array, `array[0]` and `array[1]` correspond to the elements at offsets 0 and 1, respectively. The struct works similarly:
-
-`p.x` can be thought of as `((unsigned char*)&p)` similar to `array[0]` +
-`p.y` can be thought of as `+((unsigned char*)&p) + (sizeof(int))+` similar to `array[1]`
-
-Thus, `struct` gives specific names and meaning to the elements of a collection, making code easier to read and maintain.
-
-=== Padding
-Padding is introduced by the compiler to ensure proper alignment of data members. For instance, on many systems, int values need to be aligned to a 4-byte boundary. This can cause "holes" in the memory layout where extra bytes are reserved but not used, making the struct larger than the sum of its members.
-
-[source, c]
-----
-typedef struct Mixed {
-    char c;
-    int i;
-} Mixed_t;
-----
-
-In this case, the `char c` will often be padded to align `int i` on a 4-byte boundary.
 
 === Related Functions
 It's common to write functions that operate on `struct`'s, using the first parameter as a pointer to the struct instance. The pointer is often named `self`, `context`, `arg`, or something similar.
