@@ -1,0 +1,50 @@
+= struct Definition and Instantiation
+
+== TL;DR
+
+In C, when you define a new `struct` type like `struct Foo {}`, you must refer to it as `struct Foo`. In {cpp}, you can simply use `Foo`, omitting the `struct` keyword.
+
+== C
+
+In C, struct definitions require the `struct` keyword because struct names reside in a separate namespace, potentially leading to naming conflicts with variables and functions. This requirement disambiguates the struct type from other uses of the same name, but it adds verbosity to the code.
+
+While this distinction aids backward compatibility, it can make C code harder to read and write. Although modern systems could manage naming better, changing this would break legacy code.
+
+[source,c]
+----
+struct Foo {
+    int x;
+    char y;
+};
+
+struct Foo data; // Must include "struct"
+void function1( struct Foo* sp ) {} // Must include "struct"
+
+typedef struct Foo Foo_t; // Create an alias
+Foo_t variable;  // Now use "Foo_t" without "struct"
+void function2( Foo_t* sp ) {}
+
+typedef struct Bar {
+    char a;
+    char b;
+} Bar_t; // "Bar_t" is an alias for "struct Bar"
+
+typedef struct {
+    int alpha;
+    int beta;
+} Anonymous_t; // "Anonymous_t" is an alias for this unnamed struct
+----
+
+== {cpp}
+
+In {cpp}, the design was improved by merging namespaces, allowing struct names to be used directly without the `struct` keyword. This simplification applies to all types, enhancing readability and usability. There's no need for typedefs for unnamed structs.
+
+[source,c++]
+----
+struct Foo {
+    int x;
+    char z;
+};
+
+Foo variable; // No need for "struct"
+----

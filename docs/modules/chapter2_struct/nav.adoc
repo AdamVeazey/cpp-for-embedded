@@ -1,4 +1,5 @@
 * xref:index.adoc[Chapter 2: struct]
+** xref:struct_definition.adoc[struct Definition and Instantiation]
 ** xref:memory_layout.adoc[Memory Layout]
 // ** xref:references.adoc[References]
 // // 12. Reference Types
