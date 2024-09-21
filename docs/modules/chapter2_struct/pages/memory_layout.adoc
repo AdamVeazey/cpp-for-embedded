@@ -4,7 +4,7 @@ To understand how a `struct` is laid out in memory, consider an unusual but usef
 
 [source,c]
 ----
-typedef struct StrangeArray {
+typedef struct {
     int x;
     char y;
     const char* z;
@@ -49,24 +49,24 @@ Consider the following examples:
 ----
 #include <cstdint>
 
-typedef struct Larger {
+struct Larger {
     char ch0;
     int number;
     char ch1;
-} Larger_t;
+};
 
-sizeof(Larger_t);  // Likely 12 bytes on 32/64-bit targets
+sizeof(Larger);  // Likely 12 bytes on 32/64-bit targets
 
-typedef struct Smaller {
+struct Smaller {
     char ch0;
     char ch1;
     int number;
-} Smaller_t;
+};
 
-sizeof(Smaller_t);  // Likely 8 bytes on 32/64-bit targets
+sizeof(Smaller);  // Likely 8 bytes on 32/64-bit targets
 ----
 
-In `Larger_t`, the data member `ch0` is padded so that `number` aligns on a 4-byte boundary. On 32-bit and 64-bit systems, accessing an `int` at misaligned boundaries can slow down performance, so compilers automatically pad data to avoid this. Reordering the members in `Smaller_t` eliminates the padding, reducing the `struct` size to 8 bytes.
+In `Larger`, the data member `ch0` is padded so that `number` aligns on a 4-byte boundary. On 32-bit and 64-bit systems, accessing an `int` at misaligned boundaries can slow down performance, so compilers automatically pad data to avoid this. Reordering the members in `Smaller` eliminates the padding, reducing the `struct` size to 8 bytes.
 
 == Data Member Order
 
