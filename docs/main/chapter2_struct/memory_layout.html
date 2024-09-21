@@ -167,7 +167,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct StrangeArray {
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct {
     int x;
     char y;
     const char* z;
@@ -228,25 +228,25 @@ In the example, <code>bar(&amp;strangeArray);</code> demonstrates that the addre
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">#include &lt;cstdint&gt;
 
-typedef struct Larger {
+struct Larger {
     char ch0;
     int number;
     char ch1;
-} Larger_t;
+};
 
-sizeof(Larger_t);  // Likely 12 bytes on 32/64-bit targets
+sizeof(Larger);  // Likely 12 bytes on 32/64-bit targets
 
-typedef struct Smaller {
+struct Smaller {
     char ch0;
     char ch1;
     int number;
-} Smaller_t;
+};
 
-sizeof(Smaller_t);  // Likely 8 bytes on 32/64-bit targets</code></pre>
+sizeof(Smaller);  // Likely 8 bytes on 32/64-bit targets</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In <code>Larger_t</code>, the data member <code>ch0</code> is padded so that <code>number</code> aligns on a 4-byte boundary. On 32-bit and 64-bit systems, accessing an <code>int</code> at misaligned boundaries can slow down performance, so compilers automatically pad data to avoid this. Reordering the members in <code>Smaller_t</code> eliminates the padding, reducing the <code>struct</code> size to 8 bytes.</p>
+<p>In <code>Larger</code>, the data member <code>ch0</code> is padded so that <code>number</code> aligns on a 4-byte boundary. On 32-bit and 64-bit systems, accessing an <code>int</code> at misaligned boundaries can slow down performance, so compilers automatically pad data to avoid this. Reordering the members in <code>Smaller</code> eliminates the padding, reducing the <code>struct</code> size to 8 bytes.</p>
 </div>
 </div>
 </div>

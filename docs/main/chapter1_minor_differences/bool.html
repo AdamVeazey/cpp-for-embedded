@@ -272,6 +272,14 @@ MISRA-C&#43;&#43; does <strong>not</strong> require an explicit use of a logical
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_why_is_any_non_zero_condition_true_in_an_if_statement"><a class="anchor" href="#_why_is_any_non_zero_condition_true_in_an_if_statement"></a>Why is any non-zero condition <code>true</code> in an <code>if</code> statement?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In many systems, the condition in an <code>if</code> statement, or other conditional expression, is evaluated using a comparison that checks whether the value is zero. This typically involves a "compare" instruction at the machine code level, which sets the CPU&#8217;s zero flag based on the result. If the value is zero, the zero flag is set, meaning the condition evaluates to <code>false</code>. If the value is non-zero, the zero flag is cleared, and the condition is considered <code>true</code>. This is why any non-zero value in a condition evaluates as <code>true</code>.</p>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="empty_parameter_list.html">Empty Parameter List</a></span>
   <span class="next"><a href="const.html">const</a></span>
