@@ -39,3 +39,7 @@ TIP: MISRA-{cpp} does *not* require an explicit use of a logical/relational oper
     * `false` = 0
 
 NOTE: `int` could be replaced with any of the variations in <cstdint>
+
+== Why is any non-zero condition `true` in an `if` statement?
+
+In many systems, the condition in an `if` statement, or other conditional expression, is evaluated using a comparison that checks whether the value is zero. This typically involves a "compare" instruction at the machine code level, which sets the CPU's zero flag based on the result. If the value is zero, the zero flag is set, meaning the condition evaluates to `false`. If the value is non-zero, the zero flag is cleared, and the condition is considered `true`. This is why any non-zero value in a condition evaluates as `true`.
