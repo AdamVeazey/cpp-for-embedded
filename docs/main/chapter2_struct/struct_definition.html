@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Chapter 1: Minor Differences :: C++ For Embedded C Developers</title>
-    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter1_minor_differences/index.html">
-    <link rel="prev" href="../behind_the_curtain.html">
-    <link rel="next" href="implicit_int_return.html">
+    <title>struct Definition and Instantiation :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter2_struct/struct_definition.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="memory_layout.html">
     <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -76,30 +76,30 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 1: Minor Differences</a>
+    <a class="nav-link" href="../chapter1_minor_differences/index.html">Chapter 1: Minor Differences</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="implicit_int_return.html">Implicit Return Type</a>
+    <a class="nav-link" href="../chapter1_minor_differences/implicit_int_return.html">Implicit Return Type</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="variable_declarations.html">Variable Declarations</a>
+    <a class="nav-link" href="../chapter1_minor_differences/variable_declarations.html">Variable Declarations</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="empty_parameter_list.html">Empty Parameter List</a>
+    <a class="nav-link" href="../chapter1_minor_differences/empty_parameter_list.html">Empty Parameter List</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="bool.html">bool</a>
+    <a class="nav-link" href="../chapter1_minor_differences/bool.html">bool</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="const.html">const</a>
+    <a class="nav-link" href="../chapter1_minor_differences/const.html">const</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="typecasting.html">Typecasting</a>
+    <a class="nav-link" href="../chapter1_minor_differences/typecasting.html">Typecasting</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="constexpr.html">constexpr</a>
+    <a class="nav-link" href="../chapter1_minor_differences/constexpr.html">constexpr</a>
   </li>
 </ul>
   </li>
@@ -109,13 +109,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2_struct/index.html">Chapter 2: struct</a>
+    <a class="nav-link" href="index.html">Chapter 2: struct</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2_struct/struct_definition.html">struct Definition and Instantiation</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="struct_definition.html">struct Definition and Instantiation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2_struct/memory_layout.html">Memory Layout</a>
+    <a class="nav-link" href="memory_layout.html">Memory Layout</a>
   </li>
 </ul>
   </li>
@@ -149,67 +149,83 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">C++ For Embedded C Developers</a></li>
-    <li><a href="index.html">Chapter 1: Minor Differences</a></li>
+    <li><a href="index.html">Chapter 2: struct</a></li>
+    <li><a href="struct_definition.html">struct Definition and Instantiation</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter1_minor_differences/pages/index.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter2_struct/pages/struct_definition.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Chapter 1: Minor Differences</h1>
+<h1 class="page">struct Definition and Instantiation</h1>
+<div class="sect1">
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>This chapter covers the various minor differences between C and C&#43;&#43;. Many of the topics covered are brief; while not an exhaustive list, it includes several small details that can add up in relevance over time. By considering these topics, you&#8217;ll better understand what changes are helpful when you approach C&#43;&#43; from a C background.</p>
+<p>In C, when you define a new <code>struct</code> type like <code>struct Foo {}</code>, you must refer to it as <code>struct Foo</code>. In C&#43;&#43;, you can simply use <code>Foo</code>, omitting the <code>struct</code> keyword.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#">Chapter 1: Minor Differences</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="implicit_int_return.html" class="xref page">Implicit Return Type</a></p>
-</li>
-<li>
-<p><a href="variable_declarations.html" class="xref page">Variable Declarations</a></p>
-</li>
-<li>
-<p><a href="empty_parameter_list.html" class="xref page">Empty Parameter List</a></p>
-</li>
-<li>
-<p><a href="bool.html" class="xref page">bool</a></p>
-</li>
-<li>
-<p><a href="const.html" class="xref page">const</a></p>
-</li>
-<li>
-<p><a href="typecasting.html" class="xref page">Typecasting</a></p>
-</li>
-<li>
-<p><a href="constexpr.html" class="xref page">constexpr</a></p>
-</li>
-</ul>
 </div>
-</li>
-</ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The sections on <a href="implicit_int_return.html" class="xref page">Implicit Return Type</a>, <a href="variable_declarations.html" class="xref page">Variable Declarations</a>, and <a href="empty_parameter_list.html" class="xref page">Empty Parameter Lists</a> address quirks that may appear in C but are unnecessary in C&#43;&#43;. These specific topics originate from C89 (or even earlier versions of C) and problematically find their way into C&#43;&#43; code, so it&#8217;s important to consider the changes necessary for a more effective C&#43;&#43; approach.
-</td>
-</tr>
-</table>
+<div class="sect1">
+<h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C, struct definitions require the <code>struct</code> keyword because struct names reside in a separate namespace, potentially leading to naming conflicts with variables and functions. This requirement disambiguates the struct type from other uses of the same name, but it adds verbosity to the code.</p>
+</div>
+<div class="paragraph">
+<p>While this distinction aids backward compatibility, it can make C code harder to read and write. Although modern systems could manage naming better, changing this would break legacy code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">struct Foo {
+    int x;
+    char y;
+};
+
+struct Foo data; // Must include "struct"
+void function1( struct Foo* sp ) {} // Must include "struct"
+
+typedef struct Foo Foo_t; // Create an alias
+Foo_t variable;  // Now use "Foo_t" without "struct"
+void function2( Foo_t* sp ) {}
+
+typedef struct Bar {
+    char a;
+    char b;
+} Bar_t; // "Bar_t" is an alias for "struct Bar"
+
+typedef struct {
+    int alpha;
+    int beta;
+} Anonymous_t; // "Anonymous_t" is an alias for this unnamed struct</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C&#43;&#43;, the design was improved by merging namespaces, allowing struct names to be used directly without the <code>struct</code> keyword. This simplification applies to all types, enhancing readability and usability. There&#8217;s no need for typedefs for unnamed structs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">struct Foo {
+    int x;
+    char z;
+};
+
+Foo variable; // No need for "struct"</code></pre>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../behind_the_curtain.html">Behind The Curtain</a></span>
-  <span class="next"><a href="implicit_int_return.html">Implicit Return Type</a></span>
+  <span class="prev"><a href="index.html">Chapter 2: struct</a></span>
+  <span class="next"><a href="memory_layout.html">Memory Layout</a></span>
 </nav>
 </article>
   </div>
