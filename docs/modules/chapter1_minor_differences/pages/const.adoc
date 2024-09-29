@@ -53,7 +53,7 @@ EX: +
 . **Read-only variables:** Same as in C.
 
 . **Pointers:** Same as in C.
-
+[[member-functions]]
 . **Member Functions:** A member function can be declared as `const`, meaning it does not modify the state of the object. The `this` pointer is a constant pointer to constant data for these member functions, as opposed to being a constant pointer to mutable data in a non-const member function. For example, `int getValue() const;` ensures that calling `getValue()` will not change any member variables of the class.
 +
 [source,c++]

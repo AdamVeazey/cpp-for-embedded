@@ -1,0 +1,110 @@
+= Member Functions
+
+.C
+[source, c]
+----
+typedef struct {
+    int x;
+    int y;
+} Point_t;
+
+void Point_add(Point_t* const self, int deltaX, int deltaY) {
+    self->x += deltaX;
+    self->y += deltaY;
+}
+----
+
+.{cpp}
+[source, c++]
+----
+struct Point {
+    int x;
+    int y;
+    void add( int deltaX, int deltaY ) {
+        this->x += deltaX;
+        this->y += deltaY;
+    }
+};
+----
+
+== TL;DR
+A member function is a function with an extra argument: a pointer to an instance of a struct.
+
+In C, this is done explicitly by passing a pointer to the struct.
+
+In {cpp}, this is done implicitly by defining the function as part of the struct type.
+
+== C
+In C, there is no direct concept of member functions. The closest equivalent is a function that takes a pointer to a struct as an argument, like `Point_add` in the example.
+
+== {cpp}
+In {cpp}, a non-static member function, like `add` in the example above, has an implicit argument called `this`, which is a constant pointer to the instance of the struct. In the C example, this argument is explicitly passed as `self`. The type of `this` is `Point* const`, just like `self` in the C example is `Point_t* const`.
+
+=== The `this` pointer
+What exactly is `this` pointing to? Let's first look at how we use `Point_t` in C.
+
+.C
+[source,c]
+----
+void foo(void) {
+    Point_t p = { .x = 5, .y = 10 };
+    Point_add( &p, 5, 20 );
+    int x = p.x; // value is now 10
+    int y = p.y; // value is now 30
+}
+----
+
+Here, `Point_t* const self` is `&p`, which is the address of the instance `p` of type `Point_t`.
+
+In {cpp}, the `.` or `->` operator is used, and the left-hand side of the operator is the struct instance that becomes the `this` pointer.
+
+.{cpp}
+[source, c++]
+----
+void foo() {
+    Point p( 5, 10 );
+    p.add( 5, 20 );
+    int x = p.x; // value is now 10
+    int y = p.y; // value is now 30
+}
+----
+
+Similar to xref:ROOT:behind_the_curtain.adoc#operators-inline-functions-in-disguise[Operators: Inline Functions in Disguise], the `.` and `+->+` operators in {cpp} can be mentally modeled as functions.
+
+[source,c++]
+----
+Point p( 5, 10 );
+
+p.add( 5, 20 );
+inline void operator.( Point& lhs, int rhsX, int rhsY ) {
+    Point_add( &lhs, rhsX, rhsY );
+}
+operator.( p, 5, 20 ); // same as p.add( 5, 20 );
+
+Point* pointPointer = &p;
+pointPointer->add( 5, 20 );
+inline void operator->( Point* const lhs, int rhsX, int rhsY ) {
+    Point_add( lhs, rhsX, rhsY );
+}
+operator->( pointPointer, 5, 20 ); // same as pointPointer->add( 5, 20 );
+----
+
+=== Memory Impact
+Member functions are not stored as function pointers inside the instance of the struct. They are implemented as free functions with an additional implicit pointer parameter (the `this` pointer). The C function `Point_add` shows how the {cpp} `Point` struct's `add` member function is implemented.
+
+=== `const` Member Functions
+As briefly mentioned in the xref:chapter1_minor_differences:const.adoc#member-functions[const section], a member function marked with `const` cannot modify the object `this` points to.
+
+A `const` member function changes the pointer type from `Type* const` to `const Type* const`. In other words, a constant pointer to constant data.
+
+Since the `this` pointer is implicit, {cpp} places the `const` after the closing parenthesis in the function declaration.
+
+[source,c++]
+----
+struct Point {
+    // ...
+    bool isOrigin() const {
+        return (x == 0) && (y == 0);
+    }
+};
+----
