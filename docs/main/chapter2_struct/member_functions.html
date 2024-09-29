@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Member Functions :: C++ For Embedded C Developers</title>
+    <link rel="canonical" href="https://adamveazey.github.io/cpp-for-embedded/docs/main/docs/main/chapter2_struct/member_functions.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://adamveazey.github.io/cpp-for-embedded/docs/main">C++ For Embedded C Developers</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">C++ For Embedded C Developers</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Overview</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../not_your_fathers_cpp.html">Not Your Fathers C&#43;&#43;</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../behind_the_curtain.html">Behind The Curtain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter1_minor_differences/index.html">Chapter 1: Minor Differences</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/implicit_int_return.html">Implicit Return Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/variable_declarations.html">Variable Declarations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/empty_parameter_list.html">Empty Parameter List</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/bool.html">bool</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/const.html">const</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/typecasting.html">Typecasting</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1_minor_differences/constexpr.html">constexpr</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Chapter 2: struct</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="struct_definition.html">struct Definition and Instantiation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="memory_layout.html">Memory Layout</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">C++ For Embedded C Developers</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">C++ For Embedded C Developers</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">C++ For Embedded C Developers</a></li>
+    <li><a href="member_functions.html">Member Functions</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/AdamVeazey/cpp-for-embedded/edit/main/docs/modules/chapter2_struct/pages/member_functions.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Member Functions</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct {
+    int x;
+    int y;
+} Point_t;
+
+void Point_add(Point_t* const self, int deltaX, int deltaY) {
+    self-&gt;x += deltaX;
+    self-&gt;y += deltaY;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">C&#43;&#43;</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">struct Point {
+    int x;
+    int y;
+    void add( int deltaX, int deltaY ) {
+        this-&gt;x += deltaX;
+        this-&gt;y += deltaY;
+    }
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL;DR</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A member function is a function with an extra argument: a pointer to an instance of a struct.</p>
+</div>
+<div class="paragraph">
+<p>In C, this is done explicitly by passing a pointer to the struct.</p>
+</div>
+<div class="paragraph">
+<p>In C&#43;&#43;, this is done implicitly by defining the function as part of the struct type.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c"><a class="anchor" href="#_c"></a>C</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C, there is no direct concept of member functions. The closest equivalent is a function that takes a pointer to a struct as an argument, like <code>Point_add</code> in the example.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_2"><a class="anchor" href="#_c_2"></a>C&#43;&#43;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In C&#43;&#43;, a non-static member function, like <code>add</code> in the example above, has an implicit argument called <code>this</code>, which is a constant pointer to the instance of the struct. In the C example, this argument is explicitly passed as <code>self</code>. The type of <code>this</code> is <code>Point* const</code>, just like <code>self</code> in the C example is <code>Point_t* const</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="_the_this_pointer"><a class="anchor" href="#_the_this_pointer"></a>The <code>this</code> pointer</h3>
+<div class="paragraph">
+<p>What exactly is <code>this</code> pointing to? Let&#8217;s first look at how we use <code>Point_t</code> in C.</p>
+</div>
+<div class="listingblock">
+<div class="title">C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">void foo(void) {
+    Point_t p = { .x = 5, .y = 10 };
+    Point_add( &amp;p, 5, 20 );
+    int x = p.x; // value is now 10
+    int y = p.y; // value is now 30
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, <code>Point_t* const self</code> is <code>&amp;p</code>, which is the address of the instance <code>p</code> of type <code>Point_t</code>.</p>
+</div>
+<div class="paragraph">
+<p>In C&#43;&#43;, the <code>.</code> or <code>&#8594;</code> operator is used, and the left-hand side of the operator is the struct instance that becomes the <code>this</code> pointer.</p>
+</div>
+<div class="listingblock">
+<div class="title">C&#43;&#43;</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">void foo() {
+    Point p( 5, 10 );
+    p.add( 5, 20 );
+    int x = p.x; // value is now 10
+    int y = p.y; // value is now 30
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similar to <a href="../behind_the_curtain.html#operators-inline-functions-in-disguise" class="xref page">Operators: Inline Functions in Disguise</a>, the <code>.</code> and <code>-&gt;</code> operators in C&#43;&#43; can be mentally modeled as functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">Point p( 5, 10 );
+
+p.add( 5, 20 );
+inline void operator.( Point&amp; lhs, int rhsX, int rhsY ) {
+    Point_add( &amp;lhs, rhsX, rhsY );
+}
+operator.( p, 5, 20 ); // same as p.add( 5, 20 );
+
+Point* pointPointer = &amp;p;
+pointPointer-&gt;add( 5, 20 );
+inline void operator-&gt;( Point* const lhs, int rhsX, int rhsY ) {
+    Point_add( lhs, rhsX, rhsY );
+}
+operator-&gt;( pointPointer, 5, 20 ); // same as pointPointer-&gt;add( 5, 20 );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory_impact"><a class="anchor" href="#_memory_impact"></a>Memory Impact</h3>
+<div class="paragraph">
+<p>Member functions are not stored as function pointers inside the instance of the struct. They are implemented as free functions with an additional implicit pointer parameter (the <code>this</code> pointer). The C function <code>Point_add</code> shows how the C&#43;&#43; <code>Point</code> struct&#8217;s <code>add</code> member function is implemented.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_const_member_functions"><a class="anchor" href="#_const_member_functions"></a><code>const</code> Member Functions</h3>
+<div class="paragraph">
+<p>As briefly mentioned in the <a href="../chapter1_minor_differences/const.html#member-functions" class="xref page">const section</a>, a member function marked with <code>const</code> cannot modify the object <code>this</code> points to.</p>
+</div>
+<div class="paragraph">
+<p>A <code>const</code> member function changes the pointer type from <code>Type* const</code> to <code>const Type* const</code>. In other words, a constant pointer to constant data.</p>
+</div>
+<div class="paragraph">
+<p>Since the <code>this</code> pointer is implicit, C&#43;&#43; places the <code>const</code> after the closing parenthesis in the function declaration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c++ hljs" data-lang="c++">struct Point {
+    // ...
+    bool isOrigin() const {
+        return (x == 0) &amp;&amp; (y == 0);
+    }
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
